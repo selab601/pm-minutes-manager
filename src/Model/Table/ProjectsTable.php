@@ -72,11 +72,13 @@ class ProjectsTable extends Table
 
         $validator
             ->date('started_at')
-            ->allowEmpty('started_at');
+            ->requirePresence('started_at', 'create')
+            ->notEmpty('started_at');
 
         $validator
             ->date('finished_at')
-            ->allowEmpty('finished_at');
+            ->requirePresence('finished_at', 'create')
+            ->notEmpty('finished_at');
 
         $validator
             ->dateTime('created_at')

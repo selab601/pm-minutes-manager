@@ -98,6 +98,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Last Name') ?></th>
                 <th scope="col"><?= __('First Name') ?></th>
                 <th scope="col"><?= __('Password') ?></th>
@@ -109,6 +110,7 @@
             <?php foreach ($project->users as $users): ?>
             <tr>
                 <td><?= h($users->id) ?></td>
+                <td><?= h($users->user_id) ?></td>
                 <td><?= h($users->last_name) ?></td>
                 <td><?= h($users->first_name) ?></td>
                 <td><?= h($users->password) ?></td>

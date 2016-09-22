@@ -25,7 +25,7 @@ class ItemsFixture extends TestFixture
         'contents' => ['type' => 'string', 'length' => 300, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'revision' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'overed_at' => ['type' => 'date', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'created_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'created_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         'updated_at' => ['type' => 'timestamp', 'length' => null, 'null' => false, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         '_indexes' => [
             'minute_key' => ['type' => 'index', 'columns' => ['minute_id'], 'length' => []],
@@ -58,8 +58,8 @@ class ItemsFixture extends TestFixture
             'contents' => 'Lorem ipsum dolor sit amet',
             'revision' => 1,
             'overed_at' => '2016-09-22',
-            'created_at' => '2016-09-22 14:37:33',
-            'updated_at' => 1474555053
+            'created_at' => '2016-09-22 15:33:17',
+            'updated_at' => 1474558397
         ],
     ];
 }

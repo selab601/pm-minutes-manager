@@ -33,6 +33,10 @@
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('User Id') ?></th>
+            <td><?= $this->Number->format($user->user_id) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Created At') ?></th>
             <td><?= h($user->created_at) ?></td>
         </tr>

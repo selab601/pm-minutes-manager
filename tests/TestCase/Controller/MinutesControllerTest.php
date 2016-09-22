@@ -21,6 +21,8 @@ class MinutesControllerTest extends IntegrationTestCase
         'app.users',
         'app.projects_users',
         'app.items',
+        'app.item_categories',
+        'app.responsibilities',
         'app.participations'
     ];
 

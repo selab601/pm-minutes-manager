@@ -12,6 +12,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('password') ?></th>
@@ -25,6 +26,7 @@
             <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= $this->Number->format($user->id) ?></td>
+                <td><?= $this->Number->format($user->user_id) ?></td>
                 <td><?= h($user->last_name) ?></td>
                 <td><?= h($user->first_name) ?></td>
                 <td><?= h($user->password) ?></td>

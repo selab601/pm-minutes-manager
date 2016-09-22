@@ -16,8 +16,8 @@
             echo $this->Form->input('name');
             echo $this->Form->input('budget');
             echo $this->Form->input('customer_name');
-            echo $this->Form->input('started_at', ['empty' => true]);
-            echo $this->Form->input('finished_at', ['empty' => true]);
+            echo $this->Form->input('started_at');
+            echo $this->Form->input('finished_at');
             echo $this->Form->input('created_at', ['empty' => true]);
             echo $this->Form->input('updated_at');
             echo $this->Form->input('users._ids', ['options' => $users]);

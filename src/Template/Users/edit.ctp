@@ -17,6 +17,7 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
+            echo $this->Form->input('user_id');
             echo $this->Form->input('last_name');
             echo $this->Form->input('first_name');
             echo $this->Form->input('password');

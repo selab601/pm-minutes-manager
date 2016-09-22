@@ -29,6 +29,8 @@ class MinutesTableTest extends TestCase
         'app.users',
         'app.projects_users',
         'app.items',
+        'app.item_categories',
+        'app.responsibilities',
         'app.participations'
     ];
 
