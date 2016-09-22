@@ -41,6 +41,8 @@ class AppController extends Controller
     {
         parent::initialize();
 
+        $this->viewBuilder()->autoLayout(false);
+
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
