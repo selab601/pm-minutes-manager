@@ -5,6 +5,8 @@
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Projects'), ['controller' => 'Projects', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Project'), ['controller' => 'Projects', 'action' => 'add']) ?> </li>
     </ul>
@@ -12,6 +14,10 @@
 <div class="users view large-9 medium-8 columns content">
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">
+        <tr>
+            <th scope="row"><?= __('Id String') ?></th>
+            <td><?= h($user->id_string) ?></td>
+        </tr>
         <tr>
             <th scope="row"><?= __('Last Name') ?></th>
             <td><?= h($user->last_name) ?></td>
@@ -33,10 +39,6 @@
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('User Id') ?></th>
-            <td><?= $this->Number->format($user->user_id) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Created At') ?></th>
             <td><?= h($user->created_at) ?></td>
         </tr>
@@ -45,6 +47,41 @@
             <td><?= h($user->updated_at) ?></td>
         </tr>
     </table>
+    <div class="related">
+        <h4><?= __('Related Users') ?></h4>
+        <?php if (!empty($user->users)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Id String') ?></th>
+                <th scope="col"><?= __('Last Name') ?></th>
+                <th scope="col"><?= __('First Name') ?></th>
+                <th scope="col"><?= __('Password') ?></th>
+                <th scope="col"><?= __('Mail') ?></th>
+                <th scope="col"><?= __('Created At') ?></th>
+                <th scope="col"><?= __('Updated At') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($user->users as $users): ?>
+            <tr>
+                <td><?= h($users->id) ?></td>
+                <td><?= h($users->id_string) ?></td>
+                <td><?= h($users->last_name) ?></td>
+                <td><?= h($users->first_name) ?></td>
+                <td><?= h($users->password) ?></td>
+                <td><?= h($users->mail) ?></td>
+                <td><?= h($users->created_at) ?></td>
+                <td><?= h($users->updated_at) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
     <div class="related">
         <h4><?= __('Related Projects') ?></h4>
         <?php if (!empty($user->projects)): ?>

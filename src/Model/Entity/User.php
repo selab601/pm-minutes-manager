@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
  * User Entity
  *
  * @property int $id
- * @property int $user_id
+ * @property string $id_string
  * @property string $last_name
  * @property string $first_name
  * @property string $password
@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $created_at
  * @property \Cake\I18n\Time $updated_at
  *
+ * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\Project[] $projects
  */
 class User extends Entity
