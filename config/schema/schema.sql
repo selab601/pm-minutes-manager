@@ -1,11 +1,12 @@
 CREATE
     TABLE users (
         id INT NOT NULL AUTO_INCREMENT,
+        user_id INT NOT NULL,
         last_name VARCHAR(100) NOT NULL,
         first_name VARCHAR(100) NOT NULL,
         password VARCHAR(300) NOT NULL,
         mail VARCHAR(300) NOT NULL,
-        created_at DATETIME,
+        created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
         );
@@ -16,9 +17,9 @@ CREATE
         name VARCHAR(100) NOT NULL,
         budget INT,
         customer_name VARCHAR(100),
-        started_at DATE,
-        finished_at DATE,
-        created_at DATETIME,
+        started_at DATE NOT NULL,
+        finished_at DATE NOT NULL,
+        created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
         );
@@ -27,7 +28,7 @@ CREATE
     TABLE roles (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
-        created_at DATETIME,
+        created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
         );
@@ -52,14 +53,14 @@ CREATE
         name VARCHAR(255) NOT NULL,
         holded_place VARCHAR(255),
         holded_at DATETIME,
-        created_at DATETIME,
+        created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         revision TINYINT,
-        is_examined TINYINT(1),
-        is_approved TINYINT(1),
+        is_examined TINYINT(1) DEFAULT 0,
+        is_approved TINYINT(1) DEFAULT 0,
         examined_at DATETIME,
         approved_at DATETIME,
-        is_deleted TINYINT(1),
+        is_deleted TINYINT(1) DEFAULT 0,
         FOREIGN KEY project_key(project_id) REFERENCES projects(id),
         PRIMARY KEY (id)
         );
@@ -80,7 +81,7 @@ CREATE
     TABLE item_categories (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(50) NOT NULL,
-        created_at DATETIME,
+        created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
         );
@@ -95,7 +96,7 @@ CREATE
         contents VARCHAR(300),
         revision TINYINT,
         overed_at DATE,
-        created_at DATETIME,
+        created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY minute_key(minute_id) REFERENCES minutes(id),
         FOREIGN KEY item_category_key(item_category_id) REFERENCES item_categories(id),
