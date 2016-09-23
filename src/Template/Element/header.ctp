@@ -47,27 +47,17 @@
                                 ['class' => 'navbar-brand']
                             );
                         ?>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <?php
-                                    if ($this->request->session()->read('Auth.User.is_authorized') == 1) {
-                                        echo "<li>" .$this->Html->link(
-                                            'ユーザ', ['controller'=>'Users', 'action'=>'index']
-                                        ) . "</li>";
-                                        echo "<li>" . $this->Html->link(
-                                            'プロジェクト', ['controller'=>'Projects', 'action'=>'index']
-                                        ) . "</li>";
-                                        echo "<li>" .$this->Html->link(
-                                            'プロジェクト担当', ['controller'=>'Roles', 'action'=>'index']
-                                        ) . "</li>";
-                                        echo "<li>" .$this->Html->link(
-                                            '案件種別', ['controller'=>'ItemCategories', 'action'=>'index']
-                                        ) . "</li>";
-                                    }
-                                ?>
-                            </ul>
-                        </li>
+                        <?php if ($this->request->session()->read('Auth.User.is_authorized') == 1): ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">管理<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><?=  $this->Html->link('ユーザ', ['controller'=>'Users', 'action'=>'index']) ?></li>
+                                    <li><?=  $this->Html->link('プロジェクト', ['controller'=>'Projects', 'action'=>'index']) ?></li>
+                                    <li><?=  $this->Html->link('担当種別', ['controller'=>'Roles', 'action'=>'index']) ?></li>
+                                    <li><?=  $this->Html->link('案件種別', ['controller'=>'ItemCategories', 'action'=>'index']) ?></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                         <li>
                             <?= $this->Html->link(
                                 'ログアウト', [
