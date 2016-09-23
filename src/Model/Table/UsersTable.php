@@ -76,6 +76,10 @@ class UsersTable extends Table
             ->notEmpty('mail');
 
         $validator
+            ->boolean('is_authorized')
+            ->allowEmpty('is_authorized');
+
+        $validator
             ->dateTime('created_at')
             ->allowEmpty('created_at');
 

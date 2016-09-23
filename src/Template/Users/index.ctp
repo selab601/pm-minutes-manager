@@ -16,6 +16,7 @@
                         <th scope="col"><?= $this->Paginator->sort('id_string') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('full_name') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('mail') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('is_authorized') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('created_at') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('updated_at') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -28,6 +29,7 @@
                             <td><?= h($user->id_string) ?></td>
                             <td><?= h($user->full_name) ?></td>
                             <td><?= h($user->mail) ?></td>
+                            <td><?= h($user->is_authorized) ?></td>
                             <td><?= h($user->created_at) ?></td>
                             <td><?= h($user->updated_at) ?></td>
                             <td class="actions">
