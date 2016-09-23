@@ -19,6 +19,8 @@
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav navbar-right">
                     <?php if (($this->request->session()->read('Auth.User')) == false): ?>
+                        <!-- 未ログインユーザ用メニュー -->
+
                         <li>
                             <?=
                                 $this->Html->link(
@@ -40,6 +42,9 @@
                             ?>
                         </li>
                     <?php else: ?>
+                        <!-- ログインユーザ用メニュー -->
+
+                        <!-- 挨拶 -->
                         <?=
                             $this->Html->link(
                                 'ようこそ ' . $this->request->session()->read('Auth.User.first_name') . ' さん',
@@ -48,6 +53,7 @@
                             );
                         ?>
 
+                        <!-- 一般ユーザ用メニュー -->
                         <li>
                             <?php
                                 echo $this->Html->link('プロフィール', [
@@ -58,6 +64,7 @@
                             ?>
                         </li>
 
+                        <!-- 管理者ユーザ用メニュー -->
                         <?php if ($this->request->session()->read('Auth.User.is_authorized') == 1): ?>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">管理<span class="caret"></span></a>
