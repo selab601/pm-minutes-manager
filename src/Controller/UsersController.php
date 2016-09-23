@@ -122,4 +122,9 @@ class UsersController extends AppController
             $this->Flash->error('あなたのユーザー名またはパスワードが不正です。');
         }
     }
+
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
+    }
 }
