@@ -46,6 +46,7 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'authorize' => ['Controller'],
             'authenticate' => [
                 'Form' => [
                     'fields' => [
@@ -57,10 +58,8 @@ class AppController extends Controller
             'loginAction' => [
                 'controller' => 'Users',
                 'action' => 'login'
-            ]
+            ],
         ]);
-
-        $this->Auth->allow(['display']);
     }
 
     /**
@@ -76,5 +75,16 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+
+    public function isAuthorized($user)
+    {
+        // 管理者のみが全てのページにアクセス可能
+        if (isset($user['is_authorized']) && $user['is_authorized'] == 1) {
+            return true;
+        }
+
+        // デフォルトは拒否
+        return false;
     }
 }

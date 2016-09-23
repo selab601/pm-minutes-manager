@@ -47,6 +47,16 @@
                                 ['class' => 'navbar-brand']
                             );
                         ?>
+                        <?php
+                            if ($this->request->session()->read('Auth.User.is_authorized') == 1) {
+                                echo "<li>" .$this->Html->link(
+                                    'ユーザ管理', ['controller'=>'Users', 'action'=>'index']
+                                ) . "</li>";
+                                echo "<li>" . $this->Html->link(
+                                    'プロジェクト管理', ['controller'=>'Projects', 'action'=>'index']
+                                ) . "</li>";
+                            }
+                        ?>
                         <li>
                             <?= $this->Html->link(
                                 'ログアウト', [

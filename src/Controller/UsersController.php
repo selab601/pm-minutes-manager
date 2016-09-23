@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Users Controller
@@ -14,6 +15,13 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        // ログインしていないユーザ含め，全ユーザがアクセス可能なページ
+        // WARNING: login を含めると動作がおかしくなるため含めない
         $this->Auth->allow(['logout', 'signup']);
     }
 
