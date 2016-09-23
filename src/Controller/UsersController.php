@@ -14,7 +14,7 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['logout', 'add']);
+        $this->Auth->allow(['logout', 'signup']);
     }
 
     /**
@@ -48,19 +48,21 @@ class UsersController extends AppController
     }
 
     /**
-     * Add method
+     * signup method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function signup()
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->set('created_at', time());
+            $user->set('updated_at', time());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'login']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
