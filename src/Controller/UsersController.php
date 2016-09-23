@@ -25,6 +25,19 @@ class UsersController extends AppController
         $this->Auth->allow(['logout', 'signup']);
     }
 
+    public function isAuthorized($user)
+    {
+        // 権限がなくとも，自分の情報であれば編集，閲覧可能
+        if (in_array($this->request->action, ['edit', 'view'])) {
+            $userId = $this->request->params['pass'][0];
+            if ($userId == $user['id']) {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
+
     /**
      * Index method
      *

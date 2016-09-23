@@ -47,6 +47,17 @@
                                 ['class' => 'navbar-brand']
                             );
                         ?>
+
+                        <li>
+                            <?php
+                                echo $this->Html->link('プロフィール', [
+                                    'controller'=>'Users',
+                                    'action'=>'view',
+                                    $this->request->session()->read('Auth.User.id')
+                                ]);
+                            ?>
+                        </li>
+
                         <?php if ($this->request->session()->read('Auth.User.is_authorized') == 1): ?>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">管理<span class="caret"></span></a>
