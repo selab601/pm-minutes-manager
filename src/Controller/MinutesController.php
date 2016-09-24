@@ -40,8 +40,17 @@ class MinutesController extends AppController
         $minute = $this->Minutes->get($id, [
             'contain' => ['Projects', 'Items', 'Participations']
         ]);
+        $usernames_participations = [];
+        $users_registry = TableRegistry::get('Users');
+        $projects_users_registry = TableRegistry::get('ProjectsUsers');
+        $participations = $minute->participations;
+        foreach ($participations as $participate) {
+            $projects_user = $projects_users_registry->get($participate->projects_user_id);
+            $user = $users_registry->get($projects_user->user_id);
+            $usernames_participations[$user->last_name." ".$user->first_name] = $participate->is_participated;
+        }
 
-        $this->set('minute', $minute);
+        $this->set(compact('minute', 'usernames_participations'));
         $this->set('_serialize', ['minute']);
     }
 

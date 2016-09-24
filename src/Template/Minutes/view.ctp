@@ -11,88 +11,61 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <h3><?= h($minute->name) ?></h3>
-                    <table class="table table-striped">
+                    <table class="table table-bordered col-md-6">
                         <tr>
-                            <th scope="row"><?= __('Project') ?></th>
-                            <td><?= $minute->has('project') ? $this->Html->link($minute->project->name, ['controller' => 'Projects', 'action' => 'view', $minute->project->id]) : '' ?></td>
+                            <td class="col-md-6" colspan="4">
+                                <small>
+                                    <?= $minute->has('project') ? $this->Html->link($minute->project->name, ['controller' => 'Projects', 'action' => 'view', $minute->project->id]) : '' ?>
+                                </small>
+                            </td>
                         </tr>
                         <tr>
-                            <th scope="row"><?= __('Name') ?></th>
-                            <td><?= h($minute->name) ?></td>
+                            <td class="col-md-6" colspan="4"><b><?= h($minute->name) ?></b></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?= __('Holded Place') ?></th>
-                            <td><?= h($minute->holded_place) ?></td>
+                            <td class="col-md-1"><center><b>日時</b></center></td>
+                            <td class="col-md-2"><?= h($minute->holded_at) ?></td>
+                            <td class="col-md-1"><center><b>場所</b></center></td>
+                            <td class="col-md-2"><?= h($minute->holded_place) ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?= __('Id') ?></th>
-                            <td><?= $this->Number->format($minute->id) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Revision') ?></th>
-                            <td><?= $this->Number->format($minute->revision) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Holded At') ?></th>
-                            <td><?= h($minute->holded_at) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Created At') ?></th>
-                            <td><?= h($minute->created_at) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Updated At') ?></th>
-                            <td><?= h($minute->updated_at) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Examined At') ?></th>
-                            <td><?= h($minute->examined_at) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Approved At') ?></th>
-                            <td><?= h($minute->approved_at) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Is Examined') ?></th>
-                            <td><?= $minute->is_examined ? __('Yes') : __('No'); ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Is Approved') ?></th>
-                            <td><?= $minute->is_approved ? __('Yes') : __('No'); ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Is Deleted') ?></th>
-                            <td><?= $minute->is_deleted ? __('Yes') : __('No'); ?></td>
+                            <td class="col-md-1"><center><b>作成日</b></center></td>
+                            <td class="col-md-2"><?= h($minute->created_at) ?></td>
+                            <td class="col-md-1"><center><b>更新日</b></center></td>
+                            <td class="col-md-2"><?= h($minute->updated_at) ?></td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="col-md-6">
-                    <h4>参加者</h4>
-                    <?php if (!empty($minute->participations)): ?>
-                        <table class="table table-striped" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <th scope="col"><?= __('Id') ?></th>
-                                <th scope="col"><?= __('Projects User Id') ?></th>
-                                <th scope="col"><?= __('Minute Id') ?></th>
-                                <th scope="col"><?= __('Is Participated') ?></th>
-                            </tr>
-                            <?php foreach ($minute->participations as $participations): ?>
-                                <tr>
-                                    <td><?= h($participations->id) ?></td>
-                                    <td><?= h($participations->projects_user_id) ?></td>
-                                    <td><?= h($participations->minute_id) ?></td>
-                                    <td><?= h($participations->is_participated) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </table>
-                    <?php endif; ?>
+                    <caption><h4><b>出席状況 ( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</b></h4></caption>
+                    <table class="table table-bordered col-sm-12">
+                        <?php
+                            $i = 0;
+                            foreach ($usernames_participations as $username => $is_participated) {
+                                if ($i/3 == 0) { echo "<tr>"; }
+
+                                $participation = $is_participated ? "◯" : "✕";
+                                echo "<td class='col-sm-1'><center>".$participation."</center></td>";
+                                echo "<td class='col-sm-3'>".$username."</td>";
+
+                                if ($i/3 == 2) { echo "</tr>"; }
+                                $i++;
+                            }
+
+                            for ($j = $i ; (int)($j/3) == 0; $j++) {
+                                echo "<td class='col-sm-1'><center> - </center></td>";
+                                echo "<td class='col-sm-3'> --------------------- </td>";
+
+                                if ($j/3 == 2) { echo "</tr>"; }
+                            }
+                        ?>
+                    </table>
                 </div>
             </div>
 
             <div class="related">
-                <h4><?= __('Related Items') ?></h4>
+                <h4>議事内容</h4>
                 <?php if (!empty($minute->items)): ?>
                     <table class="table table-striped" cellpadding="0" cellspacing="0">
                         <tr>
@@ -129,6 +102,15 @@
                         <?php endforeach; ?>
                     </table>
                 <?php endif; ?>
+                <center>
+                    <?=
+                        $this->Html->link('新規作成', [
+                            'controller'=>'Items',
+                            'action'=>'add',
+                            $minute->id
+                        ])
+                    ?>
+                </center>
             </div>
         </div>
     </body>
