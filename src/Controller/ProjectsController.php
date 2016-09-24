@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use App\Model\Table\Roles;
 
 /**
  * Projects Controller
@@ -10,6 +12,15 @@ use App\Controller\AppController;
  */
 class ProjectsController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        // プロジェクトの追加は誰でも可能
+        if ($this->request->action === 'add') {
+            return true;
+        }
+
+        return parent::isAuthorized($user);
+    }
 
     /**
      * Index method
@@ -59,8 +70,9 @@ class ProjectsController extends AppController
                 $this->Flash->error(__('The project could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Projects->Users->find('list', ['limit' => 200]);
-        $this->set(compact('project', 'users'));
+        $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
+        $roles = TableRegistry::get('Roles')->find()->select(['id', 'name']);
+        $this->set(compact('project', 'users', 'roles'));
         $this->set('_serialize', ['project']);
     }
 
