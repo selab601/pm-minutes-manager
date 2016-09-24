@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use App\Model\Table\ProjectsUsersTable;
 use App\Model\Table\Roles;
 
 /**
@@ -59,17 +60,45 @@ class ProjectsController extends AppController
      */
     public function add()
     {
-        $project = $this->Projects->newEntity();
-        if ($this->request->is('post')) {
-            $project = $this->Projects->patchEntity($project, $this->request->data);
-            if ($this->Projects->save($project)) {
-                $this->Flash->success(__('The project has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+        $project = $this->Projects->newEntity();
+
+        if ($this->request->is('post')) {
+
+            $now = new \DateTime();
+            $data= $this->request->data;
+
+            $project->name = $data["name"];
+            $project->budget = $data["budget"];
+            $project->customer_name = $data["customer_name"];
+            $started_at_date = $data["started_at"]["year"] . "-" . $data["started_at"]["month"] . "-" . $data["started_at"]["day"];
+            $project->started_at = $started_at_date;
+            $finished_at_date = $data["finished_at"]["year"] . "-" . $data["finished_at"]["month"] . "-" . $data["finished_at"]["day"];
+            $project->finished_at = $finished_at_date;
+            $project->created_at = $now->format('Y-m-d H:i:s');
+            $project->updated_at = $now->format('Y-m-d H:i:s');
+
+            if ($this->Projects->save($project)) {
+                $projects_users_registry = TableRegistry::get('ProjectsUsers');
+
+                $project_id = $project->id;
+                $user_ids = $data["users"]["_ids"];
+
+                foreach($user_ids as $user_id) {
+                    $projects_users = $projects_users_registry->newEntity();
+                    $projects_users->project_id = $project_id;
+                    $projects_users->user_id = $user_id;
+                    $projects_users->role_id = $data["roles"][$user_id][0];
+
+                    if (!$projects_users_registry->save($projects_users)) {
+                        throw new \Exception('Failed to save projects_users entity');
+                    }
+                }
             } else {
-                $this->Flash->error(__('The project could not be saved. Please, try again.'));
+                throw new \Exception('Failed to save project entity');
             }
         }
+
         $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
         $roles = TableRegistry::get('Roles')->find()->select(['id', 'name']);
         $this->set(compact('project', 'users', 'roles'));
