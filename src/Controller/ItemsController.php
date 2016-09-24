@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Items Controller
@@ -49,22 +50,55 @@ class ItemsController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $item = $this->Items->newEntity();
+
         if ($this->request->is('post')) {
             $item = $this->Items->patchEntity($item, $this->request->data);
+            $item->set('created_at', time());
+            $item->set('updated_at', time());
+
             if ($this->Items->save($item)) {
-                $this->Flash->success(__('The item has been saved.'));
+                $responsibilities_registry = TableRegistry::get("Responsibilities");
+
+                foreach($this->request->data["users"]["_ids"] as $user_id) {
+                    $responsibilities = $responsibilities_registry->newEntity();
+                    $responsibilities->item_id = $item->id;
+                    $responsibilities->projects_user_id = $user_id;
+
+                    if (!$responsibilities_registry->save($responsibilities)) {
+                        throw new \Exception('Failed to save responsibilities entity');
+                    }
+                }
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The item could not be saved. Please, try again.'));
+                throw new \Exception('Failed to save item entity');
             }
         }
-        $minutes = $this->Items->Minutes->find('list', ['limit' => 200]);
+
+        $minute = $this->Items->Minutes->get($id);
         $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
-        $this->set(compact('item', 'minutes', 'itemCategories'));
+        $users = TableRegistry::get('Users')
+            ->find('all')
+            ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
+            ->where('projects_users.project_id = '.$minute->project_id)
+            ->all();
+
+        foreach($users as $user) {
+            $projects_user = TableRegistry::get("ProjectsUsers")
+                ->find('all')
+                ->where([
+                    'ProjectsUsers.user_id = '.$user->id,
+                    'ProjectsUsers.project_id = '. $minute->project_id
+                ])
+                ->first();
+            $user->projects_user_id = $projects_user->id;
+        }
+        unset($user);
+
+        $this->set(compact('item', 'minute', 'itemCategories', 'users'));
         $this->set('_serialize', ['item']);
     }
 
