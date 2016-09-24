@@ -8,43 +8,71 @@
         <?= $this->element('header') ?>
 
         <div class="container">
-            <h3><?= h($project->name) ?></h3>
-            <table class="table table-striped">
-                <tr>
-                    <th scope="row"><?= __('Name') ?></th>
-                    <td><?= h($project->name) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Customer Name') ?></th>
-                    <td><?= h($project->customer_name) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($project->id) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Budget') ?></th>
-                    <td><?= $this->Number->format($project->budget) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Started At') ?></th>
-                    <td><?= h($project->started_at) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Finished At') ?></th>
-                    <td><?= h($project->finished_at) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Created At') ?></th>
-                    <td><?= h($project->created_at) ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?= __('Updated At') ?></th>
-                    <td><?= h($project->updated_at) ?></td>
-                </tr>
-            </table>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h3>プロジェクト詳細</h3>
+                    <table class="table table-striped">
+                        <tr>
+                            <th scope="row"><?= __('Name') ?></th>
+                            <td><?= h($project->name) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Customer Name') ?></th>
+                            <td><?= h($project->customer_name) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Id') ?></th>
+                            <td><?= $this->Number->format($project->id) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Budget') ?></th>
+                            <td><?= $this->Number->format($project->budget) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Started At') ?></th>
+                            <td><?= h($project->started_at) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Finished At') ?></th>
+                            <td><?= h($project->finished_at) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Created At') ?></th>
+                            <td><?= h($project->created_at) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Updated At') ?></th>
+                            <td><?= h($project->updated_at) ?></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>参加しているユーザ</h4>
+                    <?php if (!empty($project->users)): ?>
+                        <table class="table table-striped" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th scope="col"><?= __('Id') ?></th>
+                                <th scope="col"><?= __('Name') ?></th>
+                                <th scope="col"><?= __('Mail') ?></th>
+                            </tr>
+                            <?php foreach ($project->users as $users): ?>
+                                <tr>
+                                    <td><?= h($users->id_string) ?></td>
+                                    <td><?= h($users->last_name . " " . $users->first_name) ?></td>
+                                    <td><?= h($users->mail) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php endif; ?>
+                </div>
+
+            </div>
+
             <div class="related">
-                <h4><?= __('Related Minutes') ?></h4>
+                <h4>議事録一覧</h4>
                 <?php if (!empty($project->minutes)): ?>
                     <table class="table table-striped" cellpadding="0" cellspacing="0">
                         <tr>
@@ -87,25 +115,14 @@
                         <?php endforeach; ?>
                     </table>
                 <?php endif; ?>
-            </div>
-            <div class="related">
-                <h4><?= __('Related Users') ?></h4>
-                <?php if (!empty($project->users)): ?>
-                    <table class="table table-striped" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <th scope="col"><?= __('Id') ?></th>
-                            <th scope="col"><?= __('Name') ?></th>
-                            <th scope="col"><?= __('Mail') ?></th>
-                        </tr>
-                        <?php foreach ($project->users as $users): ?>
-                            <tr>
-                                <td><?= h($users->id_string) ?></td>
-                                <td><?= h($users->last_name . " " . $users->first_name) ?></td>
-                                <td><?= h($users->mail) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                <?php endif; ?>
+                <center>
+                    <?=
+                        $this->Html->link('新規作成', [
+                            'controller'=>'Minutes',
+                            'action'=>'add'
+                        ])
+                    ?>
+                </center>
             </div>
         </div>
     </body>
