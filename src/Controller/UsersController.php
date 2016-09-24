@@ -68,6 +68,16 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
+    public function projectsView($id = null)
+    {
+        $user = $this->Users->get($id, [
+            'contain' => ['Projects']
+        ]);
+
+        $this->set('user', $user);
+        $this->set('_serialize', ['user']);
+    }
+
     /**
      * signup method
      *

@@ -63,7 +63,15 @@
                                 ]);
                             ?>
                         </li>
-                        <li><?= $this->Html->link('プロジェクト新規作成', ['controller'=>'Projects', 'action'=>'add']) ?></li>
+                        <li>
+                            <?=
+                                $this->Html->link('プロジェクト', [
+                                    'controller'=>'Users',
+                                    'action'=>'projectsView',
+                                    $this->request->session()->read('Auth.User.id')
+                                ])
+                            ?>
+                        </li>
 
                         <!-- 管理者ユーザ用メニュー -->
                         <?php if ($this->request->session()->read('Auth.User.is_authorized') == 1): ?>
