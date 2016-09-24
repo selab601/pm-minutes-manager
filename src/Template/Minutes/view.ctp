@@ -65,52 +65,60 @@
             </div>
 
             <div class="related">
-                <h4>議事内容</h4>
-                <?php if (!empty($minute->items)): ?>
-                    <table class="table table-striped" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <th scope="col"><?= __('Id') ?></th>
-                            <th scope="col"><?= __('Minute Id') ?></th>
-                            <th scope="col"><?= __('Primary No') ?></th>
-                            <th scope="col"><?= __('Item Category Id') ?></th>
-                            <th scope="col"><?= __('Order In Minute') ?></th>
-                            <th scope="col"><?= __('Contents') ?></th>
-                            <th scope="col"><?= __('Revision') ?></th>
-                            <th scope="col"><?= __('Overed At') ?></th>
-                            <th scope="col"><?= __('Created At') ?></th>
-                            <th scope="col"><?= __('Updated At') ?></th>
-                            <th scope="col" class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($minute->items as $items): ?>
+                <table class="table table-striped" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">項目</th>
+                        <th scope="col">内容</th>
+                        <th scope="col">優先度</th>
+                        <th scope="col">担当</th>
+                        <th scope="col">期限</th>
+                        <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    </tr>
+                    <?php if (!empty($minute->items)): ?>
+                        <?php foreach ($minute->items as $item): ?>
                             <tr>
-                                <td><?= h($items->id) ?></td>
-                                <td><?= h($items->minute_id) ?></td>
-                                <td><?= h($items->primary_no) ?></td>
-                                <td><?= h($items->item_category_id) ?></td>
-                                <td><?= h($items->order_in_minute) ?></td>
-                                <td><?= h($items->contents) ?></td>
-                                <td><?= h($items->revision) ?></td>
-                                <td><?= h($items->overed_at) ?></td>
-                                <td><?= h($items->created_at) ?></td>
-                                <td><?= h($items->updated_at) ?></td>
+                                <td><?= h($item->order_in_minute) ?></td>
+                                <td><?= h($item->item_category_name) ?></td>
+                                <td><?= h($item->contents) ?></td>
+                                <td>
+                                    <?php
+                                        switch($item->primary_no) {
+                                            case 0: echo "低"; break;
+                                            case 1: echo "中"; break;
+                                            case 2: echo "高"; break;
+                                            default: echo "";
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <?php
+                                            foreach($item->user_names as $user_name) {
+                                                echo "<li>".$user_name."</li>";
+                                            }
+                                        ?>
+                                    </ul>
+                                </td>
+                                <td><?= h($item->overed_at) ?></td>
                                 <td class="actions">
-                                    <?= $this->Html->link(__('View'), ['controller' => 'Items', 'action' => 'view', $items->id]) ?>
-                                    <?= $this->Html->link(__('Edit'), ['controller' => 'Items', 'action' => 'edit', $items->id]) ?>
-                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $items->id], ['confirm' => __('Are you sure you want to delete # {0}?', $items->id)]) ?>
+                                    <?= $this->Html->link(__('View'), ['controller' => 'Items', 'action' => 'view', $item->id]) ?>
+                                    <?= $this->Html->link(__('Edit'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
+                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    </table>
-                <?php endif; ?>
-                <center>
-                    <?=
-                        $this->Html->link('新規作成', [
-                            'controller'=>'Items',
-                            'action'=>'add',
-                            $minute->id
-                        ])
-                    ?>
-                </center>
+                </table>
+                    <?php endif; ?>
+                    <center>
+                        <?=
+                            $this->Html->link('新規作成', [
+                                'controller'=>'Items',
+                                'action'=>'add',
+                                $minute->id
+                            ])
+                        ?>
+                    </center>
             </div>
         </div>
     </body>
