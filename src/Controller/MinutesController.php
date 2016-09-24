@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Minutes Controller
@@ -13,7 +14,7 @@ class MinutesController extends AppController
 
     /**
      * Index method
-     *
+    *
      * @return \Cake\Network\Response|null
      */
     public function index()
@@ -49,21 +50,61 @@ class MinutesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $minute = $this->Minutes->newEntity();
-        if ($this->request->is('post')) {
-            $minute = $this->Minutes->patchEntity($minute, $this->request->data);
-            if ($this->Minutes->save($minute)) {
-                $this->Flash->success(__('The minute has been saved.'));
+        $project = $this->Minutes->Projects->get($id,[
+            'contain' => ['Users'],
+        ]);
 
+        if ($this->request->is('post')) {
+
+            $data= $this->request->data;
+
+            $minute->project_id = $data['project_id'][0];
+            $minute->name = $data['name'];
+            $minute->holded_place = $data['holded_place'];
+            $holded_at_date = $data["holded_at"]["year"] . "-" . $data["holded_at"]["month"] . "-" . $data["holded_at"]["day"];
+            $minute->holded_at = $holded_at_date;
+            $minute->set('created_at', time());
+            $minute->set('updated_at', time());
+
+            if ($this->Minutes->save($minute)) {
+                $participations_registry = TableRegistry::get('Participations');
+
+                $project_id = $minute->project_id;
+                $checked_user_ids = $data["users"]["_ids"];
+
+                foreach($project->users as $user) {
+                    $projects_users_registry = TableRegistry::get('ProjectsUsers');
+                    $projects_users = $projects_users_registry
+                        ->find('all')
+                        ->where([
+                            'ProjectsUsers.project_id = ' . $project_id,
+                            'ProjectsUsers.user_id = ' . $user['id'],
+                        ])
+                        ->first();
+
+                    $participations = $participations_registry->newEntity();
+                    $participations->projects_user_id = $projects_users->id;
+                    $participations->minute_id = $minute->id;
+                    if (in_array($user['id'], $checked_user_ids)) {
+                        $participations->is_participated = 1;
+                    } else {
+                        $participations->is_participated = 0;
+                    }
+
+                    if (!$participations_registry->save($participations)) {
+                        throw new \Exception('Failed to save participations entity');
+                    }
+                }
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The minute could not be saved. Please, try again.'));
+                throw new \Exception('Failed to save minute entity');
             }
         }
-        $projects = $this->Minutes->Projects->find('list', ['limit' => 200]);
-        $this->set(compact('minute', 'projects'));
+
+        $this->set(compact('minute', 'project'));
         $this->set('_serialize', ['minute']);
     }
 

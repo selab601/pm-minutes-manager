@@ -23,20 +23,12 @@
                             <td><?= h($project->customer_name) ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?= __('Id') ?></th>
-                            <td><?= $this->Number->format($project->id) ?></td>
-                        </tr>
-                        <tr>
                             <th scope="row"><?= __('Budget') ?></th>
                             <td><?= $this->Number->format($project->budget) ?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?= __('Started At') ?></th>
-                            <td><?= h($project->started_at) ?></td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?= __('Finished At') ?></th>
-                            <td><?= h($project->finished_at) ?></td>
+                            <th scope="row"><?= __('期間') ?></th>
+                            <td><?= h($project->started_at." 〜 ".$project->finished_at) ?></td>
                         </tr>
                         <tr>
                             <th scope="row"><?= __('Created At') ?></th>
@@ -76,16 +68,11 @@
                 <?php if (!empty($project->minutes)): ?>
                     <table class="table table-striped" cellpadding="0" cellspacing="0">
                         <tr>
-                            <th scope="col"><?= __('Id') ?></th>
-                            <th scope="col"><?= __('Project Id') ?></th>
                             <th scope="col"><?= __('Name') ?></th>
                             <th scope="col"><?= __('Holded Place') ?></th>
                             <th scope="col"><?= __('Holded At') ?></th>
                             <th scope="col"><?= __('Created At') ?></th>
                             <th scope="col"><?= __('Updated At') ?></th>
-                            <th scope="col"><?= __('Revision') ?></th>
-                            <th scope="col"><?= __('Is Examined') ?></th>
-                            <th scope="col"><?= __('Is Approved') ?></th>
                             <th scope="col"><?= __('Examined At') ?></th>
                             <th scope="col"><?= __('Approved At') ?></th>
                             <th scope="col"><?= __('Is Deleted') ?></th>
@@ -93,23 +80,19 @@
                         </tr>
                         <?php foreach ($project->minutes as $minutes): ?>
                             <tr>
-                                <td><?= h($minutes->id) ?></td>
-                                <td><?= h($minutes->project_id) ?></td>
                                 <td><?= h($minutes->name) ?></td>
                                 <td><?= h($minutes->holded_place) ?></td>
                                 <td><?= h($minutes->holded_at) ?></td>
                                 <td><?= h($minutes->created_at) ?></td>
                                 <td><?= h($minutes->updated_at) ?></td>
-                                <td><?= h($minutes->revision) ?></td>
-                                <td><?= h($minutes->is_examined) ?></td>
-                                <td><?= h($minutes->is_approved) ?></td>
                                 <td><?= h($minutes->examined_at) ?></td>
                                 <td><?= h($minutes->approved_at) ?></td>
-                                <td><?= h($minutes->is_deleted) ?></td>
+                                <td>
+                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Minutes', 'action' => 'delete', $minutes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $minutes->id)]) ?>
+                                </td>
                                 <td class="actions">
                                     <?= $this->Html->link(__('View'), ['controller' => 'Minutes', 'action' => 'view', $minutes->id]) ?>
                                     <?= $this->Html->link(__('Edit'), ['controller' => 'Minutes', 'action' => 'edit', $minutes->id]) ?>
-                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Minutes', 'action' => 'delete', $minutes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $minutes->id)]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -119,7 +102,8 @@
                     <?=
                         $this->Html->link('新規作成', [
                             'controller'=>'Minutes',
-                            'action'=>'add'
+                            'action'=>'add',
+                            $project->id
                         ])
                     ?>
                 </center>
