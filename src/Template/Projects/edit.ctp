@@ -19,7 +19,15 @@
                         echo $this->Form->input('customer_name');
                         echo $this->Form->input('started_at');
                         echo $this->Form->input('finished_at');
-                        echo $this->Form->input('users._ids', ['options' => $users]);
+
+                        $users_array = [];
+                        foreach ($users as $user) {
+                            $users_array[$user->id] = $user->last_name." ".$user->first_name;
+                        }
+                        echo $this->Form->input('users._ids', [
+                            'options' => $users_array,
+                            'multiple' => 'checkbox',
+                        ]);
                     ?>
                 </fieldset>
                 <?= $this->Form->button(__('Submit')) ?>
