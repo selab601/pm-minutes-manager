@@ -17,9 +17,11 @@
                         echo $this->Form->input('id_string');
                         echo $this->Form->input('last_name');
                         echo $this->Form->input('first_name');
-                        echo $this->Form->input('password');
+                        echo $this->Form->input('password', [
+                            'value' => "",
+                            'required' => false
+                        ]);
                         echo $this->Form->input('mail');
-                        echo $this->Form->input('is_authorized');
                     ?>
                 </fieldset>
                 <?= $this->Form->button(__('Submit')) ?>

@@ -112,21 +112,25 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Projects']
-        ]);
+        $user = $this->Users->get($id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
+            if (empty($this->request->data["password"])) {
+                unset($this->request->data["password"]);
+            }
+
             $user = $this->Users->patchEntity($user, $this->request->data);
+
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $user->id]);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $projects = $this->Users->Projects->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'projects'));
+
+        $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
 
