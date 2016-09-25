@@ -79,9 +79,10 @@ class ItemsController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id = null)
+    public function add($minute_id)
     {
         $item = $this->Items->newEntity();
+        $minute = $this->Items->Minutes->get($minute_id);
 
         if ($this->request->is('post')) {
             $item = $this->Items->patchEntity($item, $this->request->data);
@@ -89,25 +90,27 @@ class ItemsController extends AppController
             $item->set('updated_at', time());
 
             if ($this->Items->save($item)) {
-                $responsibilities_registry = TableRegistry::get("Responsibilities");
 
-                foreach($this->request->data["users"]["_ids"] as $user_id) {
-                    $responsibilities = $responsibilities_registry->newEntity();
-                    $responsibilities->item_id = $item->id;
-                    $responsibilities->projects_user_id = $user_id;
+                if (!empty($this->request->data["users"]["_ids"])) {
+                    $responsibilities_registry = TableRegistry::get("Responsibilities");
 
-                    if (!$responsibilities_registry->save($responsibilities)) {
-                        throw new \Exception('Failed to save responsibilities entity');
+                    foreach($this->request->data["users"]["_ids"] as $user_id) {
+                        $responsibilities = $responsibilities_registry->newEntity();
+                        $responsibilities->item_id = $item->id;
+                        $responsibilities->projects_user_id = $user_id;
+
+                        if (!$responsibilities_registry->save($responsibilities)) {
+                            throw new \Exception('Failed to save responsibilities entity');
+                        }
                     }
                 }
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
                 throw new \Exception('Failed to save item entity');
             }
         }
 
-        $minute = $this->Items->Minutes->get($id);
         $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
         $users = TableRegistry::get('Users')
             ->find('all')
@@ -148,7 +151,9 @@ class ItemsController extends AppController
             if ($this->Items->save($item)) {
                 $this->Flash->success(__('The item has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $minute = TableRegistry::get("Minutes")->get($item->minute_id);
+
+                return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
                 $this->Flash->error(__('The item could not be saved. Please, try again.'));
             }
