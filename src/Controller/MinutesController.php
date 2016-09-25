@@ -60,7 +60,7 @@ class MinutesController extends AppController
             foreach ($responsibilities as $responsibility) {
                 $projects_users = TableRegistry::get('ProjectsUsers')->get($responsibility->projects_user_id);
                 $user = TableRegistry::get('Users')->get($projects_users->user_id);
-                array_push($user_names, $user->last_name . " " . $user->first_name);
+                array_push($user_names, $user->last_name);
             }
 
             $item->item_category_name = $category->name;
