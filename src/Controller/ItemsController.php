@@ -144,19 +144,62 @@ class ItemsController extends AppController
      */
     public function edit($id = null)
     {
-        $item = $this->Items->get($id, [
-            'contain' => []
-        ]);
+        $item = $this->Items->get($id);
+        $minute = $this->Items->Minutes->get($item->minute_id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $item = $this->Items->patchEntity($item, $this->request->data);
             if ($this->Items->save($item)) {
-                $this->Flash->success(__('The item has been saved.'));
+                // 編集前の担当者
+                $users_selected_old = TableRegistry::get("Responsibilities")
+                    ->find('all', ['fields'=>'Responsibilities.projects_user_id'])
+                    ->where(['Responsibilities.item_id = '.$item->id])
+                    ->all()->toArray();
+                $old_selected_user_ids = [];
+                foreach ($users_selected_old as $user) {
+                    array_push($old_selected_user_ids, (string)$user->projects_user_id);
+                }
+                if (empty($old_selected_user_ids)){ $old_selected_user_ids = []; }
 
-                $minute = TableRegistry::get("Minutes")->get($item->minute_id);
+                // 編集後の担当者
+                $new_selected_user_ids = $this->request->data["projects_users"]["_ids"];
+                if (empty($new_selected_user_ids)){ $new_selected_user_ids = []; }
+
+                // 前2つの担当者の差分を比較し，追加/削除を行う
+                $responsibilities_registry = TableRegistry::get("Responsibilities");
+                $deleted_user_ids = array_diff($old_selected_user_ids, $new_selected_user_ids);
+                $added_user_ids = array_diff($new_selected_user_ids, $old_selected_user_ids);
+
+                echo var_dump($deleted_user_ids);
+                echo var_dump($added_user_ids);
+
+                if (!empty($deleted_user_ids)) {
+                    foreach($deleted_user_ids as $user_id) {
+                        $responsibility = $responsibilities_registry
+                            ->find('all')
+                            ->where(['responsibilities.item_id = '.$item->id,
+                                     'responsibilities.projects_user_id = '.$user_id])
+                            ->first();
+                        if (!$responsibilities_registry->delete($responsibility)) {
+                            throw new \Exception('Failed to delete responsibility entity');
+                        }
+                    }
+                }
+
+                if (!empty($added_user_ids)) {
+                    foreach($added_user_ids as $user_id) {
+                        $responsibility = $responsibilities_registry->newEntity();
+                        $responsibility->item_id = $item->id;
+                        $responsibility->projects_user_id = $user_id;
+                        if (!$responsibilities_registry->save($responsibility)) {
+                            throw new \Exception('Failed to save responsibility entity');
+                        }
+                    }
+                }
 
                 return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
-                $this->Flash->error(__('The item could not be saved. Please, try again.'));
+                throw new \Exception('Failed to save item entity');
             }
         }
         $minute = $this->Items->Minutes->get($item->minute_id);

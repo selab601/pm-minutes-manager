@@ -27,7 +27,7 @@
                             array_push($checked_users_array, $user->projects_user_id);
                         }
                     }
-                    echo $this->Form->input('users._ids', [
+                    echo $this->Form->input('projects_users._ids', [
                         'options' => $users_array,
                         'multiple' => 'checkbox',
                         'checked' => true,
