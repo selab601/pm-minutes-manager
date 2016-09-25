@@ -20,6 +20,23 @@ class ProjectsController extends AppController
             return true;
         }
 
+        // 自分の参加しているプロジェクトであれば編集，閲覧が可能
+        if (in_array($this->request->action, ['edit', 'view'])) {
+            $project_id = $this->request->params['pass'][0];
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $projects_users = TableRegistry::get("projects_users")
+                ->find('all')
+                ->where([
+                    'projects_users.project_id = '.$project_id,
+                    'projects_users.user_id = '.$user_id,
+                ])
+                ->all();
+
+            if (count($projects_users) != 0) {
+                return true;
+            }
+        }
+
         return parent::isAuthorized($user);
     }
 
