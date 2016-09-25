@@ -10,7 +10,7 @@
 
         <div class="container">
             <div class="related">
-                <h4>あなたの参加するプロジェクト一覧です</h4>
+                <h4>あなたの参加しているプロジェクト一覧です</h4>
                 <?php if (!empty($user->projects)): ?>
                     <table class="table table-striped" cellpadding="0" cellspacing="0">
                         <tr>
