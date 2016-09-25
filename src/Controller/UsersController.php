@@ -28,7 +28,7 @@ class UsersController extends AppController
     public function isAuthorized($user)
     {
         // 権限がなくとも，自分の情報であれば編集，閲覧可能
-        if (in_array($this->request->action, ['edit', 'view'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'projectsView'])) {
             $userId = $this->request->params['pass'][0];
             if ($userId == $user['id']) {
                 return true;
