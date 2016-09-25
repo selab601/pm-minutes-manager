@@ -9,7 +9,7 @@
         <?= $this->element('header') ?>
 
         <div class="container">
-            <div class="users view large-9 medium-8 columns content">
+                <h3>あなたのプロフィールです</h3>
                 <table class="table table-striped">
                     <tr>
                         <th scope="row"><?= __('Id') ?></th>
@@ -44,7 +44,8 @@
                         <td><?= $user->is_authorized ? __('Yes') : __('No'); ?></td>
                     </tr>
                 </table>
-            </div>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id_string)]) ?>
         </div>
     </body>
 </html>
