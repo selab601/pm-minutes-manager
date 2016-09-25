@@ -14,7 +14,7 @@ class MinutesController extends AppController
 
     /**
      * Index method
-    *
+     *
      * @return \Cake\Network\Response|null
      */
     public function index()
@@ -38,7 +38,7 @@ class MinutesController extends AppController
     public function view($id = null)
     {
         $minute = $this->Minutes->get($id, [
-            'contain' => ['Projects', 'Items', 'Participations']
+            'contain' => ['Projects', 'Participations']
         ]);
         $usernames_participations = [];
         $users_registry = TableRegistry::get('Users');
@@ -50,7 +50,13 @@ class MinutesController extends AppController
             $usernames_participations[$user->last_name." ".$user->first_name] = $participate->is_participated;
         }
 
-        foreach ($minute->items as &$item) {
+        $items = [];
+        $ordered_items = TableRegistry::get('Items')
+            ->find('all', [
+                'order' => ['Items.order_in_minute' => 'ASC']
+            ])
+            ->where(['Items.minute_id = '.$minute->id]);
+        foreach ($ordered_items as $item) {
             $category = TableRegistry::get('ItemCategories')->get($item->item_category_id);
 
             $user_names = [];
@@ -65,10 +71,11 @@ class MinutesController extends AppController
 
             $item->item_category_name = $category->name;
             $item->user_names = $user_names;
-        }
-        unset($item);
 
-        $this->set(compact('minute', 'usernames_participations'));
+            array_push($items, $item);
+        }
+
+        $this->set(compact('minute', 'items', 'usernames_participations'));
         $this->set('_serialize', ['minute']);
     }
 

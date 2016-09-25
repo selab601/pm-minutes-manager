@@ -75,8 +75,8 @@
                         <div class="table-content responsibility">担当</div>
                         <div class="table-content deadline">期限</div>
                     </div>
-                    <?php if (!empty($minute->items)): ?>
-                        <?php foreach ($minute->items as $item): ?>
+                    <?php if (!empty($items)): ?>
+                        <?php foreach ($items as $item): ?>
                             <div class="table-row">
                                 <div class="table-content no">
                                     <?= h($item->order_in_minute) ?>
