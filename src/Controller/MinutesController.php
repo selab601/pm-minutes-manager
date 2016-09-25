@@ -68,14 +68,35 @@ class MinutesController extends AppController
         $minute = $this->Minutes->get($id, [
             'contain' => ['Projects', 'Participations']
         ]);
-        $usernames_participations = [];
-        $users_registry = TableRegistry::get('Users');
-        $projects_users_registry = TableRegistry::get('ProjectsUsers');
-        $participations = $minute->participations;
-        foreach ($participations as $participate) {
-            $projects_user = $projects_users_registry->get($participate->projects_user_id);
-            $user = $users_registry->get($projects_user->user_id);
-            $usernames_participations[$user->last_name." ".$user->first_name] = $participate->is_participated;
+
+        $users = [];
+
+        // 出欠が記録されたユーザ取得
+        $saved_user_states = [];
+        foreach ($minute->participations as $participate) {
+            $projects_user = TableRegistry::get("ProjectsUsers")->get(
+                $participate->projects_user_id,
+                ['contain' => 'Users']);
+            $saved_user_states[$projects_user->user->id] = $participate->state;
+        }
+
+        // 全ユーザ取得
+        $projects_users = TableRegistry::get('ProjectsUsers')
+            ->find('all', ['contain' => 'Users'])
+            ->where(['ProjectsUsers.project_id = '.$minute->project_id]);
+        foreach ($projects_users as $projects_user) {
+            $user = [];
+
+            $user['name'] = $projects_user->user->last_name . " " . $projects_user->user->first_name;
+
+            // 既に記録済であるかどうかで場合分け
+            if (array_key_exists($projects_user->user_id, $saved_user_states)) {
+                $user['participation'] = $saved_user_states[$projects_user->user_id];
+            } else {
+                $user['participation'] = "✕";
+            }
+
+            array_push($users, $user);
         }
 
         $items = [];
@@ -103,7 +124,7 @@ class MinutesController extends AppController
             array_push($items, $item);
         }
 
-        $this->set(compact('minute', 'items', 'usernames_participations'));
+        $this->set(compact('minute', 'items', 'users'));
         $this->set('_serialize', ['minute']);
     }
 
@@ -115,9 +136,10 @@ class MinutesController extends AppController
     public function add($id = null)
     {
         $minute = $this->Minutes->newEntity();
-        $project = $this->Minutes->Projects->get($id,[
-            'contain' => ['Users'],
-        ]);
+        $projects_users = TableRegistry::get('ProjectsUsers')
+            ->find('all', ['contain' => ['Users', 'Projects']])
+            ->where(['ProjectsUsers.project_id = '.$id])
+            ->all()->toArray();
 
         if ($this->request->is('post')) {
 
@@ -132,29 +154,16 @@ class MinutesController extends AppController
             $minute->set('updated_at', time());
 
             if ($this->Minutes->save($minute)) {
-                $participations_registry = TableRegistry::get('Participations');
 
-                $project_id = $minute->project_id;
-                $checked_user_ids = $data["users"]["_ids"];
-
-                foreach($project->users as $user) {
-                    $projects_users_registry = TableRegistry::get('ProjectsUsers');
-                    $projects_users = $projects_users_registry
-                        ->find('all')
-                        ->where([
-                            'ProjectsUsers.project_id = ' . $project_id,
-                            'ProjectsUsers.user_id = ' . $user['id'],
-                        ])
-                        ->first();
-
-                    $participations = $participations_registry->newEntity();
-                    $participations->projects_user_id = $projects_users->id;
+                // 議事録へのユーザ参加の登録
+                $projects_user_ids = $data["projects_users"]["_ids"];
+                foreach ($projects_user_ids as $projects_user_id) {
+                    $participations = TableRegistry::get('Participations')->newEntity();
+                    $participations->projects_user_id = $projects_user_id;
                     $participations->minute_id = $minute->id;
-                    if (in_array($user['id'], $checked_user_ids)) {
-                        $participations->is_participated = 1;
-                    } else {
-                        $participations->is_participated = 0;
-                    }
+
+                    // TODO: 参加と遅刻参加を登録できるようにする
+                    $participations->state = "◯";
 
                     if (!$participations_registry->save($participations)) {
                         throw new \Exception('Failed to save participations entity');
@@ -167,7 +176,7 @@ class MinutesController extends AppController
             }
         }
 
-        $this->set(compact('minute', 'project'));
+        $this->set(compact('minute', 'projects_users'));
         $this->set('_serialize', ['minute']);
     }
 

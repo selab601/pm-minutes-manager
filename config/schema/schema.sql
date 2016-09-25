@@ -71,7 +71,7 @@ CREATE
         id INT NOT NULL AUTO_INCREMENT,
         projects_user_id INT NOT NULL,
         minute_id INT NOT NULL,
-        is_participated TINYINT(1) NOT NULL,
+        state VARCHAR(10) NOT NULL,
         FOREIGN KEY projects_user_key(projects_user_id) REFERENCES projects_users(id),
         FOREIGN KEY minute_key(minute_id) REFERENCES minutes(id),
         UNIQUE (projects_user_id, minute_id),

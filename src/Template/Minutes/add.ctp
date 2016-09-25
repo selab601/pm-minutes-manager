@@ -13,9 +13,11 @@
             <fieldset>
                 <legend><?= __('Add Minute') ?></legend>
                 <?php
+                    $project_id = $projects_users[0]->project->id;
+                    $project_name = $projects_users[0]->project->name;
                     echo $this->Form->input('project_id', [
-                        'options' => [$project->id => $project->name],
-                        'default' => $project->name,
+                        'options' => [$project_id => $project_name],
+                        'default' => $project_name,
                         'readonly' => true,
                     ]);
                     echo $this->Form->input('name');
@@ -27,10 +29,12 @@
                     ]);
 
                     $users_array = [];
-                    foreach ($project->users as $user) {
-                        $users_array[$user['id']] = $user['last_name'] . " " . $user['first_name'];
+                    foreach ($projects_users as $projects_user) {
+                        $user = $projects_user->toArray()["user"];
+                        $users_array[$projects_user->id] =
+                            $user["last_name"] . " " . $user["first_name"];
                     }
-                    echo $this->Form->input('users._ids', [
+                    echo $this->Form->input('projects_users._ids', [
                         'options' => $users_array,
                         'multiple' => 'checkbox',
                     ]);

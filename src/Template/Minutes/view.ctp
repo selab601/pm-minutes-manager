@@ -44,12 +44,11 @@
                     <table class="table table-bordered col-sm-12">
                         <?php
                             $i = 0;
-                            foreach ($usernames_participations as $username => $is_participated) {
+                            foreach ($users as $user) {
                                 if ($i/3 == 0) { echo "<tr>"; }
 
-                                $participation = $is_participated ? "◯" : "✕";
-                                echo "<td class='col-sm-1'><center>".$participation."</center></td>";
-                                echo "<td class='col-sm-3'>".$username."</td>";
+                                echo "<td class='col-sm-1'><center>".$user['participation']."</center></td>";
+                                echo "<td class='col-sm-3'>".$user['name']."</td>";
 
                                 if ($i/3 == 2) { echo "</tr>"; }
                                 $i++;
