@@ -1,0 +1,105 @@
+@margin: 30px;
+@text-width: 180px;
+@num-width: 80px;
+
+/*
+ * 幅の設定
+ */
+
+.table-row {
+    display: flex;          display: -webkit-flex;
+    flex-direction: row;    -webkit-flex-direction: row;
+    flex-wrap: no-wrap;     -webkit-flex-wrap: no-wrap;
+    width: 100%;
+    padding: 0 0 0 0;
+}
+
+.table-content.no {
+    width: 30px;
+}
+
+.table-content.category {
+    width: 80px;
+}
+
+.table-content.text {
+    flex: 1;
+}
+
+.table-content.primary {
+    width: 35px;
+}
+
+.table-content.responsibility {
+    width: 100px;
+}
+
+.table-content.deadline {
+    width: 80px;
+}
+
+.table-content.actions {
+    width: 40px;
+}
+
+/*
+ * テキスト配置
+ */
+
+.table-content {
+    text-align: center;
+}
+
+.table-content.text {
+    text-align: left;
+}
+
+.header>.table-content {
+    text-align: center;
+}
+
+.header>.table-content {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
+    align-items: center; /* 縦方向中央揃え */
+    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
+    justify-content: center; /* 横方向中央揃え */
+}
+
+/*
+ * 見た目の変更
+ */
+
+.table-content {
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.table-contetnt.text {
+    flex: 1;
+    overflow: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 20px;
+}
+
+.table-row.header {
+  background-color: #FFEEDB;
+  font-weight: bold;
+}
+
+/*
+ * 担当者の見た目
+ */
+
+.table-content.responsibility>ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.table-content.responsibility>ul {
+    float: left;
+    padding-left: 10px;
+}
