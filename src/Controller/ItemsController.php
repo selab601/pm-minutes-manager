@@ -177,7 +177,17 @@ class ItemsController extends AppController
                     'ProjectsUsers.project_id = '. $minute->project_id
                 ])
                 ->first();
+
+            $responsibility = TableRegistry::get('Responsibilities')
+                ->find('all')
+                ->where(['responsibilities.item_id = '.$item->id])
+                ->innerJoin('projects_users', 'projects_users.id = Responsibilities.projects_user_id')
+                ->where(['projects_users.user_id = '.$user->id])
+                ->all()
+                ->toArray();
+
             $users[$key]->projects_user_id = $projects_user->id;
+            $users[$key]->has_responsibility = count($responsibility)>0 ? true : false;
         }
 
         $this->set(compact('item', 'itemCategories', 'users'));
