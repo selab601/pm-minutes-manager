@@ -74,6 +74,7 @@
                         <div class="table-content primary">優先度</div>
                         <div class="table-content responsibility">担当</div>
                         <div class="table-content deadline">期限</div>
+                        <div class="table-content actions"></div>
                     </div>
                     <?php if (!empty($items)): ?>
                         <?php foreach ($items as $item): ?>
@@ -108,6 +109,10 @@
                                 </div>
                                 <div class="table-content deadline">
                                     <?= h($item->overed_at) ?>
+                                </div>
+                                <div class="table-content actions">
+                                    <?= $this->Html->link(__('Edit'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
+                                    <?= $this->Html->link(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $item->id]) ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
