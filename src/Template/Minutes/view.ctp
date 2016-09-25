@@ -2,6 +2,7 @@
 <html>
     <head>
         <?= $this->html->css('bootstrap.min.css') ?>
+        <?= $this->html->css('main.css') ?>
         <?= $this->html->css('minute.css') ?>
         <?= $this->html->script(['jquery.js', 'bootstrap.min.js']) ?>
     </head>
