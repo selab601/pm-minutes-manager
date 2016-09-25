@@ -11,6 +11,35 @@ use Cake\ORM\TableRegistry;
  */
 class ItemsController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        // 案件の追加は誰でも可能
+        if ($this->request->action === 'add') {
+            return true;
+        }
+
+        // 自分の参加しているプロジェクトの議事録の案件であれば編集，閲覧が可能
+        if (in_array($this->request->action, ['edit', 'view'])) {
+            $item_id = $this->request->params['pass'][0];
+            $item = $this->Items->get($item_id);
+            $minute = TableRegistry::get('Minutes')->get($item->minute_id);
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $projects_users = TableRegistry::get("projects_users")
+                ->find('all')
+                ->where([
+                    'projects_users.project_id = '.$minute->project_id,
+                    'projects_users.user_id = '.$user_id,
+                ])
+                ->all();
+
+            if (count($projects_users) != 0) {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
+
 
     /**
      * Index method
