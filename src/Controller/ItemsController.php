@@ -19,7 +19,7 @@ class ItemsController extends AppController
         }
 
         // 自分の参加しているプロジェクトの議事録の案件であれば編集，閲覧が可能
-        if (in_array($this->request->action, ['edit', 'view'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'delete'])) {
             $item_id = $this->request->params['pass'][0];
             $item = $this->Items->get($item_id);
             $minute = TableRegistry::get('Minutes')->get($item->minute_id);
@@ -247,13 +247,24 @@ class ItemsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
         $item = $this->Items->get($id);
-        if ($this->Items->delete($item)) {
-            $this->Flash->success(__('The item has been deleted.'));
-        } else {
-            $this->Flash->error(__('The item could not be deleted. Please, try again.'));
+        $minute_id = $item->minute_id;
+
+        $responsibilities = TableRegistry::get('Responsibilities')
+            ->find('all')
+            ->where(['responsibilities.item_id = '.$id]);
+        foreach($responsibilities as $responsibility) {
+            if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
+                throw new \Exception('Failed to delete responsibility entity');
+            }
         }
 
-        return $this->redirect(['action' => 'index']);
+        if ($this->Items->delete($item)) {
+        } else {
+            throw new \Exception('Failed to delete responsibility entity');
+        }
+
+        return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute_id]);
     }
 }

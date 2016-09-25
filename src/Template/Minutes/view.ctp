@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="table-content actions">
                                     <?= $this->Html->link(__('Edit'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
-                                    <?= $this->Html->link(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $item->id]) ?>
+                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
