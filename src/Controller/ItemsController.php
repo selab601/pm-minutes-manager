@@ -112,13 +112,15 @@ class ItemsController extends AppController
         }
 
         $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
+
         $users = TableRegistry::get('Users')
             ->find('all')
             ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
             ->where('projects_users.project_id = '.$minute->project_id)
-            ->all();
+            ->all()
+            ->toArray();
 
-        foreach($users as $user) {
+        foreach($users as $key => $user) {
             $projects_user = TableRegistry::get("ProjectsUsers")
                 ->find('all')
                 ->where([
@@ -126,9 +128,8 @@ class ItemsController extends AppController
                     'ProjectsUsers.project_id = '. $minute->project_id
                 ])
                 ->first();
-            $user->projects_user_id = $projects_user->id;
+            $users[$key]->projects_user_id = $projects_user->id;
         }
-        unset($user);
 
         $this->set(compact('item', 'minute', 'itemCategories', 'users'));
         $this->set('_serialize', ['item']);
@@ -158,9 +159,28 @@ class ItemsController extends AppController
                 $this->Flash->error(__('The item could not be saved. Please, try again.'));
             }
         }
-        $minutes = $this->Items->Minutes->find('list', ['limit' => 200]);
+        $minute = $this->Items->Minutes->get($item->minute_id);
         $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
-        $this->set(compact('item', 'minutes', 'itemCategories'));
+
+        $users = TableRegistry::get('Users')
+            ->find('all')
+            ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
+            ->where('projects_users.project_id = '.$minute->project_id)
+            ->all()
+            ->toArray();
+
+        foreach($users as $key => $user) {
+            $projects_user = TableRegistry::get("ProjectsUsers")
+                ->find('all')
+                ->where([
+                    'ProjectsUsers.user_id = '.$user->id,
+                    'ProjectsUsers.project_id = '. $minute->project_id
+                ])
+                ->first();
+            $users[$key]->projects_user_id = $projects_user->id;
+        }
+
+        $this->set(compact('item', 'itemCategories', 'users'));
         $this->set('_serialize', ['item']);
     }
 
