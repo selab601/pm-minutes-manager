@@ -11,6 +11,34 @@ use Cake\ORM\TableRegistry;
  */
 class MinutesController extends AppController
 {
+    public function isAuthorized($user)
+    {
+        // 議事録の追加は誰でも可能
+        if ($this->request->action === 'add') {
+            return true;
+        }
+
+        // 自分の参加しているプロジェクトの議事録であれば編集，閲覧が可能
+        if (in_array($this->request->action, ['edit', 'view'])) {
+            $minute_id = $this->request->params['pass'][0];
+            $minute = $this->Minutes->get($minute_id);
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $projects_users = TableRegistry::get("projects_users")
+                ->find('all')
+                ->where([
+                    'projects_users.project_id = '.$minute->project_id,
+                    'projects_users.user_id = '.$user_id,
+                ])
+                ->all();
+
+            if (count($projects_users) != 0) {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
+    }
+
 
     /**
      * Index method
@@ -132,7 +160,8 @@ class MinutesController extends AppController
                         throw new \Exception('Failed to save participations entity');
                     }
                 }
-                return $this->redirect(['action' => 'index']);
+
+                return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
             } else {
                 throw new \Exception('Failed to save minute entity');
             }
