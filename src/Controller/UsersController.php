@@ -27,8 +27,12 @@ class UsersController extends AppController
 
     public function isAuthorized($user)
     {
+        if ($this->request->action == 'projectsView') {
+            return true;
+        }
+
         // 権限がなくとも，自分の情報であれば編集，閲覧可能
-        if (in_array($this->request->action, ['edit', 'view', 'projectsView'])) {
+        if (in_array($this->request->action, ['edit', 'view'])) {
             $userId = $this->request->params['pass'][0];
             if ($userId == $user['id']) {
                 return true;
@@ -68,8 +72,10 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
-    public function projectsView($id = null)
+    public function projectsView()
     {
+        $id = $this->request->session()->read('Auth.User.id');
+
         $user = $this->Users->get($id, [
             'contain' => ['Projects']
         ]);

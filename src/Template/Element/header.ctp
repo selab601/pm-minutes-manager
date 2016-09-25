@@ -53,8 +53,7 @@
                     <?=
                         $this->Html->link('プロジェクト', [
                             'controller'=>'Users',
-                            'action'=>'projectsView',
-                            $this->request->session()->read('Auth.User.id')
+                            'action'=>'projectsView'
                         ])
                     ?>
                 </li>

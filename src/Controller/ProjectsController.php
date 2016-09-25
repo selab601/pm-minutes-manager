@@ -94,6 +94,8 @@ class ProjectsController extends AppController
                         throw new \Exception('Failed to save projects_users entity');
                     }
                 }
+
+                return $this->redirect(['controller' => 'users', 'action' => 'projectsView']);
             } else {
                 throw new \Exception('Failed to save project entity');
             }
