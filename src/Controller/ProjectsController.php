@@ -194,7 +194,9 @@ class ProjectsController extends AppController
                 }
 
                 if (!empty($add_member_ids)) {
+
                     foreach ($add_member_ids as $add_member_id) {
+                        $role_id = $this->request->data["roles"][$add_member_id][0];
                         // 過去に削除済みであるか確認
                         $member = TableRegistry::get('ProjectsUsers')
                             ->find('all')
@@ -202,6 +204,7 @@ class ProjectsController extends AppController
                             ->first();
                         if (!empty($member)) {
                             $member->is_deleted = false;
+                            $member->role_id = $role_id;
                             if (!TableRegistry::get('ProjectsUsers')->save($member)) {
                                 throw new \Exception('Failed to save projects_users entity');
                             }
@@ -209,6 +212,7 @@ class ProjectsController extends AppController
                             $member = TableRegistry::get('ProjectsUsers')->newEntity();
                             $member->project_id = $id;
                             $member->user_id = $add_member_id;
+                            $member->role_id = $role_id;
                             if (!TableRegistry::get('ProjectsUsers')->save($member)) {
                                 throw new \Exception('Failed to save projects_users entity');
                             }
@@ -224,7 +228,7 @@ class ProjectsController extends AppController
 
         $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
         $members = TableRegistry::get('ProjectsUsers')
-            ->find('all', ['contain'=>['Users']])
+            ->find('all', ['contain'=>['Users', 'Roles']])
             ->where(['ProjectsUsers.project_id='.$id, 'ProjectsUsers.is_deleted=0']);
         $roles = json_encode(TableRegistry::get('Roles')->find()->select(['id', 'name'])
             ->all()->toArray());

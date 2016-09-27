@@ -7,7 +7,7 @@
         <?= $this->html->script(['toggleRoleList.js']) ?>
         <script>
             $(document).ready(function () {
-                toggleRoleList(jQuery, '<?= $roles ?>');
+                toggleRoleList(jQuery, '<?= $roles ?>', '<?= json_encode($members) ?>');
             });
         </script>
     </head>
