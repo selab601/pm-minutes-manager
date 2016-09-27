@@ -158,7 +158,8 @@ class MinutesController extends AppController
                 // 議事録へのユーザ参加の登録
                 $projects_user_ids = $data["projects_users"]["_ids"];
                 foreach ($projects_user_ids as $projects_user_id) {
-                    $participations = TableRegistry::get('Participations')->newEntity();
+                    $participations_registry = TableRegistry::get('Participations');
+                    $participations = $participations_registry->newEntity();
                     $participations->projects_user_id = $projects_user_id;
                     $participations->minute_id = $minute->id;
 
@@ -170,7 +171,7 @@ class MinutesController extends AppController
                     }
                 }
 
-                return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
+                return $this->redirect(['controller' => 'projects', 'action' => 'view', $minute->project_id]);
             } else {
                 throw new \Exception('Failed to save minute entity');
             }
