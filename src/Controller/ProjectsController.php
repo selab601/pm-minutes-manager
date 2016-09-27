@@ -171,17 +171,16 @@ class ProjectsController extends AppController
                     ->where(['ProjectsUsers.project_id = '.$id])
                     ->all()->toArray();
                 $old_project_member_ids = [];
-                $deleted_member_ids = [];
                 foreach ($old_project_members as $old_project_member) {
-                    if ($old_project_member->is_deleted) {
-                        array_push($deleted_member_ids, $old_project_member->user_id);
-                    } else {
+                    if (!$old_project_member->is_deleted) {
                         array_push($old_project_member_ids, $old_project_member->user_id);
                     }
                 }
+                if (empty($old_selected_user_ids)){ $old_project_member_ids = []; }
 
                 // 新規の参加者を取得
                 $new_project_member_ids = $this->request->data["users"]["_ids"];
+                if (empty($new_project_member_ids)){ $new_project_member_ids = []; }
 
                 // 前2つの担当者の差分を比較し，追加/削除を行う
                 $responsibilities_registry = TableRegistry::get("Responsibilities");
@@ -192,7 +191,8 @@ class ProjectsController extends AppController
                     foreach ($delete_member_ids as $delete_member_id) {
                         $member = TableRegistry::get('ProjectsUsers')
                             ->find('all')
-                            ->where(['ProjectsUsers.user_id='.$delete_member_id,'ProjectsUsers.project_id='.$id])
+                            ->where(['ProjectsUsers.user_id='.$delete_member_id,
+                                    'ProjectsUsers.project_id='.$id])
                             ->first();
                         $member->is_deleted = true;
                         if (!TableRegistry::get('ProjectsUsers')->save($member)) {
@@ -202,7 +202,6 @@ class ProjectsController extends AppController
                 }
 
                 if (!empty($add_member_ids)) {
-
                     foreach ($add_member_ids as $add_member_id) {
                         $role_id = $this->request->data["roles"][$add_member_id][0];
                         // 過去に削除済みであるか確認
