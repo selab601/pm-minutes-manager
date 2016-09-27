@@ -19,7 +19,7 @@ class MinutesController extends AppController
         }
 
         // 自分の参加しているプロジェクトの議事録であれば編集，閲覧が可能
-        if (in_array($this->request->action, ['edit', 'view'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'delete'])) {
             $minute_id = $this->request->params['pass'][0];
             $minute = $this->Minutes->get($minute_id);
             $user_id = $this->request->session()->read('Auth.User.id');
@@ -218,13 +218,44 @@ class MinutesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $minute = $this->Minutes->get($id);
+        $minute = $this->Minutes->get($id, [
+            'contain' => ['Participations', 'Items'],
+        ]);
+        $project_id = $minute->project_id;
+
+        if (!empty($minute->participations)) {
+            foreach ($minute->participations as $participation) {
+                if (!TableRegistry::get('Participations')->delete($participation)) {
+                    throw new \Exception('Failed to delete participation entity');
+                }
+            }
+        }
+
+        if (!empty($minute->items)) {
+            foreach ($minute->items as $item) {
+                $responsibilities = TableRegistry::get('Responsibilities')
+                    ->find('all')
+                    ->where(['responsibilities.item_id = '.$item->id]);
+                if (!empty($responsibilities)) {
+                    foreach($responsibilities as $responsibility) {
+                        if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
+                            throw new \Exception('Failed to delete responsibility entity');
+                        }
+                    }
+                }
+
+                if (!TableRegistry::get('Items')->delete($item)) {
+                    throw new \Exception('Failed to delete item entity');
+                }
+            }
+        }
+
         if ($this->Minutes->delete($minute)) {
             $this->Flash->success(__('The minute has been deleted.'));
         } else {
-            $this->Flash->error(__('The minute could not be deleted. Please, try again.'));
+            throw new \Exception('Failed to delete minute entity');
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
     }
 }
