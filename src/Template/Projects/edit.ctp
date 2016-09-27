@@ -24,9 +24,15 @@
                         foreach ($users as $user) {
                             $users_array[$user->id] = $user->last_name." ".$user->first_name;
                         }
+                        $checked_users_array = [];
+                        foreach ($members as $member) {
+                            array_push($checked_users_array, $member->user->id);
+                        }
                         echo $this->Form->input('users._ids', [
                             'options' => $users_array,
                             'multiple' => 'checkbox',
+                            'checked' => true,
+                            'default' => $checked_users_array,
                         ]);
                     ?>
                 </fieldset>

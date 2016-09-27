@@ -84,7 +84,6 @@ class ProjectsController extends AppController
      */
     public function add()
     {
-
         $project = $this->Projects->newEntity();
 
         if ($this->request->is('post')) {
@@ -140,21 +139,93 @@ class ProjectsController extends AppController
      */
     public function edit($id = null)
     {
-        $project = $this->Projects->get($id, [
-            'contain' => ['Users']
-        ]);
+        $project = $this->Projects->get($id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $project = $this->Projects->patchEntity($project, $this->request->data);
+            $data= $this->request->data;
+
+            // プロジェクト内容の変更を保存する
+            $project->name = $data["name"];
+            $project->budget = $data["budget"];
+            $project->customer_name = $data["customer_name"];
+            $started_at_date = $data["started_at"]["year"] . "-" . $data["started_at"]["month"] . "-" . $data["started_at"]["day"];
+            $project->started_at = $started_at_date;
+            $finished_at_date = $data["finished_at"]["year"] . "-" . $data["finished_at"]["month"] . "-" . $data["finished_at"]["day"];
+            $project->finished_at = $finished_at_date;
+
             if ($this->Projects->save($project)) {
-                $this->Flash->success(__('The project has been saved.'));
+                // 参加者の変更を保存する
+
+                // 既存の参加者を取得
+                $old_project_members = TableRegistry::get('ProjectsUsers')
+                    ->find('all', ['id'])
+                    ->where(['ProjectsUsers.project_id = '.$id])
+                    ->all()->toArray();
+                $old_project_member_ids = [];
+                $deleted_member_ids = [];
+                foreach ($old_project_members as $old_project_member) {
+                    if ($old_project_member->is_deleted) {
+                        array_push($deleted_member_ids, $old_project_member->user_id);
+                    } else {
+                        array_push($old_project_member_ids, $old_project_member->user_id);
+                    }
+                }
+
+                // 新規の参加者を取得
+                $new_project_member_ids = $this->request->data["users"]["_ids"];
+
+                // 前2つの担当者の差分を比較し，追加/削除を行う
+                $responsibilities_registry = TableRegistry::get("Responsibilities");
+                $delete_member_ids = array_diff($old_project_member_ids, $new_project_member_ids);
+                $add_member_ids = array_diff($new_project_member_ids, $old_project_member_ids);
+
+                if (!empty($delete_member_ids)) {
+                    foreach ($delete_member_ids as $delete_member_id) {
+                        $member = TableRegistry::get('ProjectsUsers')
+                            ->find('all')
+                            ->where(['ProjectsUsers.user_id='.$delete_member_id,'ProjectsUsers.project_id='.$id])
+                            ->first();
+                        $member->is_deleted = true;
+                        if (!TableRegistry::get('ProjectsUsers')->save($member)) {
+                            throw new \Exception('Failed to update(delete) projects_users entity');
+                        }
+                    }
+                }
+
+                if (!empty($add_member_ids)) {
+                    foreach ($add_member_ids as $add_member_id) {
+                        // 過去に削除済みであるか確認
+                        $member = TableRegistry::get('ProjectsUsers')
+                            ->find('all')
+                            ->where(['ProjectsUsers.project_id='.$id, 'ProjectsUsers.user_id='.$add_member_id])
+                            ->first();
+                        if (!empty($member)) {
+                            $member->is_deleted = false;
+                            if (!TableRegistry::get('ProjectsUsers')->save($member)) {
+                                throw new \Exception('Failed to save projects_users entity');
+                            }
+                        } else {
+                            $member = TableRegistry::get('ProjectsUsers')->newEntity();
+                            $member->project_id = $id;
+                            $member->user_id = $add_member_id;
+                            if (!TableRegistry::get('ProjectsUsers')->save($member)) {
+                                throw new \Exception('Failed to save projects_users entity');
+                            }
+                        }
+                    }
+                }
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The project could not be saved. Please, try again.'));
+                throw new \Exception('Failed to edit project entity');
             }
         }
-        $users = $this->Projects->Users->find('list', ['limit' => 200]);
-        $this->set(compact('project', 'users'));
+
+        $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
+        $members = TableRegistry::get('ProjectsUsers')
+            ->find('all', ['contain'=>['Users']])
+            ->where(['ProjectsUsers.project_id='.$id, 'ProjectsUsers.is_deleted=0']);
+        $this->set(compact('project', 'members', 'users'));
         $this->set('_serialize', ['project']);
     }
 
