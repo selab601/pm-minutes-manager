@@ -204,7 +204,7 @@ class MinutesController extends AppController
             if ($this->Minutes->save($minute)) {
                 $this->Flash->success(__('The minute has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'projects', 'action' => 'view', $minute->project_id]);
             } else {
                 $this->Flash->error(__('The minute could not be saved. Please, try again.'));
             }
