@@ -40,6 +40,7 @@ CREATE
         project_id INT NOT NULL,
         user_id INT NOT NULL,
         role_id INT NOT NULL,
+        is_deleted TINYINT(1) DEFAULT 0,
         FOREIGN KEY project_key(project_id) REFERENCES projects(id),
         FOREIGN KEY user_key(user_id) REFERENCES users(id),
         FOREIGN KEY role_key(role_id) REFERENCES roles(id),

@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property int $project_id
  * @property int $user_id
  * @property int $role_id
+ * @property bool $is_deleted
  *
  * @property \App\Model\Entity\Project $project
  * @property \App\Model\Entity\User $user

@@ -72,6 +72,10 @@ class ProjectsUsersTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
+        $validator
+            ->boolean('is_deleted')
+            ->allowEmpty('is_deleted');
+
         return $validator;
     }
 

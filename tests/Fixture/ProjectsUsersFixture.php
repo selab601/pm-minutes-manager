@@ -21,6 +21,7 @@ class ProjectsUsersFixture extends TestFixture
         'project_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'role_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'is_deleted' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null],
         '_indexes' => [
             'user_key' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
             'role_key' => ['type' => 'index', 'columns' => ['role_id'], 'length' => []],
@@ -49,7 +50,8 @@ class ProjectsUsersFixture extends TestFixture
             'id' => 1,
             'project_id' => 1,
             'user_id' => 1,
-            'role_id' => 1
+            'role_id' => 1,
+            'is_deleted' => 1
         ],
     ];
 }
