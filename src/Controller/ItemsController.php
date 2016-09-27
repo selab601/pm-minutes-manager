@@ -11,6 +11,12 @@ use Cake\ORM\TableRegistry;
  */
 class ItemsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Delete');
+    }
+
     public function isAuthorized($user)
     {
         // 案件の追加は誰でも可能
@@ -247,23 +253,10 @@ class ItemsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-
-        $item = $this->Items->get($id);
+        $item = TableRegistry::get("Items")->get($id, ['id']);
         $minute_id = $item->minute_id;
 
-        $responsibilities = TableRegistry::get('Responsibilities')
-            ->find('all')
-            ->where(['responsibilities.item_id = '.$id]);
-        foreach($responsibilities as $responsibility) {
-            if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
-                throw new \Exception('Failed to delete responsibility entity');
-            }
-        }
-
-        if ($this->Items->delete($item)) {
-        } else {
-            throw new \Exception('Failed to delete responsibility entity');
-        }
+        $this->Delete->Item($id);
 
         return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute_id]);
     }

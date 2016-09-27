@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use App\Model\Table\ProjectsUsersTable;
 use App\Model\Table\Roles;
+use Cake\Controller\Component\DeleteComponent;
 
 /**
  * Projects Controller
@@ -13,6 +14,12 @@ use App\Model\Table\Roles;
  */
 class ProjectsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Delete');
+    }
+
     public function isAuthorized($user)
     {
         // プロジェクトの追加は誰でも可能
@@ -21,6 +28,7 @@ class ProjectsController extends AppController
         }
 
         // 自分の参加しているプロジェクトであれば編集，閲覧が可能
+        // プロジェクトの削除は管理者でなければ行えない
         if (in_array($this->request->action, ['edit', 'view'])) {
             $project_id = $this->request->params['pass'][0];
             $user_id = $this->request->session()->read('Auth.User.id');
@@ -247,12 +255,9 @@ class ProjectsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $project = $this->Projects->get($id);
-        if ($this->Projects->delete($project)) {
-            $this->Flash->success(__('The project has been deleted.'));
-        } else {
-            $this->Flash->error(__('The project could not be deleted. Please, try again.'));
-        }
 
-        return $this->redirect(['action' => 'index']);
+        $this->Delete->Project($id);
+
+        return $this->redirect(['controller' => 'users', 'action' => 'projectsView']);
     }
 }

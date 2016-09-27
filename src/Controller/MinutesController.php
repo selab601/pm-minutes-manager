@@ -11,6 +11,12 @@ use Cake\ORM\TableRegistry;
  */
 class MinutesController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Delete');
+    }
+
     public function isAuthorized($user)
     {
         // 議事録の追加は誰でも可能
@@ -218,43 +224,12 @@ class MinutesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $minute = $this->Minutes->get($id, [
+        $minute = TableRegistry::get('Minutes')->get($id, [
             'contain' => ['Participations', 'Items'],
         ]);
         $project_id = $minute->project_id;
 
-        if (!empty($minute->participations)) {
-            foreach ($minute->participations as $participation) {
-                if (!TableRegistry::get('Participations')->delete($participation)) {
-                    throw new \Exception('Failed to delete participation entity');
-                }
-            }
-        }
-
-        if (!empty($minute->items)) {
-            foreach ($minute->items as $item) {
-                $responsibilities = TableRegistry::get('Responsibilities')
-                    ->find('all')
-                    ->where(['responsibilities.item_id = '.$item->id]);
-                if (!empty($responsibilities)) {
-                    foreach($responsibilities as $responsibility) {
-                        if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
-                            throw new \Exception('Failed to delete responsibility entity');
-                        }
-                    }
-                }
-
-                if (!TableRegistry::get('Items')->delete($item)) {
-                    throw new \Exception('Failed to delete item entity');
-                }
-            }
-        }
-
-        if ($this->Minutes->delete($minute)) {
-            $this->Flash->success(__('The minute has been deleted.'));
-        } else {
-            throw new \Exception('Failed to delete minute entity');
-        }
+        $this->Delete->Minute($id);
 
         return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
     }
