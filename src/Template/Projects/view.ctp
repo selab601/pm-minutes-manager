@@ -44,18 +44,16 @@
 
                 <div class="col-md-6">
                     <h4>参加しているユーザ</h4>
-                    <?php if (!empty($project->users)): ?>
+                    <?php if (!empty($projects_users)): ?>
                         <table class="table table-striped" cellpadding="0" cellspacing="0">
                             <tr>
                                 <th scope="col"><?= __('Id') ?></th>
                                 <th scope="col"><?= __('Name') ?></th>
-                                <th scope="col"><?= __('Mail') ?></th>
                             </tr>
-                            <?php foreach ($project->users as $users): ?>
+                            <?php foreach ($projects_users as $projects_user): ?>
                                 <tr>
-                                    <td><?= h($users->id_string) ?></td>
-                                    <td><?= h($users->last_name . " " . $users->first_name) ?></td>
-                                    <td><?= h($users->mail) ?></td>
+                                    <td><?= h($projects_user->user->id_string) ?></td>
+                                    <td><?= h($projects_user->user->last_name . " " . $projects_user->user->first_name) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>

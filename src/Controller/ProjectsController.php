@@ -63,10 +63,17 @@ class ProjectsController extends AppController
     public function view($id = null)
     {
         $project = $this->Projects->get($id, [
-            'contain' => ['Users', 'Minutes']
+            'contain' => ['Minutes']
         ]);
 
-        $this->set('project', $project);
+        $projects_users = TableRegistry::get('ProjectsUsers')
+            ->find('all', ['contain'=>['Users']])
+            ->where([
+                'ProjectsUsers.project_id = '.$id,
+                'ProjectsUsers.is_deleted = 0'
+            ]);
+
+        $this->set(compact('project', 'projects_users'));
         $this->set('_serialize', ['project']);
     }
 
