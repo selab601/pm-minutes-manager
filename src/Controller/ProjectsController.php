@@ -125,7 +125,8 @@ class ProjectsController extends AppController
         }
 
         $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
-        $roles = TableRegistry::get('Roles')->find()->select(['id', 'name']);
+        $roles = json_encode(TableRegistry::get('Roles')->find()->select(['id', 'name'])
+            ->all()->toArray());
         $this->set(compact('project', 'users', 'roles'));
         $this->set('_serialize', ['project']);
     }
@@ -225,7 +226,9 @@ class ProjectsController extends AppController
         $members = TableRegistry::get('ProjectsUsers')
             ->find('all', ['contain'=>['Users']])
             ->where(['ProjectsUsers.project_id='.$id, 'ProjectsUsers.is_deleted=0']);
-        $this->set(compact('project', 'members', 'users'));
+        $roles = json_encode(TableRegistry::get('Roles')->find()->select(['id', 'name'])
+            ->all()->toArray());
+        $this->set(compact('project', 'members', 'users', 'roles'));
         $this->set('_serialize', ['project']);
     }
 

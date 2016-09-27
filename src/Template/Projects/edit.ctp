@@ -4,6 +4,12 @@
         <?= $this->html->css('bootstrap.min.css') ?>
         <?= $this->html->css('main.css') ?>
         <?= $this->html->script(['jquery.js', 'bootstrap.min.js']) ?>
+        <?= $this->html->script(['toggleRoleList.js']) ?>
+        <script>
+            $(document).ready(function () {
+                toggleRoleList(jQuery, '<?= $roles ?>');
+            });
+        </script>
     </head>
     <body>
         <?= $this->element('header') ?>

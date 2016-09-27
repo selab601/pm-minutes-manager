@@ -4,25 +4,10 @@
         <?= $this->html->css('bootstrap.min.css') ?>
         <?= $this->html->css('main.css') ?>
         <?= $this->html->script(['jquery.js', 'bootstrap.min.js']) ?>
+        <?= $this->html->script(['toggleRoleList.js']) ?>
         <script>
             $(document).ready(function () {
-                var $elem = $('div.form-group.select').clone();
-                $elem.appendTo(".checkbox>label");
-
-                $('.checkbox>label').each(function (index, element) {
-                    var checkboxValue = $(this).children("input[type=checkbox]").attr('value');
-                    $(this).children("div.role-select").children("input").attr('name', 'roles['+checkboxValue+']');
-                    $(this).children("div.role-select").children("select").attr('name', 'roles['+checkboxValue+'][]');
-                });
-
-                $('input[type=checkbox]').change(function () {
-                    var $selectbox = $(this).parent().children(".select");
-                    if ($(this).prop('checked')) {
-                        $selectbox.show();
-                    } else {
-                        $selectbox.hide();
-                    }
-                });
+                toggleRoleList(jQuery, '<?= $roles ?>');
             });
         </script>
     </head>
@@ -54,18 +39,6 @@
                             ],
                             'multiple' => 'checkbox',
                         ]);
-                    ?>
-
-                    <?php
-                        /* セレクトボックスの雛形の生成 */
-                        echo '<div class="form-group select role-select" style="display: none;">';
-                        echo '  <input type="hidden" value="">';
-                        echo '  <select class="form-control" multiple="multiple">';
-                        foreach ($roles as $role) {
-                            echo '<option value="' . $role['id'] . '">' . $role['name'] . '</option>';
-                        }
-                        echo '  </select>';
-                        echo '</div>';
                     ?>
                 </fieldset>
                 <?= $this->Form->button(__('Submit')) ?>
