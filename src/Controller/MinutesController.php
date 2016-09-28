@@ -196,21 +196,89 @@ class MinutesController extends AppController
      */
     public function edit($id = null)
     {
-        $minute = $this->Minutes->get($id, [
-            'contain' => []
-        ]);
+        $minute = $this->Minutes->get($id);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $minute = $this->Minutes->patchEntity($minute, $this->request->data);
             if ($this->Minutes->save($minute)) {
-                $this->Flash->success(__('The minute has been saved.'));
 
-                return $this->redirect(['controller' => 'projects', 'action' => 'view', $minute->project_id]);
+                // 編集前の参加者
+                $users_selected_old = TableRegistry::get("Participations")
+                    ->find('all', ['fields'=>'Participations.projects_user_id'])
+                    ->where(['Participations.minute_id = '.$minute->id])
+                    ->all()->toArray();
+                $old_selected_user_ids = [];
+                foreach ($users_selected_old as $user) {
+                    array_push($old_selected_user_ids, (string)$user->projects_user_id);
+                }
+                if (empty($old_selected_user_ids)){ $old_selected_user_ids = []; }
+
+                // 編集後の参加者
+                $new_selected_user_ids = $this->request->data["projects_users"]["_ids"];
+                if (empty($new_selected_user_ids)){ $new_selected_user_ids = []; }
+
+                // 前2つの担当者の差分を比較し，追加/削除を行う
+                $participations_registry = TableRegistry::get('Participations');
+                $deleted_user_ids = array_diff($old_selected_user_ids, $new_selected_user_ids);
+                $added_user_ids = array_diff($new_selected_user_ids, $old_selected_user_ids);
+
+                echo var_dump($deleted_user_ids);
+                echo var_dump($added_user_ids);
+
+                if (!empty($deleted_user_ids)) {
+                    foreach($deleted_user_ids as $user_id) {
+                        $participation = $participations_registry
+                            ->find('all')
+                            ->where(['participations.minute_id = '.$minute->id,
+                                     'participations.projects_user_id = '.$user_id])
+                            ->first();
+                        if (!$participations_registry->delete($participation)) {
+                            throw new \Exception('Failed to delete participation entity');
+                        }
+                    }
+                }
+
+                if (!empty($added_user_ids)) {
+                    foreach($added_user_ids as $user_id) {
+                        $participation = $participations_registry->newEntity();
+                        $participation->minute_id = $minute->id;
+                        $participation->projects_user_id = $user_id;
+                        $participation->state = "◯";
+                        if (!$participations_registry->save($participation)) {
+                            throw new \Exception('Failed to save participation entity');
+                        }
+                    }
+                }
+
+                return $this->redirect(['action' => 'view', $minute->id]);
             } else {
-                $this->Flash->error(__('The minute could not be saved. Please, try again.'));
+                throw new \Exception('Failed to save minute entity');
             }
         }
-        $projects = $this->Minutes->Projects->find('list', ['limit' => 200]);
-        $this->set(compact('minute', 'projects'));
+
+        $users = TableRegistry::get('Users')
+            ->find('all')
+            ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
+            ->where('projects_users.project_id = '.$minute->project_id)
+            ->all()
+            ->toArray();
+        $projects_users = TableRegistry::get('ProjectsUsers')
+            ->find('all', ['contain' => ['Users', 'Projects']])
+            ->where(['ProjectsUsers.project_id = '.$minute->project_id])
+            ->all();
+        foreach($projects_users as $key => $projects_user) {
+            $participations = TableRegistry::get("Participations")
+                ->find('all')
+                ->where([
+                    'Participations.minute_id = '.$minute->id,
+                    'Participations.projects_user_id = '.$projects_user->id,
+                ])
+                ->count();
+            $users[$key]->projects_user_id = $projects_user->id;
+            $users[$key]->participated = $participations>0 ? true : false;
+        }
+
+        $this->set(compact('minute', 'users'));
         $this->set('_serialize', ['minute']);
     }
 
