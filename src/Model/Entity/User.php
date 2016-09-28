@@ -12,8 +12,9 @@ use Cake\ORM\Entity;
  * @property string $last_name
  * @property string $first_name
  * @property string $password
- * @property bool $is_authorized
  * @property string $mail
+ * @property bool $is_authorized
+ * @property bool $is_deleted
  * @property \Cake\I18n\Time $created_at
  * @property \Cake\I18n\Time $updated_at
  *

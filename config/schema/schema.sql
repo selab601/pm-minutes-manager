@@ -5,8 +5,9 @@ CREATE
         last_name VARCHAR(100) NOT NULL,
         first_name VARCHAR(100) NOT NULL,
         password VARCHAR(300) NOT NULL,
-        mail VARCHAR(300) NOT NULL,
+        mail VARCHAR(300),
         is_authorized TINYINT(1) DEFAULT 0,
+        is_deleted TINYINT(1) DEFAULT 0,
         created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
