@@ -11,7 +11,7 @@
 
         <div class="contents">
 
-            <div class="side-contents">
+            <div class="side-contents left">
                 <h4>プロフィール</h4>
                 <table class="table">
                     <tr>
@@ -48,7 +48,6 @@
                             <th scope="col">プロジェクト名</th>
                             <th scope="col">プロジェクト期間</th>
                             <th scope="col" class="actions"></th>
-                            <th scope="col" class="actions"></th>
                         </tr>
                         <?php foreach ($user->projects as $projects): ?>
                             <tr>
@@ -57,10 +56,7 @@
                                     <?= h($projects->started_at) ?> 〜 <?= h($projects->finished_at) ?>
                                 </td>
                                 <td>
-                                    <?= $this->Html->link(__('詳細'), ['controller' => 'Projects', 'action' => 'view', $projects->id]) ?>
-                                </td>
-                                <td>
-                                    <?= $this->Html->link(__('編集'), ['controller' => 'Projects', 'action' => 'edit', $projects->id]) ?>
+                                    <?= $this->Html->link(__('議事録一覧'), ['controller' => 'Projects', 'action' => 'view', $projects->id]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

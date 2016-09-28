@@ -41,55 +41,8 @@
 
         <div class="contents">
 
-            <div class="side-contents">
-
-                <h4>議事録詳細</h4>
-
-                <table class="table">
-                    <tr>
-                        <th>プロジェクト名</th>
-                        <td>
-                            <?= $minute->has('project') ? $this->Html->link($minute->project->name, ['controller' => 'Projects', 'action' => 'view', $minute->project->id]) : '' ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>議事録名</th>
-                        <td><b><?= h($minute->name) ?></b></td>
-                    </tr>
-                    <tr>
-                        <th>日時</th>
-                        <td><?= h($minute->holded_at) ?></td>
-                    </tr>
-                    <tr>
-                        <th>場所</th>
-                        <td><?= h($minute->holded_place) ?></td>
-                    </tr>
-                    <tr>
-                        <th>作成日</th>
-                        <td><?= h($minute->created_at) ?></td>
-                    </tr>
-                    <tr>
-                        <th>更新日</th>
-                        <td><?= h($minute->updated_at) ?></td>
-                    </tr>
-                </table>
-
-                <!-- 出席情報 -->
-                <table class="table">
-                    <tr><th colspan="6">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</th></tr>
-                    <?= $this->element('userTable', [
-                        "users"=>$users,
-                        "add_participation"=>true,
-                        "col_num"=>2,
-                        ]) ?>
-                </table>
-
-            </div>
-
             <div class="main-contents">
-
-                <h4>議事録</h4>
-
+                <h4>議事録に記録された案件一覧</h4>
                 <!-- 案件一覧 -->
                 <div class="row">
                     <div class="col-md-12">
@@ -153,6 +106,58 @@
                         </center>
                 </div>
             </div>
+
+            <div class="side-contents right">
+                <h4>議事録の詳細</h4>
+                <table class="table">
+                    <tr>
+                        <th>プロジェクト名</th>
+                        <td>
+                            <?= $minute->has('project') ? $this->Html->link($minute->project->name, ['controller' => 'Projects', 'action' => 'view', $minute->project->id]) : '' ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>議事録名</th>
+                        <td><b><?= h($minute->name) ?></b></td>
+                    </tr>
+                    <tr>
+                        <th>日時</th>
+                        <td><?= h($minute->holded_at) ?></td>
+                    </tr>
+                    <tr>
+                        <th>場所</th>
+                        <td><?= h($minute->holded_place) ?></td>
+                    </tr>
+                    <tr>
+                        <th>作成日</th>
+                        <td><?= h($minute->created_at) ?></td>
+                    </tr>
+                    <tr>
+                        <th>更新日</th>
+                        <td><?= h($minute->updated_at) ?></td>
+                    </tr>
+                </table>
+
+                <!-- 出席情報 -->
+                <table class="table">
+                    <tr><th colspan="6">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</th></tr>
+                    <?= $this->element('userTable', [
+                        "users"=>$users,
+                        "add_participation"=>true,
+                        "col_num"=>2,
+                        ]) ?>
+                </table>
+
+                <center>
+                    <?=
+                        $this->Html->link('編集', [
+                            'action'=>'edit',
+                            $minute->id
+                        ])
+                    ?>
+                </center>
+            </div>
+
         </div>
     </body>
 </html>

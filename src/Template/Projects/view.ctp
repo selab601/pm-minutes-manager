@@ -9,10 +9,51 @@
         <?= $this->element('header') ?>
 
         <div class="contents">
+            <div class="main-contents">
 
-            <div class="side-contents">
+                <h4>プロジェクトの議事録一覧</h4>
 
-                <h4>プロジェクト詳細</h4>
+                <?php if (!empty($project->minutes)): ?>
+                    <table class="table table-striped" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th scope="col">議事録名</th>
+                            <th scope="col">開催場所</th>
+                            <th scope="col">開催日</th>
+                            <th scope="col">審査</th>
+                            <th scope="col">承認</th>
+                            <th scope="col">削除</th>
+                            <th scope="col"></th>
+                        </tr>
+                        <?php foreach ($project->minutes as $minutes): ?>
+                            <tr>
+                                <td><?= h($minutes->name) ?></td>
+                                <td><?= h($minutes->holded_place) ?></td>
+                                <td><?= h($minutes->holded_at) ?></td>
+                                <td><?= h($minutes->examined_at) ?></td>
+                                <td><?= h($minutes->approved_at) ?></td>
+                                <td>
+                                    <?= $this->Form->postLink(__('削除'), ['controller' => 'Minutes', 'action' => 'delete', $minutes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $minutes->id)]) ?>
+                                </td>
+                                <td class="actions">
+                                    <?= $this->Html->link(__('編集'), ['controller' => 'Minutes', 'action' => 'view', $minutes->id]) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+                <center>
+                    <?=
+                        $this->Html->link('新規作成', [
+                            'controller'=>'Minutes',
+                            'action'=>'add',
+                            $project->id
+                        ])
+                    ?>
+                </center>
+            </div>
+
+            <div class="side-contents right">
+                <h4>プロジェクトの詳細</h4>
 
                 <div>
                     <table class="table">
@@ -56,46 +97,10 @@
                     <?php endif; ?>
                 </div>
 
-            </div>
-
-            <div class="main-contents">
-
-                <h4>議事録一覧</h4>
-
-                <?php if (!empty($project->minutes)): ?>
-                    <table class="table table-striped" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <th scope="col">議事録名</th>
-                            <th scope="col">開催場所</th>
-                            <th scope="col">開催日</th>
-                            <th scope="col">審査</th>
-                            <th scope="col">承認</th>
-                            <th scope="col">削除</th>
-                            <th scope="col"></th>
-                        </tr>
-                        <?php foreach ($project->minutes as $minutes): ?>
-                            <tr>
-                                <td><?= h($minutes->name) ?></td>
-                                <td><?= h($minutes->holded_place) ?></td>
-                                <td><?= h($minutes->holded_at) ?></td>
-                                <td><?= h($minutes->examined_at) ?></td>
-                                <td><?= h($minutes->approved_at) ?></td>
-                                <td>
-                                    <?= $this->Form->postLink(__('削除'), ['controller' => 'Minutes', 'action' => 'delete', $minutes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $minutes->id)]) ?>
-                                </td>
-                                <td class="actions">
-                                    <?= $this->Html->link(__('閲覧'), ['controller' => 'Minutes', 'action' => 'view', $minutes->id]) ?>
-                                    <?= $this->Html->link(__('編集'), ['controller' => 'Minutes', 'action' => 'edit', $minutes->id]) ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                <?php endif; ?>
                 <center>
                     <?=
-                        $this->Html->link('新規作成', [
-                            'controller'=>'Minutes',
-                            'action'=>'add',
+                        $this->Html->link('編集', [
+                            'action'=>'edit',
                             $project->id
                         ])
                     ?>
