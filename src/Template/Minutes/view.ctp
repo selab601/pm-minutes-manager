@@ -69,6 +69,7 @@
                     </table>
                 </div>
 
+                <!-- 出席情報 -->
                 <div class="col-md-6">
                     <caption><h4><b>出席状況 ( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</b></h4></caption>
                     <table class="table table-bordered col-sm-12">
@@ -92,10 +93,13 @@
                         ?>
                     </table>
                 </div>
+
             </div>
 
+            <!-- 案件一覧 -->
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="table-row header">
                         <div class="table-content no">No</div>
                         <div class="table-content category">項目</div>
