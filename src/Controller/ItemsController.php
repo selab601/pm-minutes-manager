@@ -118,7 +118,7 @@ class ItemsController extends AppController
             }
         }
 
-        $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
+        $itemCategories = $this->Items->ItemCategories->find('list');
 
         $users = TableRegistry::get('Users')
             ->find('all')
