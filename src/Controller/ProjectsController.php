@@ -99,13 +99,7 @@ class ProjectsController extends AppController
             $now = new \DateTime();
             $data= $this->request->data;
 
-            $project->name = $data["name"];
-            $project->budget = $data["budget"];
-            $project->customer_name = $data["customer_name"];
-            $started_at_date = $data["started_at"]["year"] . "-" . $data["started_at"]["month"] . "-" . $data["started_at"]["day"];
-            $project->started_at = $started_at_date;
-            $finished_at_date = $data["finished_at"]["year"] . "-" . $data["finished_at"]["month"] . "-" . $data["finished_at"]["day"];
-            $project->finished_at = $finished_at_date;
+            $project = $this->insertDataToProjectObject($project, $this->request->data);
             $project->created_at = $now->format('Y-m-d H:i:s');
             $project->updated_at = $now->format('Y-m-d H:i:s');
 
@@ -126,7 +120,8 @@ class ProjectsController extends AppController
                     }
                 }
 
-                return $this->redirect(['controller' => 'users', 'action' => 'projectsView']);
+                $user_id = $this->request->session()->read('Auth.User.id');
+                return $this->redirect(['controller' => 'users', 'action' => 'view', $user_id]);
             } else {
                 throw new \Exception('Failed to save project entity');
             }
@@ -154,13 +149,7 @@ class ProjectsController extends AppController
             $data= $this->request->data;
 
             // プロジェクト内容の変更を保存する
-            $project->name = $data["name"];
-            $project->budget = $data["budget"];
-            $project->customer_name = $data["customer_name"];
-            $started_at_date = $data["started_at"]["year"] . "-" . $data["started_at"]["month"] . "-" . $data["started_at"]["day"];
-            $project->started_at = $started_at_date;
-            $finished_at_date = $data["finished_at"]["year"] . "-" . $data["finished_at"]["month"] . "-" . $data["finished_at"]["day"];
-            $project->finished_at = $finished_at_date;
+            $project = $this->insertDataToProjectObject($project, $this->request->data);
 
             if ($this->Projects->save($project)) {
                 // 参加者の変更を保存する
@@ -189,41 +178,14 @@ class ProjectsController extends AppController
 
                 if (!empty($delete_member_ids)) {
                     foreach ($delete_member_ids as $delete_member_id) {
-                        $member = TableRegistry::get('ProjectsUsers')
-                            ->find('all')
-                            ->where(['ProjectsUsers.user_id='.$delete_member_id,
-                                    'ProjectsUsers.project_id='.$id])
-                            ->first();
-                        $member->is_deleted = true;
-                        if (!TableRegistry::get('ProjectsUsers')->save($member)) {
-                            throw new \Exception('Failed to update(delete) projects_users entity');
-                        }
+                        $this->deleteProjectsUsers($project->id,$delete_member_id);
                     }
                 }
 
                 if (!empty($add_member_ids)) {
                     foreach ($add_member_ids as $add_member_id) {
                         $role_id = $this->request->data["roles"][$add_member_id][0];
-                        // 過去に削除済みであるか確認
-                        $member = TableRegistry::get('ProjectsUsers')
-                            ->find('all')
-                            ->where(['ProjectsUsers.project_id='.$id, 'ProjectsUsers.user_id='.$add_member_id])
-                            ->first();
-                        if (!empty($member)) {
-                            $member->is_deleted = false;
-                            $member->role_id = $role_id;
-                            if (!TableRegistry::get('ProjectsUsers')->save($member)) {
-                                throw new \Exception('Failed to save projects_users entity');
-                            }
-                        } else {
-                            $member = TableRegistry::get('ProjectsUsers')->newEntity();
-                            $member->project_id = $id;
-                            $member->user_id = $add_member_id;
-                            $member->role_id = $role_id;
-                            if (!TableRegistry::get('ProjectsUsers')->save($member)) {
-                                throw new \Exception('Failed to save projects_users entity');
-                            }
-                        }
+                        $this->saveProjectsUsers($project->id,$add_member_id,$role_id);
                     }
                 }
 
@@ -257,6 +219,53 @@ class ProjectsController extends AppController
 
         $this->Delete->Project($id);
 
-        return $this->redirect(['controller' => 'users', 'action' => 'projectsView']);
+        return $this->redirect(['controller' => 'users', 'action' => 'view', ]);
+    }
+
+    private function insertDataToProjectObject($project, $data) {
+        $project->name = $data["name"];
+        $project->budget = $data["budget"];
+        $project->customer_name = $data["customer_name"];
+        $started_at_date = $data["started_at"]["year"] . "-" . $data["started_at"]["month"] . "-" . $data["started_at"]["day"];
+        $project->started_at = $started_at_date;
+        $finished_at_date = $data["finished_at"]["year"] . "-" . $data["finished_at"]["month"] . "-" . $data["finished_at"]["day"];
+        $project->finished_at = $finished_at_date;
+
+        return $project;
+    }
+
+    private function saveProjectsUsers($project_id, $member_id, $role_id) {
+        // 過去に削除済みであるか確認
+        $member = TableRegistry::get('ProjectsUsers')
+            ->find('all')
+            ->where(['ProjectsUsers.project_id='.$project_id, 'ProjectsUsers.user_id='.$member_id])
+            ->first();
+        if (!empty($member)) {
+            $member->is_deleted = false;
+            $member->role_id = $role_id;
+            if (!TableRegistry::get('ProjectsUsers')->save($member)) {
+                throw new \Exception('Failed to save projects_users entity');
+            }
+        } else {
+            $member = TableRegistry::get('ProjectsUsers')->newEntity();
+            $member->project_id = $id;
+            $member->user_id = $add_member_id;
+            $member->role_id = $role_id;
+            if (!TableRegistry::get('ProjectsUsers')->save($member)) {
+                throw new \Exception('Failed to save projects_users entity');
+            }
+        }
+    }
+
+    private function deleteProjectsUsers($project_id, $member_id) {
+        $member = TableRegistry::get('ProjectsUsers')
+            ->find('all')
+            ->where(['ProjectsUsers.user_id='.$member_id,
+                    'ProjectsUsers.project_id='.$project_id])
+            ->first();
+        $member->is_deleted = true;
+        if (!TableRegistry::get('ProjectsUsers')->save($member)) {
+            throw new \Exception('Failed to update(delete) projects_users entity');
+        }
     }
 }

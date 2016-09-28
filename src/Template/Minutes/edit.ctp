@@ -8,20 +8,11 @@
     <body>
         <?= $this->element('header') ?>
 
-
         <?php
             $this->Form->templates([
                 'inputContainer' => '<div class="form-container-fields-field">{{content}}</div>',
                 'input' => '<input class="form-container-fields-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
             ]);
-            $users_array = [];
-            $checked_users_array = [];
-            foreach ($users as $user) {
-                $users_array[$user->projects_user_id] = $user['last_name']." ".$user['first_name'];
-                if ($user->participated) {
-                    array_push($checked_users_array, $user->projects_user_id);
-                }
-            }
         ?>
 
         <div class="form-container-wrapper">

@@ -31,6 +31,7 @@
 
                     $now = new \DateTime();
                     echo $this->Form->input('holded_at', [
+                        'type' => 'datetime',
                         'default' => $now->format('Y-m-d H:i:s'),
                         'label' => '開催時刻 : ',
                     ]);

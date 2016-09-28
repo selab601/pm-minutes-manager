@@ -142,7 +142,7 @@
                 <table class="table">
                     <tr><th colspan="6">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</th></tr>
                     <?= $this->element('userTable', [
-                        "users"=>$users,
+                        "users"=>$user_array,
                         "add_participation"=>true,
                         "col_num"=>2,
                         ]) ?>

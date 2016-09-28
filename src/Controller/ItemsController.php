@@ -15,6 +15,7 @@ class ItemsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Delete');
+        $this->loadComponent('SaveDiff');
     }
 
     public function isAuthorized($user)
@@ -45,7 +46,6 @@ class ItemsController extends AppController
 
         return parent::isAuthorized($user);
     }
-
 
     /**
      * Index method
@@ -93,6 +93,7 @@ class ItemsController extends AppController
         if ($this->request->is('post')) {
             $item = $this->Items->patchEntity($item, $this->request->data);
             $item->order_in_minute = $this->getMaxItemOrderNo($minute_id);
+            $item->minute_id = $minute->id;
             $item->set('created_at', time());
             $item->set('updated_at', time());
 
@@ -119,38 +120,10 @@ class ItemsController extends AppController
         }
 
         $itemCategories = $this->Items->ItemCategories->find('list');
-
-        $users = TableRegistry::get('Users')
-            ->find('all')
-            ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
-            ->where('projects_users.project_id = '.$minute->project_id)
-            ->all()
-            ->toArray();
-
-        foreach($users as $key => $user) {
-            $projects_user = TableRegistry::get("ProjectsUsers")
-                ->find('all')
-                ->where([
-                    'ProjectsUsers.user_id = '.$user->id,
-                    'ProjectsUsers.project_id = '. $minute->project_id
-                ])
-                ->first();
-            $users[$key]->projects_user_id = $projects_user->id;
-        }
+        $users = $this->getUsersWithResponsibility(NULL, $minute->project_id);
 
         $this->set(compact('item', 'minute', 'itemCategories', 'users'));
         $this->set('_serialize', ['item']);
-    }
-
-    private function getMaxItemOrderNo($minute_id) {
-        $max_no = 0;
-        $items_num = $this->Items->find('all')
-            ->where('Items.minute_id = '.$minute_id)
-            ->count();
-        if ($items_num != 0){
-            $max_no = $items_num;
-        }
-        return $max_no+1;
     }
 
     /**
@@ -168,85 +141,24 @@ class ItemsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $item = $this->Items->patchEntity($item, $this->request->data);
             if ($this->Items->save($item)) {
-                // 編集前の担当者
-                $users_selected_old = TableRegistry::get("Responsibilities")
-                    ->find('all', ['fields'=>'Responsibilities.projects_user_id'])
-                    ->where(['Responsibilities.item_id = '.$item->id])
-                    ->all()->toArray();
-                $old_selected_user_ids = [];
-                foreach ($users_selected_old as $user) {
-                    array_push($old_selected_user_ids, (string)$user->projects_user_id);
-                }
-                if (empty($old_selected_user_ids)){ $old_selected_user_ids = []; }
-
-                // 編集後の担当者
-                $new_selected_user_ids = $this->request->data["projects_users"]["_ids"];
-                if (empty($new_selected_user_ids)){ $new_selected_user_ids = []; }
-
-                // 前2つの担当者の差分を比較し，追加/削除を行う
-                $responsibilities_registry = TableRegistry::get("Responsibilities");
-                $deleted_user_ids = array_diff($old_selected_user_ids, $new_selected_user_ids);
-                $added_user_ids = array_diff($new_selected_user_ids, $old_selected_user_ids);
-
-                if (!empty($deleted_user_ids)) {
-                    foreach($deleted_user_ids as $user_id) {
-                        $responsibility = $responsibilities_registry
-                            ->find('all')
-                            ->where(['responsibilities.item_id = '.$item->id,
-                                     'responsibilities.projects_user_id = '.$user_id])
-                            ->first();
-                        if (!$responsibilities_registry->delete($responsibility)) {
-                            throw new \Exception('Failed to delete responsibility entity');
-                        }
-                    }
-                }
-
-                if (!empty($added_user_ids)) {
-                    foreach($added_user_ids as $user_id) {
-                        $responsibility = $responsibilities_registry->newEntity();
-                        $responsibility->item_id = $item->id;
-                        $responsibility->projects_user_id = $user_id;
-                        if (!$responsibilities_registry->save($responsibility)) {
-                            throw new \Exception('Failed to save responsibility entity');
-                        }
-                    }
-                }
+                $this->SaveDiff->save(
+                    $item->id,
+                    "Responsibilities",
+                    ['fields'=>'Responsibilities.projects_user_id'],
+                    ['Responsibilities.item_id = '.$item->id],
+                    $this->request->data["projects_users"]["_ids"],
+                    [new ItemsController(), "saveResponsibility"],
+                    [new ItemsController(), "deleteResponsibility"]
+                );
 
                 return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
                 throw new \Exception('Failed to save item entity');
             }
         }
-        $minute = $this->Items->Minutes->get($item->minute_id);
+
         $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
-
-        $users = TableRegistry::get('Users')
-            ->find('all')
-            ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
-            ->where('projects_users.project_id = '.$minute->project_id)
-            ->all()
-            ->toArray();
-
-        foreach($users as $key => $user) {
-            $projects_user = TableRegistry::get("ProjectsUsers")
-                ->find('all')
-                ->where([
-                    'ProjectsUsers.user_id = '.$user->id,
-                    'ProjectsUsers.project_id = '. $minute->project_id
-                ])
-                ->first();
-
-            $responsibility = TableRegistry::get('Responsibilities')
-                ->find('all')
-                ->where(['responsibilities.item_id = '.$item->id])
-                ->innerJoin('projects_users', 'projects_users.id = Responsibilities.projects_user_id')
-                ->where(['projects_users.user_id = '.$user->id])
-                ->all()
-                ->toArray();
-
-            $users[$key]->projects_user_id = $projects_user->id;
-            $users[$key]->has_responsibility = count($responsibility)>0 ? true : false;
-        }
+        $users = $this->getUsersWithResponsibility($item->id, $minute->project_id);
 
         $this->set(compact('item', 'itemCategories', 'users'));
         $this->set('_serialize', ['item']);
@@ -269,4 +181,70 @@ class ItemsController extends AppController
 
         return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute_id]);
     }
+
+    public static function saveResponsibility($added_user_ids, $user_id, $item_id) {
+        $responsibility = TableRegistry::get("Responsibilities")->newEntity();
+        $responsibility->item_id = $item_id;
+        $responsibility->projects_user_id = $user_id;
+        if (!TableRegistry::get("Responsibilities")->save($responsibility)) {
+            throw new \Exception('Failed to save responsibility entity');
+        }
+    }
+
+    public static function deleteResponsibility($user_id, $item_id) {
+        $responsibility = TableRegistry::get("Responsibilities")
+            ->find('all')
+            ->where(['responsibilities.item_id = '.$item_id,
+                    'responsibilities.projects_user_id = '.$user_id])
+            ->first();
+        if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
+            throw new \Exception('Failed to delete responsibility entity');
+        }
+    }
+
+    private function getMaxItemOrderNo($minute_id) {
+        $max_no = 0;
+        $items_num = $this->Items->find('all')
+            ->where('Items.minute_id = '.$minute_id)
+            ->count();
+        if ($items_num != 0){
+            $max_no = $items_num;
+        }
+        return $max_no+1;
+    }
+
+    private function getUsersWithResponsibility($item_id, $project_id) {
+        $users = TableRegistry::get('Users')
+            ->find('all')
+            ->innerJoin('projects_users', 'Users.id = projects_users.user_id')
+            ->where('projects_users.project_id = '.$project_id)
+            ->all()
+            ->toArray();
+
+        foreach($users as $key => $user) {
+            $projects_user = TableRegistry::get("ProjectsUsers")
+                ->find('all')
+                ->where([
+                    'ProjectsUsers.user_id = '.$user->id,
+                    'ProjectsUsers.project_id = '. $project_id
+                ])
+                ->first();
+            $users[$key]->projects_user_id = $projects_user->id;
+
+            if ($item_id != NULL) {
+                $responsibility = TableRegistry::get('Responsibilities')
+                    ->find('all')
+                    ->where(['responsibilities.item_id = '.$item_id])
+                    ->innerJoin('projects_users', 'projects_users.id = Responsibilities.projects_user_id')
+                    ->where(['projects_users.user_id = '.$user->id])
+                    ->all()
+                    ->toArray();
+
+                $users[$key]->has_responsibility = count($responsibility)>0 ? true : false;
+            }
+        }
+
+        return $users;
+    }
+
 }
