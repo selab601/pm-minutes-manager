@@ -75,20 +75,19 @@
                         <?php
                             $i = 0;
                             foreach ($users as $user) {
-                                if ($i/3 == 0) { echo "<tr>"; }
+                                if ($i%3 == 0) { echo "<tr>"; }
 
                                 echo "<td class='col-sm-1'><center>".$user['participation']."</center></td>";
                                 echo "<td class='col-sm-3'>".$user['name']."</td>";
 
-                                if ($i/3 == 2) { echo "</tr>"; }
+                                if ($i%3 == 2) { echo "</tr>"; }
                                 $i++;
                             }
 
-                            for ($j = $i ; (int)($j/3) == 0; $j++) {
+                            for ($j = $i; $j%3 != 0; $j++) {
                                 echo "<td class='col-sm-1'><center> - </center></td>";
                                 echo "<td class='col-sm-3'> --------------------- </td>";
-
-                                if ($j/3 == 2) { echo "</tr>"; }
+                                if ($j%3 == 2) { echo "</tr>"; }
                             }
                         ?>
                     </table>
