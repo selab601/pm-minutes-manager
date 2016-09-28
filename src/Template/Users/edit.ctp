@@ -8,23 +8,45 @@
     <body>
         <?= $this->element('header') ?>
 
-        <div class="container">
-            <div class="users form large-9 medium-8 columns content">
-                <?= $this->Form->create($user) ?>
-                <fieldset>
-                    <legend><?= __('Edit User') ?></legend>
-                    <?php
-                        echo $this->Form->input('id_string');
-                        echo $this->Form->input('last_name');
-                        echo $this->Form->input('first_name');
-                        echo $this->Form->input('password', [
-                            'value' => "",
-                            'required' => false
-                        ]);
-                        echo $this->Form->input('mail');
-                    ?>
+        <?php
+            $this->Form->templates([
+                'inputContainer' => '<div class="form-container-fields-field">{{content}}</div>',
+                'input' => '<input class="form-container-fields-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
+            ])
+        ?>
+
+        <div class="form-container-wrapper">
+            <?= $this->Form->create($user, ['class'=>'form-container', 'id'=>'add-user-container']) ?>
+                <fieldset class="form-container-fields">
+                    <legend>ユーザの編集</legend>
+                    <?= $this->Form->input('id_string', ['label'=>'ID : ']) ?>
+                    <div class="form-container-fields-field">
+                        <label>名前 : </label>
+                        <div class="form-container-fields-field-input">
+                            <div class="name-form">
+                                <?= $this->Form->input('last_name', [
+                                    'label' => false,
+                                    'templates' => ['inputContainer' => '{{content}}'],
+                                    'placeholder' => '性',
+                                    ])?>
+                                <?= $this->Form->input('first_name', [
+                                    'label' => false,
+                                    'placeholder' => '名',
+                                    'templates' => ['inputContainer' => '{{content}}'],
+                                    ]) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?= $this->Form->input('password', [
+                        'value' => "",
+                        'required' => false,
+                        'label' => 'パスワード : ',
+                        ]) ?>
+                    <?= $this->Form->input('mail', ['label'=>'メールアドレス : ']) ?>
                 </fieldset>
-                <?= $this->Form->button(__('Submit')) ?>
+                <div class="form-container-footer">
+                    <?= $this->Form->button("決定") ?>
+                </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>

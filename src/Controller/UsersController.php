@@ -64,16 +64,6 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Projects']
-        ]);
-
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
-    }
-
-    public function projectsView()
-    {
         $id = $this->request->session()->read('Auth.User.id');
 
         $user = $this->Users->get($id, [

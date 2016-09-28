@@ -42,19 +42,11 @@
                 <!-- 一般ユーザ用メニュー -->
                 <li>
                     <?php
-                        echo $this->Html->link('プロフィール', [
+                        echo $this->Html->link('ユーザページ', [
                             'controller'=>'Users',
                             'action'=>'view',
                             $this->request->session()->read('Auth.User.id')
                         ]);
-                    ?>
-                </li>
-                <li>
-                    <?=
-                        $this->Html->link('プロジェクト', [
-                            'controller'=>'Users',
-                            'action'=>'projectsView'
-                        ])
                     ?>
                 </li>
 

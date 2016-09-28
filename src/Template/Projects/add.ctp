@@ -14,34 +14,55 @@
     <body>
         <?= $this->element('header') ?>
 
-        <div class="container">
-            <div class="projects form large-9 medium-8 columns content">
-                <?= $this->Form->create($project) ?>
-                <fieldset>
-                    <legend><?= __('Add Project') ?></legend>
-                    <?php
-                        echo $this->Form->input('name');
-                        echo $this->Form->input('budget');
-                        echo $this->Form->input('customer_name');
-                        echo $this->Form->input('started_at');
-                        echo $this->Form->input('finished_at');
+        <?php
+            $this->Form->templates([
+                'inputContainer' => '<div class="form-container-fields-field">{{content}}</div>',
+                'input' => '<input class="form-container-fields-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
+            ]);
+            $users_array = [];
+            foreach ($users as $user) {
+                $users_array[$user['id']] = $user['last_name'] . " " . $user['first_name'];
+            }
+        ?>
 
-                        $users_array = [];
-                        foreach ($users as $user) {
-                            $users_array[$user['id']] = $user['last_name'] . " " . $user['first_name'];
-                        }
-                        echo $this->Form->input('users._ids', [
-                            'options' => $users_array,
-                            'templates' => [
-                                'checkbox' => '<input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}}>',
-                                'checkboxFormGroup' => '{{label}}',
-                                'inputContainer' => '<div class="form-group role-checkbox {{type}}{{required}}">{{content}}</div>',
-                            ],
-                            'multiple' => 'checkbox',
-                        ]);
-                    ?>
+        <div class="form-container-wrapper">
+
+            <?= $this->Form->create($project, ['class'=>'form-container', 'id'=>'add-project-container']) ?>
+
+            <fieldset class="form-container-fields">
+
+                <legend>プロジェクトを追加する</legend>
+                <?php
+                    echo $this->Form->input('name', ['label' => 'プロジェクト名 : ']);
+                    echo $this->Form->input('budget', ['label' => '予算 : ']);
+                    echo $this->Form->input('customer_name', ['label' => '顧客名 : ']);
+                    echo $this->Form->input('started_at', ['label' => '開始期間 : ']);
+                    echo $this->Form->input('finished_at', ['label' => '終了期間 : ']);
+                ?>
+
+                <div class="checkbox-form">
+                    <label>参加者 : </label>
+                    <div class="checkbox-form-input-wrapper">
+                        <div class="checkbox-form-input">
+                            <?php
+                                echo $this->Form->input('users._ids', [
+                                    'options' => $users_array,
+                                    'multiple' => 'checkbox',
+                                    'label' => false,
+                                    'templates' => [
+                                        'inputContainer' => '{{content}}',
+                                    ],
+                                ]);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
                 </fieldset>
-                <?= $this->Form->button(__('Submit')) ?>
+
+                <div class="form-container-footer">
+                    <?= $this->Form->button("決定") ?>
+                </div>
                 <?= $this->Form->end() ?>
             </div>
         </div>

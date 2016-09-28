@@ -1,6 +1,7 @@
 html, body {
     margin: 0px;
     padding: 0px;
+    color: #222;
 }
 
 html {
@@ -15,6 +16,65 @@ body {
 
 .container {
     margin-top: 50px;
+}
+
+.contents {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.side-contents {
+    width: 400px;
+    padding: 25px;
+    background-color: #ddd;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.main-contents {
+    flex: 1;
+    margin-left: 30px;
+    padding: 25px;
+    background-color: #ddd;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+/* table */
+
+table, td, th {
+    border: 3px solid black;
+}
+
+table {
+    width : 100%;
+    border-collapse: collapse;
+}
+
+table>th {
+    font-weight: 500;
+}
+
+th, td {
+    prgging: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
 /* header */
@@ -269,7 +329,7 @@ ul.flex-navbar-contents>li a.active {
     flex: 1;
 }
 
-/* 苗字と名前を水平に並べる */
+/* 名前 */
 
 .name-form {
     display: flex;
@@ -283,8 +343,107 @@ ul.flex-navbar-contents>li a.active {
     flex: 1;
 }
 
+/* チェックボックス */
+
+.checkbox-form {
+    height: 270px;
+    overflow-y: scroll;
+
+    display: flex;
+    display: -webkit-flex;
+}
+
+.checkbox-form>label {
+    maring: 0px;
+    padding: 0px;
+    padding-right: 10px;
+
+    width: 180px;
+    font-size: 20px;
+    font-weight: bold;
+
+    display: flex;
+    display: -webkit-flex;
+    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
+    align-items: center; /* 縦方向中央揃え */
+    -webkit-justify-content: flex-end; /* 横方向中央揃え（Safari用） */
+    justify-content: flex-end; /* 横方向中央揃え */
+}
+
+.checkbox-form-input-wrapper {
+    flex: 1;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.checkbox-form-input {
+    display: flex;
+    display: -webkit-flex;
+
+    -webkit-align-items: center;
+    align-items: center;
+
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+
+    -webkit-align-content: flex-end;
+    align-content: flex-end;
+}
+
+.checkbox-form-input>.checkbox {
+    width: 180px;
+    padding: 5px;
+    margin: 0;
+}
+
+.checkbox-form-input>.checkbox>label {
+    width: 100%;
+}
+
+.checkbox-form-input>.checkbox>label>input {
+    position:relative;
+    top:-1px;
+    width: 30px;
+}
+
+.checkbox-form-input>.checkbox>label>.select {
+    padding-top: 3px;
+    padding-left: 10px;
+}
+
 /* 各コンテナの高さ */
 
 #add-user-container {
     height: 400px;
+}
+
+#add-project-container {
+    width: 1100px;
+    height: 700px;
+}
+
+#add-minute-container {
+    width: 700px;
+    height: 600px;
+}
+
+#minute-checkbox-form {
+    height: 270px;
+}
+
+#add-item-container {
+    width: 700px;
+    height: 600px;
+}
+
+#item-checkbox-form {
+    height: 200px;
 }

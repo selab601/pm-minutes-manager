@@ -8,44 +8,74 @@
     <body>
         <?= $this->element('header') ?>
 
-        <div class="container">
-                <h3>あなたのプロフィールです</h3>
-                <table class="table table-striped">
+
+        <div class="contents">
+
+            <div class="side-contents">
+                <h4>プロフィール</h4>
+                <table class="table">
                     <tr>
-                        <th scope="row"><?= __('Id') ?></th>
-                        <td><?= $this->Number->format($user->id) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?= __('Id String') ?></th>
+                        <th scope="row">ID</th>
                         <td><?= h($user->id_string) ?></td>
                     </tr>
                     <tr>
-                        <th scope="row"><?= __('Last Name') ?></th>
-                        <td><?= h($user->last_name) ?></td>
+                        <th scope="row">名前</th>
+                        <td><?= h($user->first_name)." ".h($user->last_name) ?></td>
                     </tr>
                     <tr>
-                        <th scope="row"><?= __('First Name') ?></th>
-                        <td><?= h($user->first_name) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?= __('Mail') ?></th>
+                        <th scope="row">E-mail</th>
                         <td><?= h($user->mail) ?></td>
                     </tr>
                     <tr>
-                        <th scope="row"><?= __('Created At') ?></th>
+                        <th scope="row">登録日</th>
                         <td><?= h($user->created_at) ?></td>
                     </tr>
                     <tr>
-                        <th scope="row"><?= __('Updated At') ?></th>
-                        <td><?= h($user->updated_at) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?= __('Is Authorized') ?></th>
-                        <td><?= $user->is_authorized ? __('Yes') : __('No'); ?></td>
+                        <th scope="row">管理者権限</th>
+                        <td><?= $user->is_authorized ? 'あり' : 'なし'; ?></td>
                     </tr>
                 </table>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id_string)]) ?>
+                <center>
+                    <?= $this->Html->link(__('編集'), ['action' => 'edit', $user->id]) ?>
+                </center>
+            </div>
+
+            <div class="main-contents">
+                <h4>参加中のプロジェクト一覧</h4>
+                <?php if (!empty($user->projects)): ?>
+                    <table class="table">
+                        <tr>
+                            <th scope="col">プロジェクト名</th>
+                            <th scope="col">プロジェクト期間</th>
+                            <th scope="col" class="actions"></th>
+                            <th scope="col" class="actions"></th>
+                        </tr>
+                        <?php foreach ($user->projects as $projects): ?>
+                            <tr>
+                                <td><?= h($projects->name) ?></td>
+                                <td>
+                                    <?= h($projects->started_at) ?> 〜 <?= h($projects->finished_at) ?>
+                                </td>
+                                <td>
+                                    <?= $this->Html->link(__('詳細'), ['controller' => 'Projects', 'action' => 'view', $projects->id]) ?>
+                                </td>
+                                <td>
+                                    <?= $this->Html->link(__('編集'), ['controller' => 'Projects', 'action' => 'edit', $projects->id]) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+                <center>
+                    <?=
+                        $this->Html->link('新規作成', [
+                            'controller'=>'Projects',
+                            'action'=>'add'
+                        ])
+                    ?>
+                </center>
+            </div>
+
         </div>
     </body>
 </html>

@@ -35,7 +35,7 @@ var toggleRoleList = function($, roles, members){
   });
 
   function createRoleList(roles) {
-    var html = '<div class="form-group select role-select" style="display: none;">'
+    var html = '<div class="select role-select" style="display: none;">'
       + '  <input type="hidden" value="">'
       + '  <select class="form-control" multiple="multiple">';
     $.each(roles, function() {
