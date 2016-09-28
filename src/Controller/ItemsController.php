@@ -147,7 +147,7 @@ class ItemsController extends AppController
         $items_num = $this->Items->find('all')
             ->where('Items.minute_id = '.$minute_id)
             ->count();
-        if ($items_nu != 0){
+        if ($items_num != 0){
             $max_no = $items_num;
         }
         return $max_no+1;
