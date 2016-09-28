@@ -29,7 +29,6 @@
                 echo $this->Form->input('item_category_id', [
                     'options' => $itemCategories
                 ]);
-                echo $this->Form->input('order_in_minute');
                 echo $this->Form->input('contents');
                 echo $this->Form->input('overed_at', ['empty' => true]);
                 $users_array = [];

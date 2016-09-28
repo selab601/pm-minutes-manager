@@ -92,6 +92,7 @@ class ItemsController extends AppController
 
         if ($this->request->is('post')) {
             $item = $this->Items->patchEntity($item, $this->request->data);
+            $item->order_in_minute = $this->getMaxItemOrderNo($minute_id);
             $item->set('created_at', time());
             $item->set('updated_at', time());
 
@@ -141,6 +142,16 @@ class ItemsController extends AppController
         $this->set('_serialize', ['item']);
     }
 
+    private function getMaxItemOrderNo($minute_id) {
+        $max_no = 0;
+        $items_in_minutes = $this->Items->find('all')
+            ->where('Items.minute_id = '.$minute_id);
+        if (!empty($items_in_minutes)){
+            $max_no = count($items_in_minutes);
+        }
+        return $max_no+1;
+    }
+
     /**
      * Edit method
      *
@@ -175,9 +186,6 @@ class ItemsController extends AppController
                 $responsibilities_registry = TableRegistry::get("Responsibilities");
                 $deleted_user_ids = array_diff($old_selected_user_ids, $new_selected_user_ids);
                 $added_user_ids = array_diff($new_selected_user_ids, $old_selected_user_ids);
-
-                echo var_dump($deleted_user_ids);
-                echo var_dump($added_user_ids);
 
                 if (!empty($deleted_user_ids)) {
                     foreach($deleted_user_ids as $user_id) {

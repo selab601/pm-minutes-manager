@@ -4,8 +4,38 @@
         <?= $this->html->css('bootstrap.min.css') ?>
         <?= $this->html->css('main.css') ?>
         <?= $this->html->css('minute.css') ?>
-        <?= $this->html->script(['jquery.js', 'bootstrap.min.js']) ?>
+        <?= $this->html->script(['jquery.js', 'jquery-ui.min.js', 'bootstrap.min.js', 'common.js']) ?>
     </head>
+    <script>
+        $(function () {
+            $("#sortable").sortable({
+                update: function(event, ui) {
+                    var order = [];
+                    var i=0;
+                    $(".table-content.no").each(function (item, index) {
+                        if (i==0) { i++; return; }
+                        order.push($(this).text().replace(/\s+/g, ""));
+                        $(this).text(i);
+                        i++;
+                    });
+                    var json = JSON.stringify(order);
+                    console.log(json);
+
+                    sendPost(
+                        "/minutes/ajaxUpdateItemOrder",
+                        {
+                            order: json,
+                            minute_id: <?= $minute->id ?>
+                        },
+                        null)
+                        .done(function(result) {
+                            console.log(result);
+                        });
+                }
+            });
+            $("#sortable").disableSelection();
+        });
+    </script>
     <body>
         <?= $this->element('header') ?>
 
@@ -76,46 +106,50 @@
                         <div class="table-content deadline">期限</div>
                         <div class="table-content actions"></div>
                     </div>
+
                     <?php if (!empty($items)): ?>
-                        <?php foreach ($items as $item): ?>
-                            <div class="table-row">
-                                <div class="table-content no">
-                                    <?= h($item->order_in_minute) ?>
+                        <div id="sortable">
+                            <?php foreach ($items as $item): ?>
+                                <div class="table-row ui-state-default">
+                                    <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                                    <div class="table-content no">
+                                        <?= h($item->order_in_minute) ?>
+                                    </div>
+                                    <div class="table-content category">
+                                        <?= h($item->item_category_name) ?>
+                                    </div>
+                                    <div class="table-content text">
+                                        <?= h($item->contents) ?>
+                                    </div>
+                                    <div class="table-content primary">
+                                        <?php
+                                            switch($item->primary_no) {
+                                                case 0: echo "低"; break;
+                                                case 1: echo "中"; break;
+                                                case 2: echo "高"; break;
+                                                default: echo "";
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="table-content responsibility">
+                                        <?php
+                                            echo "<ul>";
+                                            foreach($item->user_names as $user_name) {
+                                                echo "<li>".$user_name."</li>";
+                                            }
+                                            echo "</ul>";
+                                        ?>
+                                    </div>
+                                    <div class="table-content deadline">
+                                        <?= h($item->overed_at) ?>
+                                    </div>
+                                    <div class="table-content actions">
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
+                                    </div>
                                 </div>
-                                <div class="table-content category">
-                                    <?= h($item->item_category_name) ?>
-                                </div>
-                                <div class="table-content text">
-                                    <?= h($item->contents) ?>
-                                </div>
-                                <div class="table-content primary">
-                                    <?php
-                                        switch($item->primary_no) {
-                                            case 0: echo "低"; break;
-                                            case 1: echo "中"; break;
-                                            case 2: echo "高"; break;
-                                            default: echo "";
-                                        }
-                                    ?>
-                                </div>
-                                <div class="table-content responsibility">
-                                    <?php
-                                        echo "<ul>";
-                                        foreach($item->user_names as $user_name) {
-                                            echo "<li>".$user_name."</li>";
-                                        }
-                                        echo "</ul>";
-                                    ?>
-                                </div>
-                                <div class="table-content deadline">
-                                    <?= h($item->overed_at) ?>
-                                </div>
-                                <div class="table-content actions">
-                                    <?= $this->Html->link(__('Edit'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
-                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
                 </div>
                     <?php endif; ?>
                     <center>

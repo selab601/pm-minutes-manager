@@ -72,6 +72,7 @@
  */
 
 .table-content {
+    background-color: white;
     padding: 5px;
     border: 1px solid black;
 }
@@ -84,7 +85,7 @@
     padding-right: 20px;
 }
 
-.table-row.header {
+.table-row.header>.table-content {
   background-color: #FFEEDB;
   font-weight: bold;
 }

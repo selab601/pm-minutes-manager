@@ -233,4 +233,25 @@ class MinutesController extends AppController
 
         return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
     }
+
+    public function ajaxUpdateItemOrder() {
+        if ($this->request->is('post')) {
+            $order_json_string = $this->request->data["order"];
+            $minute_id = $this->request->data["minute_id"];
+            $orders = json_decode($order_json_string, true);
+
+            $items = $this->Minutes->Items
+                ->find("all", ['order' => ['Items.order_in_minute' => 'ASC']])
+                ->where(["Items.minute_id=".$minute_id]);
+            foreach ($items as $key => $item) {
+                $item->order_in_minute = $orders[$key];
+                if (!$this->Minutes->Items->save($item)) {
+                    echo "error";
+                    exit();
+                }
+            }
+        }
+        echo "success";
+        exit();
+    }
 }
