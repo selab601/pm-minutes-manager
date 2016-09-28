@@ -219,7 +219,7 @@ class ProjectsController extends AppController
 
         $this->Delete->Project($id);
 
-        return $this->redirect(['controller' => 'users', 'action' => 'view', ]);
+        return $this->redirect(['controller' => 'projects', 'action' => 'index']);
     }
 
     private function insertDataToProjectObject($project, $data) {
