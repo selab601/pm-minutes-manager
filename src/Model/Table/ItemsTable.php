@@ -64,12 +64,13 @@ class ItemsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('primary_no')
-            ->allowEmpty('primary_no');
+            ->requirePresence('primary_char', 'create')
+            ->notEmpty('primary_char');
 
         $validator
             ->integer('order_in_minute')
-            ->allowEmpty('order_in_minute');
+            ->requirePresence('order_in_minute', 'create')
+            ->notEmpty('order_in_minute');
 
         $validator
             ->allowEmpty('contents');

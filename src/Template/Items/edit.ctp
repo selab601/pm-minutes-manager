@@ -13,7 +13,13 @@
             <fieldset>
                 <legend><?= __('Edit Item') ?></legend>
                 <?php
-                    echo $this->Form->input('primary_no');
+                    echo $this->Form->input('primary_char', [
+                        'options' => [
+                            "高" => "高",
+                            "中" => "中",
+                            "低" => "低"
+                        ],
+                    ]);
                     echo $this->Form->input('item_category_id', ['options' => $itemCategories]);
                     echo $this->Form->input('contents');
                     echo $this->Form->input('overed_at', ['empty' => true]);

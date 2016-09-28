@@ -122,14 +122,7 @@
                                         <?= h($item->contents) ?>
                                     </div>
                                     <div class="table-content primary">
-                                        <?php
-                                            switch($item->primary_no) {
-                                                case 0: echo "低"; break;
-                                                case 1: echo "中"; break;
-                                                case 2: echo "高"; break;
-                                                default: echo "";
-                                            }
-                                        ?>
+                                        <?= h($item->primary_char) ?>
                                     </div>
                                     <div class="table-content responsibility">
                                         <?php

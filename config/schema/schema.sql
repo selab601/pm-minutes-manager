@@ -92,9 +92,9 @@ CREATE
     TABLE items (
         id INT NOT NULL AUTO_INCREMENT,
         minute_id INT NOT NULL,
-        primary_no TINYINT,
+        primary_char VARCHAR(10) NOT NULL,
         item_category_id INT NOT NULL,
-        order_in_minute TINYINT,
+        order_in_minute TINYINT NOT NULL,
         contents VARCHAR(300),
         revision TINYINT,
         overed_at DATE,

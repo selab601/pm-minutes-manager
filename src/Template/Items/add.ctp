@@ -18,13 +18,13 @@
                     'default' => $minute->name,
                     'readonly' => true,
                 ]);
-                echo $this->Form->input('primary_no', [
+                echo $this->Form->input('primary_char', [
                     'options' => [
-                        "2" => "高",
-                        "1" => "中",
-                        "0" => "低"
+                        "高" => "高",
+                        "中" => "中",
+                        "低" => "低"
                     ],
-                    'default' => "1",
+                    'default' => "中",
                 ]);
                 echo $this->Form->input('item_category_id', [
                     'options' => $itemCategories
