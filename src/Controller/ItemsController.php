@@ -144,10 +144,11 @@ class ItemsController extends AppController
 
     private function getMaxItemOrderNo($minute_id) {
         $max_no = 0;
-        $items_in_minutes = $this->Items->find('all')
-            ->where('Items.minute_id = '.$minute_id);
-        if (!empty($items_in_minutes)){
-            $max_no = count($items_in_minutes);
+        $items_num = $this->Items->find('all')
+            ->where('Items.minute_id = '.$minute_id)
+            ->count();
+        if ($items_nu != 0){
+            $max_no = $items_num;
         }
         return $max_no+1;
     }
