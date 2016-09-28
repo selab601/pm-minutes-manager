@@ -26,7 +26,7 @@ class MinutesController extends AppController
         }
 
         // 自分の参加しているプロジェクトの議事録であれば編集，閲覧が可能
-        if (in_array($this->request->action, ['edit', 'view', 'delete'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'createHTML', 'delete'])) {
             $minute_id = $this->request->params['pass'][0];
             $minute = $this->Minutes->get($minute_id);
             $user_id = $this->request->session()->read('Auth.User.id');
@@ -206,6 +206,25 @@ class MinutesController extends AppController
         $this->Delete->Minute($id);
 
         return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
+    }
+
+    public function createHTML($id) {
+        $minute = $this->Minutes->get($id, [
+            'contain' => ['Projects']
+        ]);
+
+        $users = $this->getUserParticipations($id, $minute->project_id);
+        $user_array = [];
+        foreach ($users as $user) {
+            $u = [];
+            $u['name'] = $user->last_name." ".$user->first_name;
+            $u['participation'] = $user->participation;
+            array_push($user_array, $u);
+        }
+
+        $items = $this->getItemsWithUserAndCategoryName($id);
+        $this->set(compact('minute', 'items', 'user_array'));
+        $this->set('_serialize', ['minute']);
     }
 
     public function ajaxUpdateItemOrder() {
