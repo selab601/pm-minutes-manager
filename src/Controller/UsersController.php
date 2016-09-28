@@ -170,6 +170,8 @@ class UsersController extends AppController
             }
             $this->Flash->error('あなたのユーザー名またはパスワードが不正です。');
         }
+        $user = $this->Users->newEntity();
+        $this->set(compact('user'));
     }
 
     public function logout()
