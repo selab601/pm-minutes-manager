@@ -22,47 +22,6 @@
   padding: 0 0 0 0;
 }
 
-/*
- * 見た目の変更
- */
-
-.table-content {
-  width: 100%;
-  background-color: white;
-  padding: 5px;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
-.table-contetnt.text {
-  flex: 1;
-  overflow: auto;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-right: 20px;
-}
-
-.table-row.header>.table-content {
-  background-color: #FFEEDB;
-  font-weight: bold;
-}
-
-/*
- * テキスト配置
- */
-
-.table-content {
-  text-align: center;
-}
-
-.table-content.text {
-  text-align: left;
-}
-
-.header>.table-content {
-  text-align: center;
-}
-
 .header>.table-content {
   display: -webkit-flex;
   display: flex;
@@ -84,7 +43,7 @@
 }
 
 .table-content.half-th {
-  width: 40px;
+  flex: 0 0 40px;
 }
 
 .table-content.half-td {
@@ -103,7 +62,7 @@
 }
 
 .table-content.quoter-th {
-  width: 25px;
+  flex: 0 0 25px;
 }
 
 .table-content.quoter-td {
@@ -167,11 +126,11 @@
 }
 
 .table-content.no {
-  width: 30px;
+  flex: 0 0 30px;
 }
 
 .table-content.category {
-  width: 80px;
+  flex: 0 0 80px;
 }
 
 .table-content.text {
@@ -179,19 +138,19 @@
 }
 
 .table-content.primary {
-  width: 35px;
+  flex: 0 0 35px;
 }
 
 .table-content.responsibility {
-  width: 100px;
+  flex: 0 0 100px;
 }
 
 .table-content.deadline {
-  width: 80px;
+  flex: 0 0 80px;
 }
 
 .table-content.actions {
-  width: 60px;
+  flex: 0 0 60px;
 }
 
 /*
@@ -207,4 +166,41 @@
 .table-content.responsibility>ul {
   float: left;
   padding-left: 10px;
+}
+
+/*
+ * 見た目の変更
+ */
+
+.table-content {
+  width: 100%;
+  background-color: white;
+  padding: 5px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.table-content.text {
+  word-break: break-all;
+}
+
+.table-row.header>.table-content {
+  background-color: #FFEEDB;
+  font-weight: bold;
+}
+
+/*
+ * テキスト配置
+ */
+
+.table-content {
+  text-align: center;
+}
+
+.table-content.text {
+  text-align: left;
+}
+
+.header>.table-content {
+  text-align: center;
 }

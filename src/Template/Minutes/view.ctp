@@ -69,7 +69,7 @@
                                             <?= h($item->item_category_name) ?>
                                         </div>
                                         <div class="table-content text">
-                                            <?= h($item->contents) ?>
+                                            <?= nl2br($item->contents) ?>
                                         </div>
                                         <div class="table-content primary">
                                             <?= h($item->primary_char) ?>

@@ -4,7 +4,129 @@
     <?= $this->html->css('main.css') ?>
     <?= $this->html->css('minute.css') ?>
     <?= $this->html->css('minute-html.css') ?>
+    <?= $this->html->script(['jquery.js', 'jquery-ui.min.js']) ?>
+    <?= $this->html->script(['elementFromAbsolutePoint.js']) ?>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
   </head>
+  <script>
+      $(document).ready(function() {
+          var page_no = 1;
+          var i = 0;
+          while (true) {
+              if (isPageBreakedByItem(page_no)) {
+                  addNewPage();
+                  var result = retrieveBreakingPageItem(page_no);
+                  var item = splitTextInItem(result.breaked_item, page_no);
+                  var hided_items = result.hided_items;
+                  addItemsToPage(item, result.hided_items, page_no+1);
+                  page_no++;
+              } else {
+                  break;
+              }
+              // safety break
+              if (++i>1000){break;}
+          }
+      });
+
+      // book 末尾に空のページを加える
+      function addNewPage() {
+          $('<div class="page"><div class="subpage"><div class="contents"></div></div></div>')
+              .appendTo($('.book').last());
+
+          var tableHtml = '<div class="table">'
+                        + '  <div class="table-row header">'
+                        + '    <div class="table-content no">No</div>'
+                        + '    <div class="table-content category">項目</div>'
+                        + '    <div class="table-content text">内容</div>'
+                        + '    <div class="table-content primary">優先度</div>'
+                        + '    <div class="table-content responsibility">担当</div>'
+                        + '    <div class="table-content deadline">期限</div>'
+                        + '  </div>'
+                        + '</div>';
+          $(tableHtml).appendTo($('.contents').last());
+      }
+
+      // 案件群をページに加える
+      function addItemsToPage($item, $items, page_no) {
+          // テーブル要素は，案件テーブルの他に議事録情報，承認等欄の2つがある
+          // また，要素番号は 0 から始まるので 1 を引く
+          var index = page_no + 2 - 1;
+          $item.appendTo($('.table:eq('+index+')'));
+          $items.appendTo($('.table:eq('+index+')'));
+      }
+
+      // はみだしている案件群を取得
+      function retrieveBreakingPageItem(page_no) {
+          var index = page_no - 1;
+          $page_contents = $('.contents:eq('+index+')');
+          if ($page_contents.get(0) === undefined) {
+              return;
+          }
+
+          var position = $page_contents.position();
+          // 外側の要素を取得してしまうことがあるので，各々少し内側(-5, 100)から取得
+          var bottom = position.top + $page_contents.outerHeight(true) - 5;
+          var left = position.left + 100;
+
+          var item_no = document.elementFromAbsolutePoint(left,bottom);
+          var $item = $(item_no).parent();
+          var $breaked_items = $item.nextAll().clone();
+          $item.nextAll().each(function(key, value) {
+              $(this).remove();
+          });
+
+          return {
+              breaked_item : $item,
+              hided_items : $breaked_items
+          };
+      }
+
+      // ページから案件がはみ出しているか
+      function isPageBreakedByItem(page_no) {
+          var page_index = page_no - 1;
+          var table_index = page_no + 2 - 1;
+          $subpage = $('.subpage:eq('+page_index+')');
+          $table = $('.table:eq('+table_index+')');
+          if ($subpage.get(0) === undefined) {
+              return;
+          }
+          var subpage_bottom = $subpage.position().top + $subpage.outerHeight(true);
+          var table_bottom = $table.position().top + $table.outerHeight(true);
+
+          return (subpage_bottom < table_bottom);
+      }
+
+      // 案件の内容を，改ページしている場所で分割する
+      function splitTextInItem($item, page_no) {
+          var page_index = page_no - 1;
+          var table_index = page_no + 2 - 1;
+          $subpage = $('.subpage:eq('+page_index+')');
+          $table = $('.table:eq('+table_index+')');
+          if ($subpage.get(0) === undefined) {
+              return;
+          }
+          var subpage_bottom = $subpage.position().top + $subpage.outerHeight(true);
+          var table_bottom = $table.position().top + $table.outerHeight(true);
+          var breaked_height = table_bottom - subpage_bottom;
+
+          var line_height = parseInt($item.css('line-height'));
+          var item_height = $item.outerHeight(true);
+          var all_line_numbers = item_height/line_height;
+          var breaked_line_numbers = breaked_height/line_height;
+
+          var lines = $item.children(".text").text().split('\n');
+
+          var index = all_line_numbers - breaked_line_numbers - 1;
+          var text = lines.slice(0, index-1);
+          var hided_text = lines.slice(index-1, lines.length);
+
+          var $breaked_item = $item.clone();
+          $item.children(".text").html(text.join('<br>'));
+          $breaked_item.children(".text").html(hided_text.join('<br>'));
+
+          return $breaked_item;
+      }
+  </script>
   <body>
     <div class="book">
       <div class="page">
@@ -120,16 +242,14 @@
 
                 <?php if (!empty($items)): ?>
                   <?php foreach ($items as $item): ?>
-                    <div class="table-row ui-state-default">
+                    <div class="table-row item">
                       <div class="table-content no">
                         <?= h($item->order_in_minute) ?>
                       </div>
                       <div class="table-content category">
                         <?= h($item->item_category_name) ?>
                       </div>
-                      <div class="table-content text">
-                        <?= h($item->contents) ?>
-                      </div>
+                      <div class="table-content text"><?= nl2br($item->contents) ?></div>
                       <div class="table-content primary">
                         <?= h($item->primary_char) ?>
                       </div>
