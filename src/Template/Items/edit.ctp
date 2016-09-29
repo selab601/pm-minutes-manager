@@ -37,7 +37,10 @@
                         'label' => '優先度 : ',
                     ]);
                     echo $this->Form->input('item_category_id', ['options' => $itemCategories, 'label' => '案件種別 : ']);
-                    echo $this->Form->input('contents', ['label' => '議事内容 : ']);
+                    echo $this->Form->input('contents', [
+                        'label' => '議事内容 : ',
+                        'type' => 'textarea',
+                    ]);
                     echo $this->Form->input('overed_at', ['empty' => true, 'label' => '期限 : ']);
                 ?>
                 <div class="checkbox-form" id="item-checkbox-form">
