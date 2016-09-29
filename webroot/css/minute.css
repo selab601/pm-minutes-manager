@@ -1,70 +1,25 @@
-@margin: 30px;
-@text-width: 180px;
-@num-width: 80px;
-
 /*
  * 幅の設定
  */
 
+.table {
+  width: 100%;
+  display: inline-block;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.table.right {
+  border: none;
+  padding-left: 20px;
+}
+
 .table-row {
-    display: flex;          display: -webkit-flex;
-    flex-direction: row;    -webkit-flex-direction: row;
-    flex-wrap: no-wrap;     -webkit-flex-wrap: no-wrap;
-    width: 100%;
-    padding: 0 0 0 0;
-}
-
-.table-content.no {
-    width: 30px;
-}
-
-.table-content.category {
-    width: 80px;
-}
-
-.table-content.text {
-    flex: 1;
-}
-
-.table-content.primary {
-    width: 35px;
-}
-
-.table-content.responsibility {
-    width: 100px;
-}
-
-.table-content.deadline {
-    width: 80px;
-}
-
-.table-content.actions {
-    width: 60px;
-}
-
-/*
- * テキスト配置
- */
-
-.table-content {
-    text-align: center;
-}
-
-.table-content.text {
-    text-align: left;
-}
-
-.header>.table-content {
-    text-align: center;
-}
-
-.header>.table-content {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
+  width: 100%;
+  display: flex;          display: -webkit-flex;
+  flex-direction: row;    -webkit-flex-direction: row;
+  flex-wrap: no-wrap;     -webkit-flex-wrap: no-wrap;
+  padding: 0 0 0 0;
 }
 
 /*
@@ -72,17 +27,19 @@
  */
 
 .table-content {
-    background-color: white;
-    padding: 5px;
-    border: 1px solid black;
+  width: 100%;
+  background-color: white;
+  padding: 5px;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .table-contetnt.text {
-    flex: 1;
-    overflow: auto;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding-right: 20px;
+  flex: 1;
+  overflow: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 20px;
 }
 
 .table-row.header>.table-content {
@@ -91,16 +48,163 @@
 }
 
 /*
+ * テキスト配置
+ */
+
+.table-content {
+  text-align: center;
+}
+
+.table-content.text {
+  text-align: left;
+}
+
+.header>.table-content {
+  text-align: center;
+}
+
+.header>.table-content {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.table-content-wrapper.half {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+}
+
+.table-content.half-th {
+  width: 40px;
+}
+
+.table-content.half-td {
+  flex: 1;
+}
+
+.table-content-wrapper.quoter {
+  width: 25%;
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+}
+
+.table-content.quoter-th {
+  width: 25px;
+}
+
+.table-content.quoter-td {
+  flex: 1;
+}
+
+.table-content-wrapper.column {
+  width:100%;
+  height: 55px;
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+}
+
+.table-content.column-th {
+  width: 50px;
+
+  border-left: 1px solid black;
+
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+#column-first {
+  border-top: 1px solid black;
+}
+
+.table-content.column-td {
+  flex: 1;
+
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+/* コンテンツの種類によるレイアウト */
+
+.table-content.project-name {
+  font-size: 12px;
+}
+
+.table-content.minute-name {
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.table-content.header {
+  font-weight: bold;
+}
+
+.table-content.no {
+  width: 30px;
+}
+
+.table-content.category {
+  width: 80px;
+}
+
+.table-content.text {
+  flex: 1;
+}
+
+.table-content.primary {
+  width: 35px;
+}
+
+.table-content.responsibility {
+  width: 100px;
+}
+
+.table-content.deadline {
+  width: 80px;
+}
+
+.table-content.actions {
+  width: 60px;
+}
+
+/*
  * 担当者の見た目
  */
 
 .table-content.responsibility>ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .table-content.responsibility>ul {
-    float: left;
-    padding-left: 10px;
+  float: left;
+  padding-left: 10px;
 }

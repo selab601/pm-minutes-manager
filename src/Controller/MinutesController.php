@@ -26,7 +26,7 @@ class MinutesController extends AppController
         }
 
         // 自分の参加しているプロジェクトの議事録であれば編集，閲覧が可能
-        if (in_array($this->request->action, ['edit', 'view', 'createHTML', 'delete'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'createHtml', 'delete'])) {
             $minute_id = $this->request->params['pass'][0];
             $minute = $this->Minutes->get($minute_id);
             $user_id = $this->request->session()->read('Auth.User.id');
@@ -208,7 +208,7 @@ class MinutesController extends AppController
         return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
     }
 
-    public function createHTML($id) {
+    public function createHtml($id) {
         $minute = $this->Minutes->get($id, [
             'contain' => ['Projects']
         ]);
