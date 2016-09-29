@@ -5,6 +5,7 @@ body {
     padding: 0;
     background-color: #FAFAFA;
     font: 10pt "Tahoma";
+    font-family: 'Inconsolata',"Osaka−等幅","ＭＳ ゴシック", monospace;
 }
 
 * {
