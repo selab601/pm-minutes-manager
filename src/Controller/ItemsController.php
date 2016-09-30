@@ -26,7 +26,7 @@ class ItemsController extends AppController
         }
 
         // 自分の参加しているプロジェクトの議事録の案件であれば編集，閲覧が可能
-        if (in_array($this->request->action, ['edit', 'view', 'delete'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'delete', 'follow'])) {
             $item_id = $this->request->params['pass'][0];
             $item = $this->Items->get($item_id);
             $minute = TableRegistry::get('Minutes')->get($item->minute_id);
@@ -162,6 +162,26 @@ class ItemsController extends AppController
 
         $this->set(compact('item', 'itemCategories', 'users'));
         $this->set('_serialize', ['item']);
+    }
+
+    public function follow($id = null) {
+        $item = $this->Items->get($id);
+        $minute = $this->Items->Minutes->get($item->minute_id);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $user_name = $this->request->session()->read('Auth.User.last_name')
+                . " " . $this->request->session()->read('Auth.User.first_name');
+            $item->followed_by = $user_id;
+            $item->followed_user_name = $user_name;
+            $item->is_followed = true;
+            $item->set('followed_at', time());
+            if (!$this->Items->save($item)) {
+                throw new \Exception('Failed to follow item');
+            }
+        }
+
+        return $this->redirect(['controller'=>'minutes', 'actions'=>'view', $minute->id]);
     }
 
     /**

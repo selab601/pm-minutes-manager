@@ -65,6 +65,7 @@
                             <div class="table-content primary">優先度</div>
                             <div class="table-content responsibility">担当</div>
                             <div class="table-content deadline">期限</div>
+                            <div class="table-content follow">フォロー</div>
                             <div class="table-content actions"></div>
                         </div>
 
@@ -95,10 +96,41 @@
                                             ?>
                                         </div>
                                         <div class="table-content deadline">
-                                            <?= h($item->overed_at) ?>
+                                            <?php
+                                                if ($item->overed_at != NULL) {
+                                                    echo $item->overed_at->format('Y/m/d');
+                                                } else {
+                                                    echo "-";
+                                                }
+                                            ?>
+                                        </div>
+                                        <div class="table-content follow">
+                                            <?php
+                                                if ($item->is_followed) {
+                                                    echo $item->followed_at->format('Y/m/d');
+                                                    echo "<br>";
+                                                    echo $item->followed_user_name;
+                                                } else {
+                                                    echo "-";
+                                                }
+                                            ?>
                                         </div>
                                         <div class="table-content actions">
+                                            <?php
+                                                if ($item->overed_at != NULL && $item->is_followed == false) {
+                                                    echo $this->Form->postLink(__('フォロー'), [
+                                                        'controller' => 'Items',
+                                                        'action' => 'follow',
+                                                        $item->id
+                                                    ],
+                                                    [
+                                                        'confirm' => '案件の終了を確認し，フォローを行います．よろしいですか？この操作は取り消せません'
+                                                    ]);
+                                                    echo "<br>";
+                                                }
+                                            ?>
                                             <?= $this->Html->link(__('編集'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
+                                            <?= "<br>" ?>
                                             <?= $this->Form->postLink(__('削除'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
                                         </div>
                                     </div>

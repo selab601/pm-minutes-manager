@@ -102,7 +102,7 @@
 
       // 複数行に渡っている箇所は改行文字を付加する
       function ApplyLineBreaks(text) {
-          var MAX_BYTE = 28 * 2;
+          var MAX_BYTE = 50;
           var new_lines = [];
           var lines = $(text).text().split('\n');
           for(var i=0; i<lines.length; i++) {
@@ -253,9 +253,15 @@
                         承認
                       </div>
                       <div class="table-content column-td" id="column-first">
-                        <?= $minute->examined_at->format('Y/m/d') ?>
-                        <?= "<br>" ?>
-                        <?= $minute->examined_user_name ?>
+                          <?php
+                              if ($minute->is_examined) {
+                                  echo $minute->examined_at->format('Y/m/d');
+                                  echo "<br>";
+                                  echo $minute->examined_user_name;
+                              } else {
+                                  echo "-";
+                              }
+                          ?>
                       </div>
                     </div>
                   </div>
@@ -265,9 +271,15 @@
                         審査
                       </div>
                       <div class="table-content column-td">
-                        <?= $minute->approved_at->format('Y/m/d') ?>
-                        <?= "<br>" ?>
-                        <?= $minute->approved_user_name ?>
+                          <?php
+                              if ($minute->is_approved) {
+                                  echo $minute->aproved_at->format('Y/m/d');
+                                  echo "<br>";
+                                  echo $minute->approved_user_name;
+                              } else {
+                                  echo "-";
+                              }
+                          ?>
                       </div>
                     </div>
                   </div>
@@ -297,6 +309,7 @@
                   <div class="table-content primary">優先度</div>
                   <div class="table-content responsibility">担当</div>
                   <div class="table-content deadline">期限</div>
+                  <div class="table-content follow">フォロー</div>
                 </div>
 
                 <?php if (!empty($items)): ?>
@@ -323,6 +336,17 @@
                       </div>
                       <div class="table-content deadline">
                         <?= h($item->overed_at) ?>
+                      </div>
+                      <div class="table-content follow">
+                        <?php
+                            if ($item->is_followed != NULL) {
+                                echo $item->followed_at->format('Y/m/d');
+                                echo "<br>";
+                                echo $item->followed_user_name;
+                            } else {
+                                echo "-";
+                            }
+                        ?>
                       </div>
                     </div>
                   <?php endforeach; ?>
