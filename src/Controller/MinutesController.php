@@ -188,6 +188,36 @@ class MinutesController extends AppController
         $this->set('_serialize', ['minute']);
     }
 
+    public function examine($id = null)
+    {
+        $minute = $this->Minutes->get($id);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $minute->is_examined = true;
+            $minute->set('examined_at', time());
+            $minute->is_deletable = false;
+            if (!$this->Minutes->save($minute)) {
+                throw new \Exception('Failed to examine minute');
+            }
+        }
+
+        return $this->redirect(['controller'=>'projects', 'action'=>'view', $minute->project_id]);
+    }
+
+    public function approve($id = null) {
+        $minute = $this->Minutes->get($id);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $minute->is_approved = true;
+            $minute->set('approved_at', time());
+            if (!$this->Minutes->save($minute)) {
+                throw new \Exception('Failed to approve minute');
+            }
+        }
+
+        return $this->redirect(['controller'=>'projects', 'action'=>'view', $minute->project_id]);
+    }
+
     /**
      * Delete method
      *

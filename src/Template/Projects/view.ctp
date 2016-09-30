@@ -29,10 +29,52 @@
                                 <td><?= h($minutes->name) ?></td>
                                 <td><?= h($minutes->holded_place) ?></td>
                                 <td><?= h($minutes->holded_at) ?></td>
-                                <td><?= h($minutes->examined_at) ?></td>
-                                <td><?= h($minutes->approved_at) ?></td>
                                 <td>
-                                    <?= $this->Form->postLink(__('削除'), ['controller' => 'Minutes', 'action' => 'delete', $minutes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $minutes->id)]) ?>
+                                    <?php
+                                        if($minutes->is_examined) {
+                                            echo $minutes->examined_at;
+                                        } else {
+                                            echo $this->Form->postLink(__('審査'), [
+                                                'controller' => 'Minutes',
+                                                'action' => 'examine',
+                                                $minutes->id
+                                            ],
+                                            [
+                                                'confirm' => "議事録を審査済みとして記録して良いですか？ この操作は取り消せません"
+                                            ]);
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                        if($minutes->is_approved) {
+                                            echo $minutes->approved_at;
+                                        } else {
+                                            echo $this->Form->postLink(__('承認'), [
+                                                'controller' => 'Minutes',
+                                                'action' => 'approve',
+                                                $minutes->id
+                                            ],
+                                            [
+                                                'confirm' => "議事録を承認済みとして記録して良いですか? この操作は取り消せません"
+                                            ]);
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                        if ($minutes->is_deletable) {
+                                            echo $this->Form->postLink(__('削除'), [
+                                                'controller' => 'Minutes',
+                                                'action' => 'delete', $minutes->id
+                                            ],
+                                            [
+                                                'confirm' => __('削除しますか?')
+                                            ]);
+                                        } else {
+                                            echo "-";
+                                        }
+                                    ?>
                                 </td>
                                 <td class="actions">
                                     <?= $this->Html->link(__('編集'), ['controller' => 'Minutes', 'action' => 'view', $minutes->id]) ?>
