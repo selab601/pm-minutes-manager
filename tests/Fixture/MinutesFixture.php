@@ -29,7 +29,7 @@ class MinutesFixture extends TestFixture
         'is_approved' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null],
         'examined_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'approved_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'is_deletable' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null],
+        'is_deletable' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => '1', 'comment' => '', 'precision' => null],
         '_indexes' => [
             'project_key' => ['type' => 'index', 'columns' => ['project_id'], 'length' => []],
         ],
@@ -55,14 +55,14 @@ class MinutesFixture extends TestFixture
             'project_id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'holded_place' => 'Lorem ipsum dolor sit amet',
-            'holded_at' => '2016-09-30 06:47:44',
-            'created_at' => '2016-09-30 06:47:44',
-            'updated_at' => 1475218064,
+            'holded_at' => '2016-09-30 06:58:02',
+            'created_at' => '2016-09-30 06:58:02',
+            'updated_at' => 1475218682,
             'revision' => 1,
             'is_examined' => 1,
             'is_approved' => 1,
-            'examined_at' => '2016-09-30 06:47:44',
-            'approved_at' => '2016-09-30 06:47:44',
+            'examined_at' => '2016-09-30 06:58:02',
+            'approved_at' => '2016-09-30 06:58:02',
             'is_deletable' => 1
         ],
     ];
