@@ -176,8 +176,25 @@ class ItemsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $item = TableRegistry::get("Items")->get($id, ['id']);
         $minute_id = $item->minute_id;
+        $delete_order = $item->order_in_minute;
 
         $this->Delete->Item($id);
+
+        // 順番要素を更新する
+        $ordered_items = TableRegistry::get('Items')
+            ->find('all', [
+                'order' => ['Items.order_in_minute' => 'ASC']
+            ])
+            ->where([
+                'Items.minute_id = '.$minute_id,
+                'Items.order_in_minute > '.$delete_order,
+            ]);
+        foreach ($ordered_items as $item) {
+            $item->order_in_minute = $item->order_in_minute - 1;
+            if (!$this->Items->save($item)) {
+                throw new \Exception('Failed to update item order');
+            }
+        }
 
         return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute_id]);
     }
