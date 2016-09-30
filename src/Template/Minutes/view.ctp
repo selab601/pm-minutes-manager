@@ -44,67 +44,65 @@
             <div class="main-contents">
                 <h4>議事録に記録された案件一覧</h4>
                 <!-- 案件一覧 -->
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="table">
 
-                        <div class="table-row header">
-                            <div class="table-content no">No</div>
-                            <div class="table-content category">項目</div>
-                            <div class="table-content text">内容</div>
-                            <div class="table-content primary">優先度</div>
-                            <div class="table-content responsibility">担当</div>
-                            <div class="table-content deadline">期限</div>
-                            <div class="table-content actions"></div>
-                        </div>
-
-                        <?php if (!empty($items)): ?>
-                            <div id="sortable">
-                                <?php foreach ($items as $item): ?>
-                                    <div class="table-row ui-state-default">
-                                        <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-                                        <div class="table-content no">
-                                            <?= h($item->order_in_minute) ?>
-                                        </div>
-                                        <div class="table-content category">
-                                            <?= h($item->item_category_name) ?>
-                                        </div>
-                                        <div class="table-content text">
-                                            <?= nl2br($item->contents) ?>
-                                        </div>
-                                        <div class="table-content primary">
-                                            <?= h($item->primary_char) ?>
-                                        </div>
-                                        <div class="table-content responsibility">
-                                            <?php
-                                                echo "<ul>";
-                                                foreach($item->user_names as $user_name) {
-                                                    echo "<li>".$user_name."</li>";
-                                                }
-                                                echo "</ul>";
-                                            ?>
-                                        </div>
-                                        <div class="table-content deadline">
-                                            <?= h($item->overed_at) ?>
-                                        </div>
-                                        <div class="table-content actions">
-                                            <?= $this->Html->link(__('編集'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
-                                            <?= $this->Form->postLink(__('削除'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
+                    <div class="table-row header">
+                        <div class="table-content no">No</div>
+                        <div class="table-content category">項目</div>
+                        <div class="table-content text">内容</div>
+                        <div class="table-content primary">優先度</div>
+                        <div class="table-content responsibility">担当</div>
+                        <div class="table-content deadline">期限</div>
+                        <div class="table-content actions"></div>
                     </div>
-                        <?php endif; ?>
-                        <center>
-                            <?=
-                                $this->Html->link('新規作成', [
-                                    'controller'=>'Items',
-                                    'action'=>'add',
-                                    $minute->id
-                                ])
-                            ?>
-                        </center>
+
+                    <?php if (!empty($items)): ?>
+                        <div id="sortable">
+                            <?php foreach ($items as $item): ?>
+                                <div class="table-row ui-state-default">
+                                    <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                                    <div class="table-content no">
+                                        <?= h($item->order_in_minute) ?>
+                                    </div>
+                                    <div class="table-content category">
+                                        <?= h($item->item_category_name) ?>
+                                    </div>
+                                    <div class="table-content text">
+                                        <?= nl2br($item->contents) ?>
+                                    </div>
+                                    <div class="table-content primary">
+                                        <?= h($item->primary_char) ?>
+                                    </div>
+                                    <div class="table-content responsibility">
+                                        <?php
+                                            echo "<ul>";
+                                            foreach($item->user_names as $user_name) {
+                                                echo "<li>".$user_name."</li>";
+                                            }
+                                            echo "</ul>";
+                                        ?>
+                                    </div>
+                                    <div class="table-content deadline">
+                                        <?= h($item->overed_at) ?>
+                                    </div>
+                                    <div class="table-content actions">
+                                        <?= $this->Html->link(__('編集'), ['controller' => 'Items', 'action' => 'edit', $item->id]) ?>
+                                        <?= $this->Form->postLink(__('削除'), ['controller' => 'Items', 'action' => 'delete', $item->id], ['confirm' => __('Are you sure you want to delete # {0}?', $item->id)]) ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                 </div>
+                    <?php endif; ?>
+                    <center>
+                        <?=
+                            $this->Html->link('新規作成', [
+                                'controller'=>'Items',
+                                'action'=>'add',
+                                $minute->id
+                            ])
+                        ?>
+                    </center>
             </div>
 
             <div class="side-contents right">

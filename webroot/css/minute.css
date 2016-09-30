@@ -2,19 +2,24 @@
  * 幅の設定
  */
 
-.table {
+div.table {
+  font: 10pt "Tahoma";
+  font-family: 'Inconsolata',"Osaka−等幅","ＭＳ ゴシック", monospace;
+}
+
+div.table {
   width: 100%;
   display: inline-block;
   border-top: 1px solid black;
   border-left: 1px solid black;
 }
 
-.table.right {
+div.table.right {
   border: none;
   padding-left: 20px;
 }
 
-.table-row {
+div.table-row {
   width: 100%;
   display: flex;          display: -webkit-flex;
   flex-direction: row;    -webkit-flex-direction: row;
@@ -150,7 +155,7 @@
 }
 
 .table-content.actions {
-  flex: 0 0 60px;
+  flex: 0 0 50px;
 }
 
 /*
