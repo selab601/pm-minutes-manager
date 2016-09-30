@@ -103,8 +103,8 @@ class MinutesTable extends Table
             ->allowEmpty('approved_at');
 
         $validator
-            ->boolean('is_deleted')
-            ->allowEmpty('is_deleted');
+            ->boolean('is_deletable')
+            ->allowEmpty('is_deletable');
 
         return $validator;
     }

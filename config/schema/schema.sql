@@ -63,7 +63,7 @@ CREATE
         is_approved TINYINT(1) DEFAULT 0,
         examined_at DATETIME,
         approved_at DATETIME,
-        is_deleted TINYINT(1) DEFAULT 0,
+        is_deletable TINYINT(1) DEFAULT 0,
         FOREIGN KEY project_key(project_id) REFERENCES projects(id),
         PRIMARY KEY (id)
         );
