@@ -253,6 +253,7 @@
                         承認
                       </div>
                       <div class="table-content column-td" id="column-first">
+                        <?= $minute->examined_at->format('Y-m-d') ?>
                       </div>
                     </div>
                   </div>
@@ -262,6 +263,7 @@
                         審査
                       </div>
                       <div class="table-content column-td">
+                        <?= $minute->approved_at->format('Y-m-d') ?>
                       </div>
                     </div>
                   </div>
@@ -271,6 +273,7 @@
                         作成
                       </div>
                       <div class="table-content column-td">
+                        <?= $minute->created_at->format('Y-m-d') ?>
                       </div>
                     </div>
                   </div>
