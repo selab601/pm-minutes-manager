@@ -10,6 +10,10 @@
   </head>
   <script>
       $(document).ready(function() {
+          $(".table-content.text").each(function() {
+              ApplyLineBreaks(this);
+          })
+
           var page_no = 1;
           var i = 0;
           while (true) {
@@ -96,6 +100,54 @@
           return (subpage_bottom < table_bottom);
       }
 
+      // 複数行に渡っている箇所は改行文字を付加する
+      function ApplyLineBreaks(text) {
+          var MAX_BYTE = 28 * 2;
+          var new_lines = [];
+          var lines = $(text).text().split('\n');
+          for(var i=0; i<lines.length; i++) {
+              if (countLength(lines[i]) > MAX_BYTE) {
+                  var new_line = "";
+                  var bytes = 0;
+                  for (var j=0; j<lines[i].length; j++) {
+                      bytes += countByte(lines[i].charCodeAt(j));
+                      if (bytes > MAX_BYTE) {
+                          new_lines.push(new_line);
+                          new_line = "";
+                          bytes = countByte(lines[i].charCodeAt(j));
+                      }
+                      new_line += lines[i][j];
+                  }
+
+                  if (!(new_line === "")) {
+                      new_lines.push(new_line);
+                  }
+              } else {
+                  new_lines.push(lines[i]);
+              }
+          }
+          $(text).html(new_lines.join('<br>'))
+      }
+
+      function countByte(c) {
+          // Shift_JIS: 0x0 ～ 0x80, 0xa0 , 0xa1 ～ 0xdf , 0xfd ～ 0xff
+          // Unicode : 0x0 ～ 0x80, 0xf8f0, 0xff61 ～ 0xff9f, 0xf8f1 ～ 0xf8f3
+          if ( (c >= 0x0 && c < 0x81) || (c == 0xf8f0) || (c >= 0xff61 && c < 0xffa0) || (c >= 0xf8f1 && c < 0xf8f4)) {
+              return 1;
+          } else {
+              return 2;
+          }
+      }
+
+      function countLength(str) {
+          var r = 0;
+          for (var i = 0; i < str.length; i++) {
+              var c = str.charCodeAt(i);
+              r += countByte(c);
+          }
+          return r;
+      }
+
       // 案件の内容を，改ページしている場所で分割する
       function splitTextInItem($item, page_no) {
           var page_index = page_no - 1;
@@ -114,7 +166,7 @@
           var all_line_numbers = item_height/line_height;
           var breaked_line_numbers = breaked_height/line_height;
 
-          var lines = $item.children(".text").text().split('\n');
+          var lines = $item.children(".text").html().split('<br>');
 
           var index = all_line_numbers - breaked_line_numbers - 1;
           var text = lines.slice(0, index-1);
