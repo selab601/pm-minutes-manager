@@ -253,7 +253,9 @@
                         承認
                       </div>
                       <div class="table-content column-td" id="column-first">
-                        <?= $minute->examined_at->format('Y-m-d') ?>
+                        <?= $minute->examined_at->format('Y/m/d') ?>
+                        <?= "<br>" ?>
+                        <?= $minute->examined_user_name ?>
                       </div>
                     </div>
                   </div>
@@ -263,7 +265,9 @@
                         審査
                       </div>
                       <div class="table-content column-td">
-                        <?= $minute->approved_at->format('Y-m-d') ?>
+                        <?= $minute->approved_at->format('Y/m/d') ?>
+                        <?= "<br>" ?>
+                        <?= $minute->approved_user_name ?>
                       </div>
                     </div>
                   </div>
@@ -273,7 +277,7 @@
                         作成
                       </div>
                       <div class="table-content column-td">
-                        <?= $minute->created_at->format('Y-m-d') ?>
+                        <?= $minute->created_at->format('Y/m/d') ?>
                       </div>
                     </div>
                   </div>

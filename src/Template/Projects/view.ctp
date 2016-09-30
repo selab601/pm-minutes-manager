@@ -32,6 +32,8 @@
                                 <td>
                                     <?php
                                         if($minutes->is_examined) {
+                                            echo $minutes->examined_user_name;
+                                            echo "<br>";
                                             echo $minutes->examined_at;
                                         } else {
                                             echo $this->Form->postLink(__('審査'), [
@@ -48,6 +50,8 @@
                                 <td>
                                     <?php
                                         if($minutes->is_approved) {
+                                            echo $minutes->approved_user_name;
+                                            echo "<br>";
                                             echo $minutes->approved_at;
                                         } else {
                                             echo $this->Form->postLink(__('承認'), [

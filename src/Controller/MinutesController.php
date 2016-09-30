@@ -26,7 +26,7 @@ class MinutesController extends AppController
         }
 
         // 自分の参加しているプロジェクトの議事録であれば編集，閲覧が可能
-        if (in_array($this->request->action, ['edit', 'view', 'createHtml', 'delete'])) {
+        if (in_array($this->request->action, ['edit', 'view', 'createHtml', 'delete', 'examine', 'approve'])) {
             $minute_id = $this->request->params['pass'][0];
             $minute = $this->Minutes->get($minute_id);
             $user_id = $this->request->session()->read('Auth.User.id');
@@ -193,6 +193,12 @@ class MinutesController extends AppController
         $minute = $this->Minutes->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $user_name = $this->request->session()->read('Auth.User.last_name')
+                . " " . $this->request->session()->read('Auth.User.first_name');
+
+            $minute->examined_by = $user_id;
+            $minute->examined_user_name = $user_name;
             $minute->is_examined = true;
             $minute->set('examined_at', time());
             $minute->is_deletable = false;
@@ -208,6 +214,11 @@ class MinutesController extends AppController
         $minute = $this->Minutes->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $user_name = $this->request->session()->read('Auth.User.last_name')
+                . " " . $this->request->session()->read('Auth.User.first_name');
+            $minute->approved_by = $user_id;
+            $minute->approved_user_name = $user_name;
             $minute->is_approved = true;
             $minute->set('approved_at', time());
             if (!$this->Minutes->save($minute)) {
