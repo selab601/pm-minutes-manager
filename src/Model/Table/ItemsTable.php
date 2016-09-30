@@ -92,6 +92,21 @@ class ItemsTable extends Table
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
 
+        $validator
+            ->boolean('is_followed')
+            ->allowEmpty('is_followed');
+
+        $validator
+            ->integer('followed_by')
+            ->allowEmpty('followed_by');
+
+        $validator
+            ->allowEmpty('followed_user_name');
+
+        $validator
+            ->dateTime('followed_at')
+            ->allowEmpty('followed_at');
+
         return $validator;
     }
 

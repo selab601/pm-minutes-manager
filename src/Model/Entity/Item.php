@@ -16,6 +16,10 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $overed_at
  * @property \Cake\I18n\Time $created_at
  * @property \Cake\I18n\Time $updated_at
+ * @property bool $is_followed
+ * @property int $followed_by
+ * @property string $followed_user_name
+ * @property \Cake\I18n\Time $followed_at
  *
  * @property \App\Model\Entity\Minute $minute
  * @property \App\Model\Entity\ItemCategory $item_category

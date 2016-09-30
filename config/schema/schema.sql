@@ -69,8 +69,6 @@ CREATE
         approved_user_name VARCHAR(201),
         is_deletable TINYINT(1) DEFAULT 1,
         FOREIGN KEY project_key(project_id) REFERENCES projects(id),
-        FOREIGN KEY approver_by_key(approved_by) REFERENCES users(id),
-        FOREIGN KEY examined_by_key(examined_by) REFERENCES users(id),
         PRIMARY KEY (id)
         );
 
@@ -107,6 +105,10 @@ CREATE
         overed_at DATE,
         created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+        is_followed TINYINT(1),
+        followed_by INT,
+        followed_user_name VARCHAR(201),
+        followed_at DATETIME,
         FOREIGN KEY minute_key(minute_id) REFERENCES minutes(id),
         FOREIGN KEY item_category_key(item_category_id) REFERENCES item_categories(id),
         PRIMARY KEY (id)
