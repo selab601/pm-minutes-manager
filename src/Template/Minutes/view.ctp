@@ -88,11 +88,15 @@
                                         </div>
                                         <div class="table-content responsibility">
                                             <?php
-                                                echo "<ul>";
-                                                foreach($item->user_names as $user_name) {
-                                                    echo "<li>".$user_name."</li>";
+                                                if (empty($item->user_names)) {
+                                                    echo "-";
+                                                } else {
+                                                    echo "<ul>";
+                                                    foreach($item->user_names as $user_name) {
+                                                        echo "<li>".$user_name."</li>";
+                                                    }
+                                                    echo "</ul>";
                                                 }
-                                                echo "</ul>";
                                             ?>
                                         </div>
                                         <div class="table-content deadline">

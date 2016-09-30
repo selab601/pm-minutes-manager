@@ -327,15 +327,25 @@
                       </div>
                       <div class="table-content responsibility">
                         <?php
-                        echo "<ul>";
-                        foreach($item->user_names as $user_name) {
-                          echo "<li>".$user_name."</li>";
-                        }
-                        echo "</ul>";
+                            if (empty($item->user_names)) {
+                                echo "-";
+                            } else {
+                                echo "<ul>";
+                                foreach($item->user_names as $user_name) {
+                                    echo "<li>".$user_name."</li>";
+                                }
+                                echo "</ul>";
+                            }
                         ?>
                       </div>
                       <div class="table-content deadline">
-                        <?= h($item->overed_at) ?>
+                        <?php
+                            if ($item->overed_at != NULL) {
+                                echo $item->overed_at->format('Y/m/d');
+                            } else {
+                                echo "-";
+                            }
+                        ?>
                       </div>
                       <div class="table-content follow">
                         <?php
