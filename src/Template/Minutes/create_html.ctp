@@ -273,7 +273,7 @@
                       <div class="table-content column-td">
                           <?php
                               if ($minute->is_approved) {
-                                  echo $minute->aproved_at->format('Y/m/d');
+                                  echo $minute->approved_at->format('Y/m/d');
                                   echo "<br>";
                                   echo $minute->approved_user_name;
                               } else {
