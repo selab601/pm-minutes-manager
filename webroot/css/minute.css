@@ -3,7 +3,8 @@
  */
 
 div.table {
-  font: 10pt "Tahoma";
+  font-size: 13.5px;
+  line-height: 13.5px;
   font-family: 'Inconsolata',"Osaka−等幅","ＭＳ ゴシック", monospace;
 }
 
@@ -123,6 +124,7 @@ div.table-row {
 .table-content.minute-name {
   text-align: left;
   font-size: 22px;
+  line-height: 22px;
   font-weight: bold;
 }
 

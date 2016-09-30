@@ -4,8 +4,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #FAFAFA;
-    font: 10pt "Tahoma";
-    font-family: 'Inconsolata',"Osaka−等幅","ＭＳ ゴシック", monospace;
 }
 
 * {
@@ -67,7 +65,7 @@ body {
 .contents-header {
     padding: 0;
     margin: 0;
-    flex: 1;
+    height: 200px;
     padding-bottom: 20px;
 }
 

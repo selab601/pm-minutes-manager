@@ -5,6 +5,7 @@
         <?= $this->html->css('main.css') ?>
         <?= $this->html->css('minute.css') ?>
         <?= $this->html->script(['jquery.js', 'jquery-ui.min.js', 'bootstrap.min.js', 'common.js']) ?>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     </head>
     <script>
         $(function () {
