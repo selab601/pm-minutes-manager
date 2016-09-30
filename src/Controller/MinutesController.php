@@ -236,8 +236,8 @@ class MinutesController extends AppController
             $items = $this->Minutes->Items
                 ->find("all", ['order' => ['Items.order_in_minute' => 'ASC']])
                 ->where(["Items.minute_id=".$minute_id]);
-            foreach ($items as $key => $item) {
-                $item->order_in_minute = $orders[$key];
+            foreach ($items as $item) {
+                $item->order_in_minute = array_search($item->order_in_minute, $orders)+1;
                 if (!$this->Minutes->Items->save($item)) {
                     echo "error";
                     exit();
