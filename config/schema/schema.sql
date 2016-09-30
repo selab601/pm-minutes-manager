@@ -65,6 +65,8 @@ CREATE
         approved_at DATETIME,
         examined_by INT,
         approved_by INT,
+        examined_user_name VARCHAR(201),
+        approved_user_name VARCHAR(201),
         is_deletable TINYINT(1) DEFAULT 0,
         FOREIGN KEY project_key(project_id) REFERENCES projects(id),
         FOREIGN KEY approver_by_key(approved_by) REFERENCES users(id),

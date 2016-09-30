@@ -20,6 +20,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $approved_at
  * @property int $examined_by
  * @property int $approved_by
+ * @property string $examined_user_name
+ * @property string $approved_user_name
  * @property bool $is_deletable
  *
  * @property \App\Model\Entity\Project $project

@@ -111,6 +111,12 @@ class MinutesTable extends Table
             ->allowEmpty('approved_by');
 
         $validator
+            ->allowEmpty('examined_user_name');
+
+        $validator
+            ->allowEmpty('approved_user_name');
+
+        $validator
             ->boolean('is_deletable')
             ->allowEmpty('is_deletable');
 
