@@ -139,7 +139,7 @@ div.table-row {
 }
 
 .table-content.text {
-  flex: 1;
+    width: 390px;
 }
 
 .table-content.primary {
@@ -155,7 +155,7 @@ div.table-row {
 }
 
 .table-content.actions {
-  flex: 0 0 50px;
+    flex: 1;
 }
 
 /*
@@ -208,4 +208,16 @@ div.table-row {
 
 .header>.table-content {
   text-align: center;
+}
+
+/* 議事録閲覧画面用 */
+
+.page-in-minute-view {
+    width: 228mm;
+    padding: 10mm;
+    margin: 10mm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
