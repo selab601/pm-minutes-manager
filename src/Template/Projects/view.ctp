@@ -54,14 +54,18 @@
                                             echo "<br>";
                                             echo $minutes->approved_at;
                                         } else {
-                                            echo $this->Form->postLink(__('承認'), [
-                                                'controller' => 'Minutes',
-                                                'action' => 'approve',
-                                                $minutes->id
-                                            ],
-                                            [
-                                                'confirm' => "議事録を承認済みとして記録して良いですか? この操作は取り消せません"
-                                            ]);
+                                            if ($minutes->is_examined) {
+                                                echo $this->Form->postLink(__('承認'), [
+                                                    'controller' => 'Minutes',
+                                                    'action' => 'approve',
+                                                    $minutes->id
+                                                ],
+                                                [
+                                                    'confirm' => "議事録を承認済みとして記録して良いですか? この操作は取り消せません"
+                                                ]);
+                                            } else {
+                                                echo "審査待ち";
+                                            }
                                         }
                                     ?>
                                 </td>
