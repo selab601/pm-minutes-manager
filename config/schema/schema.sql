@@ -63,8 +63,12 @@ CREATE
         is_approved TINYINT(1) DEFAULT 0,
         examined_at DATETIME,
         approved_at DATETIME,
+        examined_by INT,
+        approved_by INT,
         is_deletable TINYINT(1) DEFAULT 0,
         FOREIGN KEY project_key(project_id) REFERENCES projects(id),
+        FOREIGN KEY approver_by_key(approved_by) REFERENCES users(id),
+        FOREIGN KEY examined_by_key(examined_by) REFERENCES users(id),
         PRIMARY KEY (id)
         );
 

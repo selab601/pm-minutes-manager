@@ -18,6 +18,8 @@ use Cake\ORM\Entity;
  * @property bool $is_approved
  * @property \Cake\I18n\Time $examined_at
  * @property \Cake\I18n\Time $approved_at
+ * @property int $examined_by
+ * @property int $approved_by
  * @property bool $is_deletable
  *
  * @property \App\Model\Entity\Project $project
