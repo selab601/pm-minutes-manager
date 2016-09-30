@@ -125,11 +125,11 @@ div.table-row {
   text-align: left;
   font-size: 22px;
   line-height: 22px;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 .table-content.header {
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 .table-content.no {
@@ -193,7 +193,7 @@ div.table-row {
 
 .table-row.header>.table-content {
   background-color: #FFEEDB;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 /*
