@@ -31,6 +31,11 @@
                     array_push($checked_users_array, $user->projects_user_id);
                 }
             }
+            if ($item->overed_at == NULL) {
+                $default_overed_at = "";
+            } else {
+                $default_overed_at = $item->overed_at->format('Y/m/d');
+            }
         ?>
 
         <div class="form-container-wrapper">
@@ -63,6 +68,7 @@
                             'label' => '期限 : ',
                             'type' => 'text',
                             'id' => 'datepicker',
+                            'value' => $default_overed_at,
                         ]);
                     ?>
                     <div class="checkbox-form form-container-field add-item">
