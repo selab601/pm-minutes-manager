@@ -14,23 +14,23 @@ body {
     min-width: 100%;
 }
 
+/**** 全体のレイアウト ****/
+
 .container {
     margin-top: 50px;
 }
 
 .contents {
-    display: flex;
-    display: -webkit-flex;
+    display: flex; display: -webkit-flex;
     flex-direction: row;
-    padding-top: 40px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding: 40px 40px 0 40px;
 }
 
 .side-contents {
+    flex: 0 0 400px;
     width: 400px;
     padding: 25px;
-    background-color: #ddd;
+    background-color: #e7e7e7;
 
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -46,16 +46,25 @@ body {
 }
 
 .main-contents {
-    flex: 1;
+    flex: 0 0 1;
+    -webkit-flex: 1;
+
     padding: 25px;
-    background-color: #ddd;
+    background-color: #e7e7e7;
 
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
+
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
+    flex-direction: column;
 }
 
-/* table */
+/*************************/
+
+/********* table *********/
 
 table, td, th {
     border: 2px solid black;
@@ -64,6 +73,7 @@ table, td, th {
 table {
     width : 100%;
     border-collapse: collapse;
+    margin-top: 24px;
 }
 
 table>th {
@@ -71,12 +81,24 @@ table>th {
 }
 
 th, td {
-    prgging: 10px;
+    padding: 10px;
     text-align: left;
 }
 
-th {
+/* テーブルの種類毎に色を変更 */
+
+table.user th {
+    background-color: #4CAFFF;
+    color: white;
+}
+
+table.project th {
     background-color: #4CAF50;
+    color: white;
+}
+
+table.minute th {
+    background-color: #FFAF50;
     color: white;
 }
 
@@ -84,7 +106,10 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* header */
+/*************************/
+
+/******** header ********/
+
 .flex-navbar {
     width: 100%;
     height: 50px;
@@ -96,16 +121,11 @@ tr:nth-child(even) {
 
 .flex-navbar-header {
     width: 100px;
-
-    /* 縦横中央揃え */
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
-
     background-color: #ddd;
+
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 .flex-navbar-header>a {
@@ -123,31 +143,21 @@ ul.flex-navbar-contents {
     border: 1px solid #e7e7e7;
     background-color: #f3f3f3;
 
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -webkit-justify-content: flex-end;
-    justify-content: flex-end;
+    display: flex;             display: -webkit-flex;
+    flex-direction: row;       -webkit-flex-direction: row;
+    justify-content: flex-end; -webkit-justify-content: flex-end;
 }
 
 ul.flex-navbar-contents>li {
-    /* 縦横中央揃え */
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 ul.flex-navbar-contents>li a {
     display: block;
     color: #666;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 10px 20px 10px 20px;
     text-decoration: none;
 }
 
@@ -160,16 +170,18 @@ ul.flex-navbar-contents>li a.active {
     background-color: #4CAF50;
 }
 
+/*************************/
+
+/******* コンテナ ********/
+
 /* ログインコンテナ */
 
 .login-container-wrapper {
     width: 100%;
     height: 100vh;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
+    display: flex;           display: -webkit-flex;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 .login-container {
@@ -182,18 +194,15 @@ ul.flex-navbar-contents>li a.active {
     border: 1px solid #e7e7e7;
     background-color: #f3f3f3;
 
-    display: flex;
-    display: -webkit-flex;
+    display: flex; display: -webkit-flex;
     flex-direction: column;
 }
 
 .login-container>.form-group {
     flex: 1;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
     flex-direction: row;
 }
 
@@ -205,12 +214,9 @@ ul.flex-navbar-contents>li a.active {
     font-size: 20px;
     font-weight: bold;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 .login-container>.form-group>input {
@@ -221,20 +227,15 @@ ul.flex-navbar-contents>li a.active {
     flex: 1;
     width: 100%;
 
-    display: flex;
-    flex-direction: row;
+    display: flex; flex-direction: row;
 }
 
 .login-container-footer-content {
     width: 50%;
 
-    display: flex;
-    display: -webkit-flex;
-
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 .login-container-footer-content>button {
@@ -250,28 +251,27 @@ ul.flex-navbar-contents>li a.active {
     font-size: 20px;
 }
 
+/********************/
+
 /* フォームコンテナ */
 
 .form-container-wrapper {
     width: 100%;
     height: 100vh;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-justify-content: center; /* 横方向中央揃え（Safari用） */
-    justify-content: center; /* 横方向中央揃え */
+    display: flex;           display: -webkit-flex;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 .form-container {
     width: 800px;
     margin-top: 50px;
     padding: 30px 50px 30px 50px;
-
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #e7e7e7;
     background-color: #f3f3f3;
 
-    display: flex;
-    display: -webkit-flex;
+    display: flex; display: -webkit-flex;
     flex-direction: column;
 }
 
@@ -279,22 +279,48 @@ ul.flex-navbar-contents>li a.active {
     flex: 1;
     width: 100%;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    flex-direction: column;
+    display: flex;          display: -webkit-flex;
+    align-items: center;    -webkit-align-items: center;
+    flex-direction: column; -webkit-flex-wrap: wrap;
 }
+
+.form-container-field {
+    width: 100%;
+    flex: 1;                   -webkit-flex: 1;
+
+    display: flex;             display: -webkit-flex;
+    align-items: center;       -webkit-align-items: center;
+    justify-content: flex-end; -webkit-justify-content: flex-end;
+    flex-direction: row;
+}
+
+.form-container-field>label {
+    maring: 0px;
+    padding: 0px;
+    padding-right: 10px;
+
+    width: 180px;
+    font-size: 20px;
+    font-weight: bold;
+
+    display: flex;             display: -webkit-flex;
+    align-items: center;       -webkit-align-items: center;
+    justify-content: flex-end; -webkit-justify-content: flex-end;
+}
+
+.form-container-field-input {
+    flex: 1;
+    width: 100%;
+}
+
 
 .form-container-footer {
     height: 70px;
+    width: 100%;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: flex-end;
-    justify-content: flex-end;
+    display: flex;             display: -webkit-flex;
+    align-items: center;       -webkit-align-items: center;
+    justify-content: flex-end; -webkit-justify-content: flex-end;
 }
 
 .form-container-footer>button {
@@ -304,60 +330,55 @@ ul.flex-navbar-contents>li a.active {
     font-weight: bold;
 }
 
-.form-container-fields-field {
-    width: 100%;
-    flex: 1;
+/********************/
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
+/* 年月 */
+
+.date-form {
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
     flex-direction: row;
 }
 
-.form-container-fields-field>label {
-    maring: 0px;
-    padding: 0px;
+.date-form select {
+    flex: 1;
+    margin-right: 10px;
     padding-right: 10px;
-
-    width: 180px;
-    font-size: 20px;
-    font-weight: bold;
-
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: flex-end; /* 横方向中央揃え（Safari用） */
-    justify-content: flex-end; /* 横方向中央揃え */
 }
 
-.form-container-fields-field-input {
+.date-form .form-container-field-input {
     flex: 1;
+    margin-right: 10px;
+    padding-right: 10px;
 }
 
 /* 名前 */
 
 .name-form {
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
     flex-direction: row;
 }
 
 .name-form>input {
-    flex: 1;
+    flex: 1;  -webkit-flex: 1;
+}
+
+#name-form-first-name {
+    margin-left: 5px;
+}
+
+#name-form-last-name {
+    margin-right: 5px;
 }
 
 /* チェックボックス */
 
 .checkbox-form {
-    height: 270px;
+    width: 100%;
     overflow-y: scroll;
 
-    display: flex;
-    display: -webkit-flex;
+    display: flex;  display: -webkit-flex;
 }
 
 .checkbox-form>label {
@@ -369,46 +390,40 @@ ul.flex-navbar-contents>li a.active {
     font-size: 20px;
     font-weight: bold;
 
-    display: flex;
-    display: -webkit-flex;
-    -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
-    align-items: center; /* 縦方向中央揃え */
-    -webkit-justify-content: flex-end; /* 横方向中央揃え（Safari用） */
-    justify-content: flex-end; /* 横方向中央揃え */
+    display: flex;             display: -webkit-flex;
+    align-items: center;       -webkit-align-items: center;
+    justify-content: flex-end; -webkit-justify-content: flex-end;
 }
 
+/* スクロールする方 */
 .checkbox-form-input-wrapper {
-    flex: 1;
+    flex: 1;                     -webkit-flex: 1;
+    justify-content: flex-start; -webkit-justify-content: flex-start;
+
     height: 100%;
     overflow-y: scroll;
+
+    border: 1px black solid;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
 }
 
+/* スクロールされる方 */
 .checkbox-form-input {
-    display: flex;
-    display: -webkit-flex;
-
-    -webkit-align-items: center;
-    align-items: center;
-
-    -webkit-justify-content: center;
-    justify-content: center;
-
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
-
-    -webkit-align-content: flex-end;
-    align-content: flex-end;
+    display: flex;           display: -webkit-flex;
+    align-items: flex-start; -webkit-align-items: flex-start;
+    justify-content: flex-start; -webkit-justify-content: flex-start;
+    flex-direction: row;     -webkit-flex-direction: row;
+    flex-wrap: wrap;         -webkit-flex-wrap: wrap;
+    flex-flow: row wrap;     -webkit-flex-flow: row wrap;
+    align-content: flex-end; -webkit-align-content: flex-end;
 }
 
 .checkbox-form-input>.checkbox {
-    width: 180px;
+    flex: 0 0 180px;
     padding: 5px;
-    margin: 0;
+    margin: 5px;
 }
 
 .checkbox-form-input>.checkbox>label {
@@ -426,31 +441,222 @@ ul.flex-navbar-contents>li a.active {
     padding-left: 10px;
 }
 
-/* 各コンテナの高さ */
+/********* 各ページ個別の設定 **********/
 
-#add-user-container {
+/*** ユーザ追加画面 ***/
+
+.form-container.add-user {
     height: 400px;
+    width: 800px;
 }
 
-#add-project-container {
-    width: 1100px;
-    height: 700px;
+.form-container-fields.add-user {
+    height: 200px;
 }
 
-#add-minute-container {
+/*** プロジェクト追加画面 ***/
+
+.form-container.add-project {
+    width: 800px;
+    height: 640px;
+}
+
+.form-container-fields.add-project {
+    width: 700px;
+    height: 450px;
+}
+
+.form-container-fields.add-project.form-container-field {
+    height: 100px;
+}
+
+.checkbox-form.add-project {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex: 0 0 200px;
+}
+
+/*** 議事録追加画面 ***/
+
+.form-container.add-minute {
     width: 800px;
     height: 600px;
 }
 
-#minute-checkbox-form {
-    height: 270px;
-}
-
-#add-item-container {
+.form-container-fields.add-minute {
     width: 700px;
-    height: 600px;
+    height: 400px;
 }
 
-#item-checkbox-form {
-    height: 200px;
+.form-container-fields.add-minute .form-container-field {
+    height: 100px;
+}
+
+.checkbox-form.add-minute {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex: 0 0 200px;
+}
+
+/*** 案件追加画面 ***/
+
+.form-container.add-item {
+    width: 900px;
+    height: 700px;
+}
+
+.form-container-fields.add-item {
+    width: 800px;
+    height: 500px;
+}
+
+.form-container-fields.add-item.form-container-field {
+    height: 100px;
+}
+
+.checkbox-form.add-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex: 0 0 200px;
+}
+
+/*** ユーザ画面 ***/
+
+.main-contents.users-view {
+    flex: 0 0 500px;
+}
+
+.contents.users-view {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.main-contents.users-projects-view {
+    flex: 0 0 800px;
+}
+
+.contents.users-projects-view {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+/* ユーザ詳細テーブル */
+
+.user-detail-table {
+    width: 400px;
+}
+
+.user-detail-table th {
+    width: 100px;
+}
+
+/* プロジェクトテーブル */
+
+table.project-table {
+    width: 700px;
+}
+
+.project-table-content.project-name {
+    width: 50%;
+}
+
+.project-table-content.started-at {
+    width: 35%;
+    text-align: center;
+}
+
+td.project-table-content.project-name {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.project-table-content.view-minutes {
+    width: 15%;
+    text-align: center;
+}
+
+/* 議事録テーブル */
+
+table.minute.projects-view {
+    width: 850px;
+}
+
+.minute-table-content.minute-name {
+    width: 50%;
+}
+
+td.minute-table-content.minute-name {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.minute-table-content.holded-at {
+    width: 12%;
+    text-align: center;
+}
+
+td.minute-table-content.holded-at {
+    font-size: 14px;
+}
+
+.minute-table-content.examined-at {
+    width: 12%;
+    text-align: center;
+}
+
+td.minute-table-content.examined-at {
+    font-size: 14px;
+}
+
+.minute-table-content.approved-at {
+    width: 12%;
+    text-align: center;
+}
+
+td.minute-table-content.approved-at {
+    font-size: 14px;
+}
+
+.minute-table-content.is-deletable {
+    width: 7%;
+    text-align: center;
+}
+
+td.minute-table-content.is-deletable {
+    font-size: 14px;
+}
+
+.minute-table-content.action {
+    width: 7%;
+    text-align: center;
+}
+
+/* プロジェクト詳細テーブル */
+
+.project-detail-table th {
+    width: 130px;
+}
+
+/* プロジェクト参加者テーブル */
+
+.project-member-table .project-member {
+    width: 50%;
+    text-align: center;
+}
+
+/* 議事録詳細テーブル */
+
+.minute-detail-table th {
+    width: 90px;
+}
+
+/* 参加者テーブル */
+
+.participation-table .project-member {
+    width: 40%;
+}
+
+.participation-table .participation {
+    width: 10%;
+    text-align: center;
 }

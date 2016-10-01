@@ -121,7 +121,7 @@ class ProjectsController extends AppController
                 }
 
                 $user_id = $this->request->session()->read('Auth.User.id');
-                return $this->redirect(['controller' => 'users', 'action' => 'view', $user_id]);
+                return $this->redirect(['controller' => 'users', 'action' => 'projectsView', $user_id]);
             } else {
                 throw new \Exception('Failed to save project entity');
             }
@@ -189,7 +189,7 @@ class ProjectsController extends AppController
                     }
                 }
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $id]);
             } else {
                 throw new \Exception('Failed to edit project entity');
             }
@@ -226,10 +226,8 @@ class ProjectsController extends AppController
         $project->name = $data["name"];
         $project->budget = $data["budget"];
         $project->customer_name = $data["customer_name"];
-        $started_at_date = $data["started_at"]["year"] . "-" . $data["started_at"]["month"] . "-" . $data["started_at"]["day"];
-        $project->started_at = $started_at_date;
-        $finished_at_date = $data["finished_at"]["year"] . "-" . $data["finished_at"]["month"] . "-" . $data["finished_at"]["day"];
-        $project->finished_at = $finished_at_date;
+        $project->started_at = $data["started_at"];
+        $project->finished_at = $data["finished_at"];
 
         return $project;
     }
@@ -248,8 +246,8 @@ class ProjectsController extends AppController
             }
         } else {
             $member = TableRegistry::get('ProjectsUsers')->newEntity();
-            $member->project_id = $id;
-            $member->user_id = $add_member_id;
+            $member->project_id = $project_id;
+            $member->user_id = $member_id;
             $member->role_id = $role_id;
             if (!TableRegistry::get('ProjectsUsers')->save($member)) {
                 throw new \Exception('Failed to save projects_users entity');

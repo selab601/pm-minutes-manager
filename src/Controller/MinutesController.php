@@ -109,8 +109,7 @@ class MinutesController extends AppController
             $minute->project_id = $id;
             $minute->name = $data['name'];
             $minute->holded_place = $data['holded_place'];
-            $holded_at_date = $data["holded_at"]["year"] . "-" . $data["holded_at"]["month"] . "-" . $data["holded_at"]["day"] . " " . $data["holded_at"]["hour"] . ":" . $data["holded_at"]["minute"];
-            $minute->holded_at = $holded_at_date;
+            $minute->holded_at = $data['holded_at'];
             $minute->set('created_at', time());
             $minute->set('updated_at', time());
 

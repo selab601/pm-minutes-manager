@@ -156,20 +156,14 @@
 
             <div class="side-contents right">
                 <h4>議事録の詳細</h4>
-                <table class="table">
-                    <tr>
-                        <th>プロジェクト名</th>
-                        <td>
-                            <?= $minute->has('project') ? $this->Html->link($minute->project->name, ['controller' => 'Projects', 'action' => 'view', $minute->project->id]) : '' ?>
-                        </td>
-                    </tr>
+                <table class="table minute minute-detail-table">
                     <tr>
                         <th>議事録名</th>
                         <td><b><?= h($minute->name) ?></b></td>
                     </tr>
                     <tr>
                         <th>日時</th>
-                        <td><?= h($minute->holded_at) ?></td>
+                        <td><?= h($minute->holded_at->format('Y/m/d H:m')) ?></td>
                     </tr>
                     <tr>
                         <th>場所</th>
@@ -177,21 +171,23 @@
                     </tr>
                     <tr>
                         <th>作成日</th>
-                        <td><?= h($minute->created_at) ?></td>
+                        <td><?= h($minute->created_at->format('Y/m/d')) ?></td>
                     </tr>
                     <tr>
                         <th>更新日</th>
-                        <td><?= h($minute->updated_at) ?></td>
+                        <td><?= h($minute->updated_at->format('Y/m/d')) ?></td>
                     </tr>
                 </table>
 
                 <!-- 出席情報 -->
-                <table class="table">
+                <table class="table minute participation-table">
                     <tr><th colspan="6">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</th></tr>
                     <?= $this->element('userTable', [
                         "users"=>$user_array,
                         "add_participation"=>true,
                         "col_num"=>2,
+                        "classes"=>"project-member",
+                        "participation_classes"=>"participation",
                         ]) ?>
                 </table>
 
