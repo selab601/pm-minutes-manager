@@ -457,12 +457,12 @@ ul.flex-navbar-contents>li a.active {
 /*** プロジェクト追加画面 ***/
 
 .form-container.add-project {
-    width: 800px;
+    width: 900px;
     height: 640px;
 }
 
 .form-container-fields.add-project {
-    width: 700px;
+    width: 800px;
     height: 450px;
 }
 
