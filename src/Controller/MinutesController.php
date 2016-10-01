@@ -103,6 +103,7 @@ class MinutesController extends AppController
             ->all()->toArray();
 
         if ($this->request->is('post')) {
+            $now = new \DateTime();
 
             $data= $this->request->data;
 
@@ -110,8 +111,8 @@ class MinutesController extends AppController
             $minute->name = $data['name'];
             $minute->holded_place = $data['holded_place'];
             $minute->holded_at = $data['holded_at'];
-            $minute->set('created_at', time());
-            $minute->set('updated_at', time());
+            $minute->created_at = $now->format('Y-m-d H:i:s');
+            $minute->updated_at = $now->format('Y-m-d H:i:s');
 
             if ($this->Minutes->save($minute)) {
 
@@ -192,6 +193,7 @@ class MinutesController extends AppController
         $minute = $this->Minutes->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $now = new \DateTime();
             $user_id = $this->request->session()->read('Auth.User.id');
             $user_name = $this->request->session()->read('Auth.User.last_name')
                 . " " . $this->request->session()->read('Auth.User.first_name');
@@ -199,7 +201,7 @@ class MinutesController extends AppController
             $minute->examined_by = $user_id;
             $minute->examined_user_name = $user_name;
             $minute->is_examined = true;
-            $minute->set('examined_at', time());
+            $minute->examined_at = $now->format('Y-m-d H:i:s');
             $minute->is_deletable = false;
             if (!$this->Minutes->save($minute)) {
                 throw new \Exception('Failed to examine minute');
@@ -213,13 +215,14 @@ class MinutesController extends AppController
         $minute = $this->Minutes->get($id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $now = new \DateTime();
             $user_id = $this->request->session()->read('Auth.User.id');
             $user_name = $this->request->session()->read('Auth.User.last_name')
                 . " " . $this->request->session()->read('Auth.User.first_name');
             $minute->approved_by = $user_id;
             $minute->approved_user_name = $user_name;
             $minute->is_approved = true;
-            $minute->set('approved_at', time());
+            $minute->approved_at = $now->format('Y-m-d H:i:s');
             if (!$this->Minutes->save($minute)) {
                 throw new \Exception('Failed to approve minute');
             }

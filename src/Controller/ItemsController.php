@@ -91,11 +91,12 @@ class ItemsController extends AppController
         $minute = $this->Items->Minutes->get($minute_id);
 
         if ($this->request->is('post')) {
+            $now = new \DateTime();
             $item = $this->Items->patchEntity($item, $this->request->data);
             $item->order_in_minute = $this->getMaxItemOrderNo($minute_id);
             $item->minute_id = $minute->id;
-            $item->set('created_at', time());
-            $item->set('updated_at', time());
+            $item->updated_at = $now->format('Y-m-d H:i:s');
+            $item->created_at = $now->format('Y-m-d H:i:s');
 
             if ($this->Items->save($item)) {
 
@@ -169,13 +170,14 @@ class ItemsController extends AppController
         $minute = $this->Items->Minutes->get($item->minute_id);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $now = new \DateTime();
             $user_id = $this->request->session()->read('Auth.User.id');
             $user_name = $this->request->session()->read('Auth.User.last_name')
                 . " " . $this->request->session()->read('Auth.User.first_name');
             $item->followed_by = $user_id;
             $item->followed_user_name = $user_name;
             $item->is_followed = true;
-            $item->set('followed_at', time());
+            $item->followed_at = $now->format('Y-m-d H:i:s');
             if (!$this->Items->save($item)) {
                 throw new \Exception('Failed to follow item');
             }

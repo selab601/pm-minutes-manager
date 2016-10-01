@@ -92,9 +92,10 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
+            $now = new \DateTime();
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $user->set('created_at', time());
-            $user->set('updated_at', time());
+            $user->created_at = $now->format('Y/m/d H:i:s');
+            $user->updated_at = $now->format('Y/m/d H:i:s');
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
