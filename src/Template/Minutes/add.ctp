@@ -58,6 +58,8 @@
                                 <?php
                                     echo $this->Form->input('projects_users._ids', [
                                         'options' => $users_array,
+                                        'checked' => true,
+                                        'default' => [$auth_projects_user->id],
                                         'multiple' => 'checkbox',
                                         'label' => false,
                                         'templates' => [

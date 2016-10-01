@@ -135,7 +135,10 @@ class ProjectsController extends AppController
         $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
         $roles = json_encode(TableRegistry::get('Roles')->find()->select(['id', 'name'])
             ->all()->toArray());
-        $this->set(compact('project', 'users', 'roles'));
+        $auth_user = [];
+        $auth_user["user_id"] = $this->request->session()->read('Auth.User.id');
+        $auth_user = "[".json_encode($auth_user)."]";
+        $this->set(compact('project', 'users', 'roles', 'auth_user'));
         $this->set('_serialize', ['project']);
     }
 

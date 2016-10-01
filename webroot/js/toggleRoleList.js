@@ -15,11 +15,13 @@ var toggleRoleList = function($, roles, members){
         if (member["user_id"] == checkboxValue) {
           $(dom).children("div.role-select").show();
           var $option = $(dom).children("div.role-select").children(".form-control").children("option");
-          $.each($option, function () {
-            if ($(this).val() == member['role']['id']) {
-              $(this).prop("selected", true);
-            }
-          });
+          if (member['role'] != undefined) {
+            $.each($option, function () {
+              if ($(this).val() == member['role']['id']) {
+                $(this).prop("selected", true);
+              }
+            });
+          }
         }
       });
     }

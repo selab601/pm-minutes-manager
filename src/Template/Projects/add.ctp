@@ -10,7 +10,7 @@
         <?= $this->html->script(['toggleRoleList.js']) ?>
         <script>
             $(document).ready(function () {
-                toggleRoleList(jQuery, '<?= $roles ?>', null);
+                toggleRoleList(jQuery, '<?= $roles ?>', <?= json_encode($auth_user) ?>);
                 $("#datepicker1").datepicker({dateFormat: 'yy/mm/dd'});
                 $("#datepicker2").datepicker({dateFormat: 'yy/mm/dd'});
             });
@@ -63,6 +63,8 @@
                                 <?php
                                     echo $this->Form->input('users._ids', [
                                         'options' => $users_array,
+                                        'checked' => true,
+                                        'default' => [$this->request->session()->read('Auth.User.id')],
                                         'multiple' => 'checkbox',
                                         'label' => false,
                                         'templates' => [

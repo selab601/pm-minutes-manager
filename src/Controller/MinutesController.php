@@ -140,7 +140,14 @@ class MinutesController extends AppController
             }
         }
 
-        $this->set(compact('minute', 'projects_users'));
+        $auth_projects_user = TableRegistry::get('ProjectsUsers')
+            ->find('all')
+            ->where([
+                'ProjectsUsers.user_id = '.$this->request->session()->read('Auth.User.id'),
+                'ProjectsUsers.project_id = '.$id
+            ])
+            ->first();
+        $this->set(compact('minute', 'projects_users', 'auth_projects_user'));
         $this->set('_serialize', ['minute']);
     }
 
