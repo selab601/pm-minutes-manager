@@ -202,7 +202,7 @@
                   <div class="table-row">
                     <div class="table-content-wrapper half">
                       <div class="table-content half-th header">日時</div>
-                      <div class="table-content half-td"><?= h($minute->holded_at) ?></div>
+                      <div class="table-content half-td"><?= h($minute->holded_at->format('Y/m/d H:m')) ?></div>
                     </div>
                     <div class="table-content-wrapper half">
                       <div class="table-content half-th header">場所</div>
