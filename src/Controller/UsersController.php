@@ -97,11 +97,10 @@ class UsersController extends AppController
             $user->created_at = $now->format('Y/m/d H:i:s');
             $user->updated_at = $now->format('Y/m/d H:i:s');
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
+                $this->Flash->success('ユーザ登録に成功しました');
                 return $this->redirect(['action' => 'login']);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error('ユーザ登録に失敗しました');
             }
         }
         $projects = $this->Users->Projects->find('list', ['limit' => 200]);
@@ -128,11 +127,11 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
 
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('ユーザ情報を更新しました'));
 
                 return $this->redirect(['action' => 'view', $user->id]);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error(__('ユーザ情報の更新に失敗しました'));
             }
         }
 
@@ -152,9 +151,9 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            $this->Flash->success(__('ユーザを駆除しました'));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('ユーザの削除に失敗しました'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -168,7 +167,7 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error('あなたのユーザー名またはパスワードが不正です。');
+            $this->Flash->error('IDまたはパスワードが不正です');
         }
         $user = $this->Users->newEntity();
         $this->set(compact('user'));

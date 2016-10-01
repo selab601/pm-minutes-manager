@@ -132,6 +132,8 @@ class MinutesController extends AppController
                     }
                 }
 
+                $this->Flash->success('議事録を追加しました');
+
                 return $this->redirect(['controller' => 'projects', 'action' => 'view', $minute->project_id]);
             } else {
                 throw new \Exception('Failed to save minute entity');
@@ -166,6 +168,8 @@ class MinutesController extends AppController
                     [new MinutesController(), "saveParticipation"],
                     [new MinutesController(), "deleteParticipation"]
                 );
+
+                $this->Flash->success('議事録を更新しました');
 
                 return $this->redirect(['action' => 'view', $minute->id]);
             } else {
@@ -206,6 +210,8 @@ class MinutesController extends AppController
             if (!$this->Minutes->save($minute)) {
                 throw new \Exception('Failed to examine minute');
             }
+
+            $this->Flash->success('「'.$minute->minute_name.'」を審査済に更新しました');
         }
 
         return $this->redirect(['controller'=>'projects', 'action'=>'view', $minute->project_id]);
@@ -226,6 +232,8 @@ class MinutesController extends AppController
             if (!$this->Minutes->save($minute)) {
                 throw new \Exception('Failed to approve minute');
             }
+
+            $this->Flash->success('「'.$minute->minute_name.'」を承認済に更新しました');
         }
 
         return $this->redirect(['controller'=>'projects', 'action'=>'view', $minute->project_id]);
@@ -247,6 +255,8 @@ class MinutesController extends AppController
         $project_id = $minute->project_id;
 
         $this->Delete->Minute($id);
+
+        $this->Flash->success('議事録を削除しました');
 
         return $this->redirect(['controller' => 'projects', 'action' => 'view', $project_id]);
     }

@@ -114,6 +114,8 @@ class ItemsController extends AppController
                     }
                 }
 
+                $this->Flash->success('案件を追加しました');
+
                 return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
                 throw new \Exception('Failed to save item entity');
@@ -152,6 +154,8 @@ class ItemsController extends AppController
                     [new ItemsController(), "deleteResponsibility"]
                 );
 
+                $this->Flash->success('案件を更新しました');
+
                 return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
                 throw new \Exception('Failed to save item entity');
@@ -181,6 +185,8 @@ class ItemsController extends AppController
             if (!$this->Items->save($item)) {
                 throw new \Exception('Failed to follow item');
             }
+
+            $this->Flash->success('案件をフォローしました');
         }
 
         return $this->redirect(['controller'=>'minutes', 'actions'=>'view', $minute->id]);
@@ -217,6 +223,8 @@ class ItemsController extends AppController
                 throw new \Exception('Failed to update item order');
             }
         }
+
+        $this->Flash->success('案件を削除しました');
 
         return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute_id]);
     }

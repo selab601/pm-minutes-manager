@@ -83,3 +83,5 @@
         </ul>
     </div>
 </header>
+
+<?= $this->element('flashModal') ?>

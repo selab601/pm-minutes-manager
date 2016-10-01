@@ -64,6 +64,14 @@ body {
 
 /*************************/
 
+/**** flash message ****/
+
+.mesageBox {
+    position: fixed;
+}
+
+/***********************/
+
 /********* table *********/
 
 table, td, th {

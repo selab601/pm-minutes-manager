@@ -121,7 +121,12 @@ class ProjectsController extends AppController
                 }
 
                 $user_id = $this->request->session()->read('Auth.User.id');
-                return $this->redirect(['controller' => 'users', 'action' => 'projectsView', $user_id]);
+                $this->Flash->success('プロジェクトを追加しました');
+                return $this->redirect([
+                    'controller' => 'users',
+                    'action' => 'projectsView',
+                    $user_id
+                ]);
             } else {
                 throw new \Exception('Failed to save project entity');
             }
@@ -189,6 +194,8 @@ class ProjectsController extends AppController
                     }
                 }
 
+                $this->Flash->success('プロジェクトを更新しました');
+
                 return $this->redirect(['action' => 'view', $id]);
             } else {
                 throw new \Exception('Failed to edit project entity');
@@ -218,6 +225,8 @@ class ProjectsController extends AppController
         $project = $this->Projects->get($id);
 
         $this->Delete->Project($id);
+
+        $this->Flash->success('プロジェクトを削除しました');
 
         return $this->redirect(['controller' => 'projects', 'action' => 'index']);
     }

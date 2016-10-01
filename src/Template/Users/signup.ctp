@@ -8,6 +8,16 @@
 <body>
     <?= $this->element('header') ?>
 
+    <?php if (!empty($this->request->session()->read('Flash'))): ?>
+        <div class="messageBox">
+            <label class="fontawesome-remove-sign" for="message error">
+                <span class="hidden">times-circle</span>
+            </label>
+            <?= $this->Flash->render('flash') ?>
+        </div>
+    <?php endif; ?>
+
+
     <?php
         $this->Form->templates([
             'inputContainer' => '<div class="form-container-field">{{content}}</div>',
