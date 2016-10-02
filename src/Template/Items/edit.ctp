@@ -33,59 +33,53 @@
         ?>
 
         <?= $this->element('formContainerTemplate') ?>
-        <div class="form-container-wrapper">
-            <?= $this->Form->create($item, ['class'=>'form-container add-item']) ?>
-            <fieldset>
-                <legend>案件を編集する</legend>
-                <div class="form-container-fields add-item">
-                    <?= $this->Form->input('primary_char', [
-                        'options' => [
-                            "-" => "-",
-                            "高" => "高",
-                            "中" => "中",
-                            "低" => "低"
-                        ],
-                        'default' => "中",
-                        'label' => '優先度 : ',
-                        ]) ?>
-                    <?= $this->Form->input('item_category_id', [
-                        'options' => $itemCategories,
-                        'label' => '案件種別 : '
-                        ]) ?>
-                    <?= $this->Form->input('contents', [
-                        'label'=>'議事内容 : ',
-                        'type'=>'textarea',
-                        ]) ?>
-                    <?php
-                        if (!$item->is_followed) {
-                            echo $this->Form->input('overed_at', [
-                                'empty' => true,
-                                'label'=>'期限 : ',
-                                'type'=>'text',
-                                'id'=>'datepicker',
-                                'disabled' => true,
-                                'value'=>$default_overed_at,
-                            ]);
-                        }
-                    ?>
-                    <?php
-                        if (!$item->is_followed) {
-                            echo $this->element('checkboxForm', [
-                                'name' => 'projects_users._ids',
-                                'label' => '担当者 : ',
-                                'classes' => 'add-item',
-                                'form' => $this->Form,
-                                'options' => $users_array,
-                                'default' => $checked_users_array,
-                            ]);
-                        }
-                    ?>
-                </div>
-            </fieldset>
-            <div class="form-container-footer">
-                <?= $this->Form->button("決定") ?>
+        <?= $this->Form->create($item, ['class'=>'form-container add-item']) ?>
+        <fieldset>
+            <legend>案件を編集する</legend>
+            <div class="form-container-fields add-item">
+                <?= $this->Form->input('primary_char', [
+                    'options' => [
+                        "-" => "-",
+                        "高" => "高",
+                        "中" => "中",
+                        "低" => "低"
+                    ],
+                    'default' => "中",
+                    'label' => '優先度 : ',
+                    ]) ?>
+                <?= $this->Form->input('item_category_id', [
+                    'options' => $itemCategories,
+                    'label' => '案件種別 : '
+                    ]) ?>
+                <?= $this->Form->input('contents', [
+                    'label'=>'議事内容 : ',
+                    'type'=>'textarea',
+                    ]) ?>
+                <?= $this->Form->input('overed_at', [
+                    'empty' => true,
+                    'label'=>'期限 : ',
+                    'type'=>'text',
+                    'id'=>'datepicker',
+                    'disabled' => $item->is_followed,
+                    'value'=>$default_overed_at,
+                    ]) ?>
+                <?php
+                    if (!$item->is_followed) {
+                        echo $this->element('checkboxForm', [
+                            'name' => 'projects_users._ids',
+                            'label' => '担当者 : ',
+                            'classes' => 'add-item',
+                            'form' => $this->Form,
+                            'options' => $users_array,
+                            'default' => $checked_users_array,
+                        ]);
+                    }
+                ?>
             </div>
-            <?= $this->Form->end() ?>
+        </fieldset>
+        <div class="form-container-footer">
+            <?= $this->Form->button("決定") ?>
         </div>
+        <?= $this->Form->end() ?>
     </body>
 </html>
