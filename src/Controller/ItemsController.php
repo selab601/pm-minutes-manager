@@ -189,7 +189,7 @@ class ItemsController extends AppController
             $this->Flash->success('案件をフォローしました');
         }
 
-        return $this->redirect(['controller'=>'minutes', 'actions'=>'view', $minute->id]);
+        return $this->redirect(['controller'=>'minutes', 'action'=>'view', $minute->id]);
     }
 
     /**
