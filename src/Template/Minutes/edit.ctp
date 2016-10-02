@@ -8,60 +8,47 @@
     </head>
     <script>
         $(function () {
-            $('#datetimepicker').datetimepicker();
+            $('#datetimepicker1').datetimepicker();
+            $('#datetimepicker2').datetimepicker();
         });
     </script>
     <body>
         <?= $this->element('header') ?>
 
         <?php
-            $this->Form->templates([
-                'inputContainer' => '<div class="form-container-field">{{content}}</div>',
-                'input' => '<input class="form-container-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
-                'dateWidget' => '<div class="form-container-field-input"><div class="date-form">{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}{{meridian}}</div></div>',
-            ]);
+            $now = new \DateTime();
+            $ended_at = $minute->ended_at == NULL ? "" : $minute->ended_at->format('Y/m/d H:i');
+            $holded_at = $minute->holded_at == NULL ? "" : $minute->holded_at->format('Y/m/d H:i');
         ?>
 
+        <?= $this->element('formContainerTemplate') ?>
         <div class="form-container-wrapper">
-            <?php
-                echo $this->Form->create($minute, [
-                    'class'=>'form-container add-minute',
-                ]);
-            ?>
+            <?= $this->Form->create($minute, ['class'=>'form-container add-minute']); ?>
             <fieldset>
                 <legend>議事録の編集</legend>
-                <div class="form-container-fields add-minute">
-                    <?php
-                        echo $this->Form->input('name', ['label' => '議事録名 : ']);
-                        echo $this->Form->input('holded_place', ['label' => '開催場所 : ']);
-                        echo $this->Form->input('holded_at', [
-                            'empty' => true,
-                            'value'=>$minute->holded_at->format('Y/m/d H:i'),
-                            'label'=>'開催時刻 : ',
-                            'type'=>'text',
-                            'id'=>'datetimepicker',
-                        ]);
-                    ?>
-                    <div class="checkbox-form form-container-field add-minute">
-                        <label>参加者 : </label>
-                        <div class="checkbox-form-input-wrapper">
-                            <div class="checkbox-form-input">
-                                <?php
-                                    echo $this->Form->input('projects_users._ids', [
-                                        'options' => $users_array,
-                                        'multiple' => 'checkbox',
-                                        'checked' => true,
-                                        'default' => $checked_users_array,
-                                        'label' => false,
-                                        'templates' => [
-                                            'inputContainer' => '{{content}}',
-                                        ],
-                                    ]);
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?= $this->Form->input('name', ['label'=>'議事録名 : ']) ?>
+                <?= $this->Form->input('holded_place', ['label'=>'開催場所 : ']) ?>
+                <?= $this->Form->input('holded_at', [
+                    'type' => 'datetime',
+                    'value'=>$holded_at,
+                    'label' => '開催時刻 : ',
+                    'type'=>'text',
+                    'id'=>'datetimepicker1',
+                    ]) ?>
+                <?= $this->Form->input('ended_at', [
+                    'type' => 'datetime',
+                    'value'=>$ended_at,
+                    'label' => '終了時刻 : ',
+                    'type'=>'text',
+                    'id'=>'datetimepicker2',
+                    ]) ?>
+                <?= $this->element('checkboxForm', [
+                    'label' => '参加者 : ',
+                    'classes' => 'add-minute',
+                    'form' => $this->Form,
+                    'options' => $users_array,
+                    'default' => $checked_users_array,
+                    ]) ?>
             </fieldset>
             <div class="form-container-footer">
                 <?= $this->Form->button("追加") ?>

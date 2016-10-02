@@ -8,54 +8,16 @@
 <body>
     <?= $this->element('header') ?>
 
-    <?php if (!empty($this->request->session()->read('Flash'))): ?>
-        <div class="messageBox">
-            <label class="fontawesome-remove-sign" for="message error">
-                <span class="hidden">times-circle</span>
-            </label>
-            <?= $this->Flash->render('flash') ?>
-        </div>
-    <?php endif; ?>
-
-
-    <?php
-        $this->Form->templates([
-            'inputContainer' => '<div class="form-container-field">{{content}}</div>',
-            'input' => '<input class="form-container-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
-        ])
-    ?>
-
+    <?= $this->element('formContainerTemplate') ?>
     <div class="form-container-wrapper">
-        <?php
-            echo $this->Form->create('User', [
-                'class'=>'form-container add-user',
-            ]);
-        ?>
+        <?= $this->Form->create($user, ['class'=>'form-container add-user']) ?>
         <fieldset>
             <legend>ユーザの追加</legend>
             <div class="form-container-fields add-user">
                 <?= $this->Form->input('id_string', ['label' => 'ID : ',]) ?>
-                <div class="form-container-field">
-                    <label>名前 : </label>
-                    <div class="form-container-field-input">
-                        <div class="name-form">
-                            <?= $this->Form->input('last_name', [
-                                'label' => false,
-                                'templates' => ['inputContainer' => '{{content}}'],
-                                'placeholder' => '性',
-                                'id' => 'name-form-last-name',
-                                ])?>
-                            <?= $this->Form->input('first_name', [
-                                'label' => false,
-                                'placeholder' => '名',
-                                'templates' => ['inputContainer' => '{{content}}'],
-                                'id' => 'name-form-first-name',
-                                ]) ?>
-                        </div>
-                    </div>
-                </div>
-            <?= $this->Form->input('password', ['label' => 'パスワード : ',]) ?>
-            <?= $this->Form->input('mail', ['label' => 'メールアドレス : ',]) ?>
+                <?= $this->element('nameForm', ['form' => $this->Form]) ?>
+                <?= $this->Form->input('password', ['label' => 'パスワード : ',]) ?>
+                <?= $this->Form->input('mail', ['label' => 'メールアドレス : ',]) ?>
             </div>
         </fieldset>
         <div class="form-container-footer">
@@ -63,6 +25,5 @@
         </div>
         <?= $this->Form->end() ?>
     </div>
-
 </body>
 </html>

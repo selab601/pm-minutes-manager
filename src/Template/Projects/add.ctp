@@ -20,64 +20,40 @@
         <?= $this->element('header') ?>
 
         <?php
-            $this->Form->templates([
-                'inputContainer' => '<div class="form-container-field">{{content}}</div>',
-                'input' => '<input class="form-container-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
-                'dateWidget' => '<div class="form-container-field-input"><div class="date-form">{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}{{meridian}}</div></div>',
-            ]);
             $users_array = [];
             foreach ($users as $user) {
                 $users_array[$user['id']] = $user['last_name'] . " " . $user['first_name'];
             }
         ?>
 
+        <?= $this->element('formContainerTemplate') ?>
         <div class="form-container-wrapper">
-            <?php
-                echo $this->Form->create($project, [
-                    'class'=>'form-container add-project',
-                ]);
-            ?>
-
+            <?= $this->Form->create($project, ['class'=>'form-container add-project']); ?>
             <fieldset>
                 <legend>プロジェクトを追加する</legend>
                 <div class="form-container-fields add-project">
-                    <?php
-                        echo $this->Form->input('name', ['label' => 'プロジェクト名 : ']);
-                        echo $this->Form->input('budget', ['label' => '予算 : ']);
-                        echo $this->Form->input('customer_name', ['label' => '顧客名 : ']);
-                        echo $this->Form->input('started_at', [
+                    <?= $this->Form->input('name', ['label' => 'プロジェクト名 : ']) ?>
+                    <?= $this->Form->input('budget', ['label' => '予算 : ']) ?>
+                    <?= $this->Form->input('customer_name', ['label' => '顧客名 : ']) ?>
+                    <?= $this->Form->input('started_at', [
                             'label' => '開始期間 : ',
                             'type'=>'text',
                             'id'=>'datepicker1',
-                        ]);
-                        echo $this->Form->input('finished_at', [
-                            'label' => '終了期間 : ',
-                            'type'=>'text',
-                            'id'=>'datepicker2',
-                        ]);
-                    ?>
-                    <div class="checkbox-form form-container-field add-project">
-                        <label>参加者 : </label>
-                        <div class="checkbox-form-input-wrapper">
-                            <div class="checkbox-form-input">
-                                <?php
-                                    echo $this->Form->input('users._ids', [
-                                        'options' => $users_array,
-                                        'checked' => true,
-                                        'default' => [$this->request->session()->read('Auth.User.id')],
-                                        'multiple' => 'checkbox',
-                                        'label' => false,
-                                        'templates' => [
-                                            'inputContainer' => '{{content}}',
-                                        ],
-                                    ]);
-                                ?>
-                            </div>
-                        </div>
-                    </div>
+                        ]) ?>
+                     <?= $this->Form->input('finished_at', [
+                         'label' => '終了期間 : ',
+                         'type'=>'text',
+                         'id'=>'datepicker2',
+                         ]) ?>
+                    <?= $this->element('checkboxForm', [
+                        'label' => '参加者 : ',
+                        'classes' => 'add-project',
+                        'form' => $this->Form,
+                        'options' => $users_array,
+                        'default' => [$this->request->session()->read('Auth.User.id')],
+                        ]) ?>
                 </div>
             </fieldset>
-
             <div class="form-container-footer">
                 <?= $this->Form->button("決定") ?>
             </div>

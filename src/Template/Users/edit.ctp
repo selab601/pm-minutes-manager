@@ -8,44 +8,17 @@
     <body>
         <?= $this->element('header') ?>
 
-        <?php
-            $this->Form->templates([
-                'inputContainer' => '<div class="form-container-field">{{content}}</div>',
-                'input' => '<input class="form-container-field-input" type="{{type}}" name="{{name}}" {{attrs}} />',
-            ])
-        ?>
-
+        <?= $this->element('formContainerTemplate') ?>
         <div class="form-container-wrapper">
-            <?php
-                echo $this->Form->create($user, [
-                    'class'=>'form-container add-user',
-                ]);
-            ?>
+            <?= $this->Form->create($user, ['class'=>'form-container add-user']) ?>
             <fieldset>
                 <legend>ユーザの編集</legend>
                 <div class="form-container-fields add-user">
                     <?= $this->Form->input('id_string', ['label'=>'ID : ']) ?>
-                    <div class="form-container-field">
-                        <label>名前 : </label>
-                        <div class="form-container-field-input">
-                            <div class="name-form">
-                                <?= $this->Form->input('last_name', [
-                                    'label' => false,
-                                    'templates' => ['inputContainer' => '{{content}}'],
-                                    'placeholder' => '性',
-                                    'id' => 'name-form-last-name'
-                                    ])?>
-                                <?= $this->Form->input('first_name', [
-                                    'label' => false,
-                                    'placeholder' => '名',
-                                    'templates' => ['inputContainer' => '{{content}}'],
-                                    'id' => 'name-form-first-name'
-                                    ]) ?>
-                            </div>
-                        </div>
-                    </div>
+                    <?= $this->element('nameForm', ['form' => $this->Form]) ?>
                     <?= $this->Form->input('password', [
                         'value' => "",
+                        'placeholder' => '新しいパスワードを入力',
                         'required' => false,
                         'label' => 'パスワード : ',
                         ]) ?>

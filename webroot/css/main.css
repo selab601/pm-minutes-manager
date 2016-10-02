@@ -294,6 +294,14 @@ ul.flex-navbar-contents>li a.active {
 
 .form-container-field {
     width: 100%;
+    flex 1;                 -webkit-flex: 1;
+    display: flex;          display: -webkit-flex;
+    align-items: center;    -webkit-align-items: center;
+    flex-direction: column; -webkit-flex-wrap: wrap;
+}
+
+.form-container-field-column {
+    width: 100%;
     flex: 1;                   -webkit-flex: 1;
 
     display: flex;             display: -webkit-flex;
@@ -302,7 +310,7 @@ ul.flex-navbar-contents>li a.active {
     flex-direction: row;
 }
 
-.form-container-field>label {
+.form-container-field-column-label {
     maring: 0px;
     padding: 0px;
     padding-right: 10px;
@@ -316,11 +324,19 @@ ul.flex-navbar-contents>li a.active {
     justify-content: flex-end; -webkit-justify-content: flex-end;
 }
 
-.form-container-field-input {
+.form-container-field-column-input {
     flex: 1;
     width: 100%;
 }
 
+.form-container-field-error {
+    flex: 1;
+    width: 100%;
+    padding-left: 180px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: red;
+}
 
 .form-container-footer {
     height: 70px;
@@ -385,11 +401,16 @@ ul.flex-navbar-contents>li a.active {
 .checkbox-form {
     width: 100%;
     overflow-y: scroll;
+    display: flex;             display: -webkit-flex;
+}
 
+.checkbox-form-column {
+    width: 100%;
+    overflow-y: scroll;
     display: flex;  display: -webkit-flex;
 }
 
-.checkbox-form>label {
+.checkbox-form-column>label {
     maring: 0px;
     padding: 0px;
     padding-right: 10px;
