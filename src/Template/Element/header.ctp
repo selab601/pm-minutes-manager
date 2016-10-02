@@ -85,3 +85,4 @@
 </header>
 
 <?= $this->element('flashModal') ?>
+<?= $this->element('navigation') ?>

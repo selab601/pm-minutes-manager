@@ -155,7 +155,9 @@ class MinutesController extends AppController
      */
     public function edit($id = null)
     {
-        $minute = $this->Minutes->get($id);
+        $minute = $this->Minutes->get($id, [
+            'contain' => ['Projects'],
+        ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $minute = $this->Minutes->patchEntity($minute, $this->request->data);
