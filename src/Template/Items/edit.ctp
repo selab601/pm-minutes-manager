@@ -56,21 +56,30 @@
                         'label'=>'議事内容 : ',
                         'type'=>'textarea',
                         ]) ?>
-                    <?= $this->Form->input('overed_at', [
-                        'empty' => true,
-                        'label'=>'期限 : ',
-                        'type'=>'text',
-                        'id'=>'datepicker',
-                        'value'=>$default_overed_at,
-                        ]) ?>
-                    <?= $this->element('checkboxForm', [
-                        'name' => 'projects_users._ids',
-                        'label' => '担当者 : ',
-                        'classes' => 'add-item',
-                        'form' => $this->Form,
-                        'options' => $users_array,
-                        'default' => $checked_users_array,
-                        ]) ?>
+                    <?php
+                        if (!$item->is_followed) {
+                            echo $this->Form->input('overed_at', [
+                                'empty' => true,
+                                'label'=>'期限 : ',
+                                'type'=>'text',
+                                'id'=>'datepicker',
+                                'disabled' => true,
+                                'value'=>$default_overed_at,
+                            ]);
+                        }
+                    ?>
+                    <?php
+                        if (!$item->is_followed) {
+                            echo $this->element('checkboxForm', [
+                                'name' => 'projects_users._ids',
+                                'label' => '担当者 : ',
+                                'classes' => 'add-item',
+                                'form' => $this->Form,
+                                'options' => $users_array,
+                                'default' => $checked_users_array,
+                            ]);
+                        }
+                    ?>
                 </div>
             </fieldset>
             <div class="form-container-footer">
