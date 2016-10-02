@@ -67,7 +67,8 @@ class MinutesTable extends Table
             ->notEmpty('name');
 
         $validator
-            ->allowEmpty('holded_place');
+            ->requirePresence('holded_place', 'create')
+            ->notEmpty('holded_place');
 
         $validator
             ->dateTime('holded_at')
@@ -119,6 +120,10 @@ class MinutesTable extends Table
         $validator
             ->boolean('is_deletable')
             ->allowEmpty('is_deletable');
+
+        $validator
+            ->dateTime('ended_at')
+            ->allowEmpty('ended_at');
 
         return $validator;
     }

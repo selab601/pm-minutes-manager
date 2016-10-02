@@ -23,6 +23,7 @@ use Cake\ORM\Entity;
  * @property string $examined_user_name
  * @property string $approved_user_name
  * @property bool $is_deletable
+ * @property \Cake\I18n\Time $ended_at
  *
  * @property \App\Model\Entity\Project $project
  * @property \App\Model\Entity\Item[] $items
