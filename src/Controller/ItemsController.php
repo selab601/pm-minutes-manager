@@ -100,19 +100,19 @@ class ItemsController extends AppController
 
             if ($this->Items->save($item)) {
 
-                if (!empty($this->request->data["users"]["_ids"])) {
+                if (!empty($this->request->data["projects_users"]["_ids"])) {
                     $responsibilities_registry = TableRegistry::get("Responsibilities");
 
-                    foreach($this->request->data["users"]["_ids"] as $user_id) {
+                    foreach($this->request->data["projects_users"]["_ids"] as $user_id) {
                         $responsibilities = $responsibilities_registry->newEntity();
                         $responsibilities->item_id = $item->id;
                         $responsibilities->projects_user_id = $user_id;
-
                         if (!$responsibilities_registry->save($responsibilities)) {
                             throw new \Exception('Failed to save responsibilities entity');
                         }
                     }
                 }
+
                 $this->Flash->success('案件を追加しました');
                 return $this->redirect(['controller' => 'minutes', 'action' => 'view', $minute->id]);
             } else {
