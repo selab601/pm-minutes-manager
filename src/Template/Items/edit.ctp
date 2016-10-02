@@ -64,6 +64,7 @@
                         'value'=>$default_overed_at,
                         ]) ?>
                     <?= $this->element('checkboxForm', [
+                        'name' => 'projects_users._ids',
                         'label' => '担当者 : ',
                         'classes' => 'add-item',
                         'form' => $this->Form,

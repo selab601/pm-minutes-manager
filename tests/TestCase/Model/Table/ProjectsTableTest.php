@@ -31,7 +31,8 @@ class ProjectsTableTest extends TestCase
         'app.responsibilities',
         'app.participations',
         'app.users',
-        'app.projects_users'
+        'app.projects_users',
+        'app.roles'
     ];
 
     /**

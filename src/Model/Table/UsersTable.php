@@ -58,7 +58,11 @@ class UsersTable extends Table
         $validator
             ->requirePresence('id_string', 'create')
             ->notEmpty('id_string')
-            ->add('id_string', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('id_string', 'unique', [
+                'rule' => 'validateUnique',
+                'provider' => 'table',
+                'message' => '既に登録されているIDです'
+            ]);
 
         $validator
             ->requirePresence('last_name', 'create')
@@ -70,10 +74,21 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->notEmpty('password')
+            ->add('password', [
+                'minLength' => [
+                    'rule' => ['minLength', 5],
+                    'last' => true,
+                    'message' => '5文字以上で入力してください'
+                ]
+            ]);
 
         $validator
-            ->allowEmpty('mail');
+            ->allowEmpty('mail')
+            ->add('mail', 'validFormat', [
+                'rule' => 'email',
+                'message' => 'メールアドレスの形式が不正です'
+            ]);
 
         $validator
             ->boolean('is_authorized')

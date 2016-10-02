@@ -1,10 +1,10 @@
 <div class="form-container-field checkbox-form <?= $classes ?>">
-    <div class="checkbox-form-column">
-        <label><?= $label ?></label>
-        <div class="checkbox-form-input-wrapper">
+    <div class="form-container-field-column checkbox-form-column">
+        <label class="form-container-field-column-label"><?= $label ?></label>
+        <div class="form-container-field-column-input checkbox-form-input-wrapper">
             <div class="checkbox-form-input">
                 <?php
-                    echo $form->input('users._ids', [
+                    echo $form->input($name, [
                         'options' => $options,
                         'checked' => true,
                         'default' => $default,

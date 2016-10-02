@@ -73,12 +73,19 @@ class ProjectsTable extends Table
         $validator
             ->date('started_at')
             ->requirePresence('started_at', 'create')
-            ->notEmpty('started_at');
+            ->notEmpty('started_at')
+            ->add('started_at', 'date', [
+                'rule' => ['date', "ymd"],
+                'message' => '日付の形式が不正です'
+            ]);
 
         $validator
             ->date('finished_at')
             ->requirePresence('finished_at', 'create')
-            ->notEmpty('finished_at');
+            ->add('finished_at', 'date', [
+                'rule' => ['date', "ymd"],
+                'message' => '日付の形式が不正です'
+            ]);
 
         $validator
             ->dateTime('created_at')

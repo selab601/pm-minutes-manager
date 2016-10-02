@@ -103,40 +103,35 @@ class MinutesController extends AppController
             ->all()->toArray();
 
         if ($this->request->is('post')) {
-            $now = new \DateTime();
-
-            $data= $this->request->data;
-
+            $minute = $this->Minutes->patchEntity($minute, $this->request->data);
             $minute->project_id = $id;
-            $minute->name = $data['name'];
-            $minute->holded_place = $data['holded_place'];
-            $minute->holded_at = $data['holded_at'];
+            $now = new \DateTime();
             $minute->created_at = $now->format('Y-m-d H:i:s');
             $minute->updated_at = $now->format('Y-m-d H:i:s');
 
             if ($this->Minutes->save($minute)) {
+                $data= $this->request->data;
 
                 // 議事録へのユーザ参加の登録
                 $projects_user_ids = $data["projects_users"]["_ids"];
-                foreach ($projects_user_ids as $projects_user_id) {
-                    $participations_registry = TableRegistry::get('Participations');
-                    $participations = $participations_registry->newEntity();
-                    $participations->projects_user_id = $projects_user_id;
-                    $participations->minute_id = $minute->id;
-
-                    // TODO: 参加と遅刻参加を登録できるようにする
-                    $participations->state = "◯";
-
-                    if (!$participations_registry->save($participations)) {
-                        throw new \Exception('Failed to save participations entity');
+                if (!empty($projects_user_ids)) {
+                    foreach ($projects_user_ids as $projects_user_id) {
+                        $participations_registry = TableRegistry::get('Participations');
+                        $participations = $participations_registry->newEntity();
+                        $participations->projects_user_id = $projects_user_id;
+                        $participations->minute_id = $minute->id;
+                        // TODO: 参加と遅刻参加を登録できるようにする
+                        $participations->state = "◯";
+                        if (!$participations_registry->save($participations)) {
+                            $this->Flash->error('議事録の追加に失敗しました');
+                        }
                     }
                 }
 
                 $this->Flash->success('議事録を追加しました');
-
                 return $this->redirect(['controller' => 'projects', 'action' => 'view', $minute->project_id]);
             } else {
-                throw new \Exception('Failed to save minute entity');
+                $this->Flash->error('議事録の追加に失敗しました');
             }
         }
 
@@ -166,21 +161,22 @@ class MinutesController extends AppController
             $minute = $this->Minutes->patchEntity($minute, $this->request->data);
             if ($this->Minutes->save($minute)) {
 
-                $this->SaveDiff->save(
-                    $minute->id,
-                    "Participations",
-                    ['fields'=>'Participations.projects_user_id'],
-                    ['Participations.minute_id = '.$minute->id],
-                    $this->request->data["projects_users"]["_ids"],
-                    [new MinutesController(), "saveParticipation"],
-                    [new MinutesController(), "deleteParticipation"]
-                );
+                if (!empty($this->request->data["projects_users"]["_ids"])) {
+                    $this->SaveDiff->save(
+                        $minute->id,
+                        "Participations",
+                        ['fields'=>'Participations.projects_user_id'],
+                        ['Participations.minute_id = '.$minute->id],
+                        $this->request->data["projects_users"]["_ids"],
+                        [new MinutesController(), "saveParticipation"],
+                        [new MinutesController(), "deleteParticipation"]
+                    );
+                }
 
                 $this->Flash->success('議事録を更新しました');
-
                 return $this->redirect(['action' => 'view', $minute->id]);
             } else {
-                throw new \Exception('Failed to save minute entity');
+                $this->Flash->success('議事録の更新に失敗しました');
             }
         }
 

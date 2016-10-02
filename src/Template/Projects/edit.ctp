@@ -28,6 +28,8 @@
             foreach ($members as $member) {
                 array_push($checked_users_array, $member->user->id);
             }
+            $started_at = is_object($project->started_at) ? $project->started_at->format('Y/m/d') : $project->started_at;
+            $finished_at = is_object($project->finished_at) ? $project->finished_at->format('Y/m/d') : $project->finished_at;
         ?>
 
         <?= $this->element('formContainerTemplate') ?>
@@ -43,15 +45,16 @@
                         'label' => '開始期間 : ',
                         'type'=>'text',
                         'id'=>'datepicker1',
-                        'value'=>$project->finished_at->format('Y/m/d'),
+                        'value'=>$started_at,
                         ]) ?>
                     <?= $this->Form->input('finished_at', [
                         'label' => '終了期間 : ',
                         'type'=>'text',
                         'id'=>'datepicker2',
-                        'value'=>$project->finished_at->format('Y/m/d'),
+                        'value'=>$finished_at,
                         ]) ?>
                     <?= $this->element('checkboxForm', [
+                        'name' => 'users._ids',
                         'label' => '参加者 : ',
                         'classes' => 'add-project',
                         'form' => $this->Form,

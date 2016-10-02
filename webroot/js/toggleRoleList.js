@@ -14,6 +14,7 @@ var toggleRoleList = function($, roles, members){
         var member = this;
         if (member["user_id"] == checkboxValue) {
           $(dom).children("div.role-select").show();
+          $(dom).children("div.role-select").children(".form-control").prop('required', true);
           var $option = $(dom).children("div.role-select").children(".form-control").children("option");
           if (member['role'] != undefined) {
             $.each($option, function () {
@@ -31,8 +32,11 @@ var toggleRoleList = function($, roles, members){
     var $selectbox = $(this).parent().children(".select");
     if ($(this).prop('checked')) {
       $selectbox.show();
+      $selectbox.children(".form-control").prop('required', true);
     } else {
       $selectbox.hide();
+      $selectbox.children(".form-control").prop('required', false);
+      $(this).prop('required', false);
     }
   });
 

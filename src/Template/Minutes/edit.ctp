@@ -43,6 +43,7 @@
                     'id'=>'datetimepicker2',
                     ]) ?>
                 <?= $this->element('checkboxForm', [
+                    'name' => 'projects_users._ids',
                     'label' => '参加者 : ',
                     'classes' => 'add-minute',
                     'form' => $this->Form,

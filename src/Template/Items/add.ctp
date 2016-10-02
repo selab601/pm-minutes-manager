@@ -31,7 +31,7 @@
             <div class="form-container-fields add-item">
                 <?= $this->Form->input('primary_char', [
                     'options' => [
-                        '-' => "-".
+                        '-' => "-",
                         "高" => "高",
                         "中" => "中",
                         "低" => "低"
@@ -55,6 +55,7 @@
                     'id'=>'datepicker',
                     ]) ?>
                 <?= $this->element('checkboxForm', [
+                    'name' => 'projects_users._ids',
                     'label' => '担当者 : ',
                     'classes' => 'add-item',
                     'form' => $this->Form,

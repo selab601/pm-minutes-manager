@@ -81,7 +81,11 @@ class ItemsTable extends Table
 
         $validator
             ->date('overed_at')
-            ->allowEmpty('overed_at');
+            ->allowEmpty('overed_at')
+            ->add('overed_at', 'date', [
+                'rule' => ['date', "ymd"],
+                'message' => '日付の形式が不正です'
+            ]);
 
         $validator
             ->dateTime('created_at')

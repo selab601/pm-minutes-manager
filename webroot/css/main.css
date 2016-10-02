@@ -404,26 +404,6 @@ ul.flex-navbar-contents>li a.active {
     display: flex;             display: -webkit-flex;
 }
 
-.checkbox-form-column {
-    width: 100%;
-    overflow-y: scroll;
-    display: flex;  display: -webkit-flex;
-}
-
-.checkbox-form-column>label {
-    maring: 0px;
-    padding: 0px;
-    padding-right: 10px;
-
-    width: 180px;
-    font-size: 20px;
-    font-weight: bold;
-
-    display: flex;             display: -webkit-flex;
-    align-items: center;       -webkit-align-items: center;
-    justify-content: flex-end; -webkit-justify-content: flex-end;
-}
-
 /* スクロールする方 */
 .checkbox-form-input-wrapper {
     flex: 1;                     -webkit-flex: 1;
@@ -472,7 +452,7 @@ ul.flex-navbar-contents>li a.active {
 
 /********* 各ページ個別の設定 **********/
 
-/*** ユーザ追加画面 ***/
+/*** ユーザ追加/編集画面 ***/
 
 .form-container.add-user {
     height: 400px;
@@ -480,7 +460,7 @@ ul.flex-navbar-contents>li a.active {
 }
 
 .form-container-fields.add-user {
-    height: 200px;
+    height: 210px;
 }
 
 /*** プロジェクト追加画面 ***/

@@ -99,36 +99,21 @@ class ProjectsController extends AppController
             $now = new \DateTime();
             $data= $this->request->data;
 
-            $project = $this->insertDataToProjectObject($project, $this->request->data);
+            $project = $this->Projects->patchEntity($project, $this->request->data);
             $project->created_at = $now->format('Y-m-d H:i:s');
             $project->updated_at = $now->format('Y-m-d H:i:s');
 
-            if ($this->Projects->save($project)) {
-                $projects_users_registry = TableRegistry::get('ProjectsUsers');
+            foreach ($project->users as &$user) {
+                $user->_joinData = TableRegistry::get('ProjectsUsers')->newEntity();
+                $user->_joinData->role_id = $data["roles"][$user->id][0];
+            }
 
-                $project_id = $project->id;
-                $user_ids = $data["users"]["_ids"];
-
-                foreach($user_ids as $user_id) {
-                    $projects_users = $projects_users_registry->newEntity();
-                    $projects_users->project_id = $project_id;
-                    $projects_users->user_id = $user_id;
-                    $projects_users->role_id = $data["roles"][$user_id][0];
-
-                    if (!$projects_users_registry->save($projects_users)) {
-                        throw new \Exception('Failed to save projects_users entity');
-                    }
-                }
-
-                $user_id = $this->request->session()->read('Auth.User.id');
+            if ($this->Projects->save($project, ['associated' => ['Users']])) {
                 $this->Flash->success('プロジェクトを追加しました');
-                return $this->redirect([
-                    'controller' => 'users',
-                    'action' => 'projectsView',
-                    $user_id
-                ]);
+                $user_id = $this->request->session()->read('Auth.User.id');
+                return $this->redirect(['controller' => 'users', 'action' => 'projectsView', $user_id]);
             } else {
-                throw new \Exception('Failed to save project entity');
+                $this->Flash->error('プロジェクトの追加に失敗しました');
             }
         }
 
@@ -156,52 +141,17 @@ class ProjectsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data= $this->request->data;
 
-            // プロジェクト内容の変更を保存する
-            $project = $this->insertDataToProjectObject($project, $this->request->data);
+            $project = $this->Projects->patchEntity($project, $this->request->data);
+            foreach ($project->users as &$user) {
+                $user->_joinData = TableRegistry::get('ProjectsUsers')->newEntity();
+                $user->_joinData->role_id = $data["roles"][$user->id][0];
+            }
 
             if ($this->Projects->save($project)) {
-                // 参加者の変更を保存する
-
-                // 既存の参加者を取得
-                $old_project_members = TableRegistry::get('ProjectsUsers')
-                    ->find('all', ['id'])
-                    ->where(['ProjectsUsers.project_id = '.$id])
-                    ->all()->toArray();
-                $old_project_member_ids = [];
-                foreach ($old_project_members as $old_project_member) {
-                    if (!$old_project_member->is_deleted) {
-                        array_push($old_project_member_ids, $old_project_member->user_id);
-                    }
-                }
-                if (empty($old_selected_user_ids)){ $old_project_member_ids = []; }
-
-                // 新規の参加者を取得
-                $new_project_member_ids = $this->request->data["users"]["_ids"];
-                if (empty($new_project_member_ids)){ $new_project_member_ids = []; }
-
-                // 前2つの担当者の差分を比較し，追加/削除を行う
-                $responsibilities_registry = TableRegistry::get("Responsibilities");
-                $delete_member_ids = array_diff($old_project_member_ids, $new_project_member_ids);
-                $add_member_ids = array_diff($new_project_member_ids, $old_project_member_ids);
-
-                if (!empty($delete_member_ids)) {
-                    foreach ($delete_member_ids as $delete_member_id) {
-                        $this->deleteProjectsUsers($project->id,$delete_member_id);
-                    }
-                }
-
-                if (!empty($add_member_ids)) {
-                    foreach ($add_member_ids as $add_member_id) {
-                        $role_id = $this->request->data["roles"][$add_member_id][0];
-                        $this->saveProjectsUsers($project->id,$add_member_id,$role_id);
-                    }
-                }
-
                 $this->Flash->success('プロジェクトを更新しました');
-
                 return $this->redirect(['action' => 'view', $id]);
             } else {
-                throw new \Exception('Failed to edit project entity');
+                $this->Flash->error('プロジェクトの更新に失敗しました');
             }
         }
 

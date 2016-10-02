@@ -46,10 +46,10 @@ class ProjectsFixture extends TestFixture
             'name' => 'Lorem ipsum dolor sit amet',
             'budget' => 1,
             'customer_name' => 'Lorem ipsum dolor sit amet',
-            'started_at' => '2016-09-22',
-            'finished_at' => '2016-09-22',
-            'created_at' => '2016-09-22 15:32:08',
-            'updated_at' => 1474558328
+            'started_at' => '2016-10-02',
+            'finished_at' => '2016-10-02',
+            'created_at' => '2016-10-02 17:44:02',
+            'updated_at' => 1475397842
         ],
     ];
 }
