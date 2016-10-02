@@ -57,7 +57,8 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('id_string', 'create')
-            ->notEmpty('id_string');
+            ->notEmpty('id_string')
+            ->add('id_string', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->requirePresence('last_name', 'create')
@@ -92,5 +93,19 @@ class UsersTable extends Table
             ->notEmpty('updated_at');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['id_string']));
+
+        return $rules;
     }
 }

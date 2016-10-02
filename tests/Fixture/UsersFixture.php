@@ -29,6 +29,7 @@ class UsersFixture extends TestFixture
         'updated_at' => ['type' => 'timestamp', 'length' => null, 'null' => false, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'id_string' => ['type' => 'unique', 'columns' => ['id_string'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -52,8 +53,8 @@ class UsersFixture extends TestFixture
             'mail' => 'Lorem ipsum dolor sit amet',
             'is_authorized' => 1,
             'is_deleted' => 1,
-            'created_at' => '2016-09-28 03:22:10',
-            'updated_at' => 1475032930
+            'created_at' => '2016-10-02 16:40:47',
+            'updated_at' => 1475394047
         ],
     ];
 }

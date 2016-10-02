@@ -10,6 +10,7 @@ CREATE
         is_deleted TINYINT(1) DEFAULT 0,
         created_at DATETIME DEFAULT current_timestamp,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+        UNIQUE (id_string),
         PRIMARY KEY (id)
         );
 
