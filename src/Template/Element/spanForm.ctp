@@ -11,6 +11,7 @@
                     'class' => 'span-form-started_at',
                     'type' => 'text',
                     'value' => isset($started_at) ? $started_at : "",
+                    'required' => true,
                     ])?>
                 <span>〜</span>
                 <?= $form->input('finished_at', [
@@ -23,6 +24,7 @@
                     'class' => 'span-form-finished_at',
                     'type' => 'text',
                     'value' => isset($finished_at) ? $finished_at : "",
+                    'required' => true,
                     ]) ?>
             </div>
         </div>
