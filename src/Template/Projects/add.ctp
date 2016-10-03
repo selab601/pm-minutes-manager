@@ -34,15 +34,8 @@
                 <?= $this->Form->input('name', ['label' => 'プロジェクト名 : ']) ?>
                 <?= $this->Form->input('budget', ['label' => '予算 : ']) ?>
                 <?= $this->Form->input('customer_name', ['label' => '顧客名 : ']) ?>
-                <?= $this->Form->input('started_at', [
-                    'label' => '開始期間 : ',
-                    'type'=>'text',
-                    'id'=>'datepicker1',
-                    ]) ?>
-                <?= $this->Form->input('finished_at', [
-                    'label' => '終了期間 : ',
-                    'type'=>'text',
-                    'id'=>'datepicker2',
+                <?= $this->element('spanForm', [
+                    'form' => $this->form,
                     ]) ?>
                 <?= $this->element('checkboxForm', [
                     'name' => 'users._ids',

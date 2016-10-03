@@ -483,6 +483,32 @@ span.new {
     margin-right: 5px;
 }
 
+/* 期間 */
+
+.span-form {
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
+    justify-content: flex-start; -webkit-justify-content: flex-start;
+    flex-direction: row;
+}
+
+.span-form>input {
+    flex: 0 0 70px;  -webkit-flex: 0 0 70px;
+}
+
+.span-form-started_at {
+    margin-right: 5px;
+}
+
+.span-form-finished_at {
+    margin-left: 5px;
+}
+
+.span-form > span {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 /* チェックボックス */
 
 .checkbox-form {
