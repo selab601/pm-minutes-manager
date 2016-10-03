@@ -76,6 +76,10 @@
                     'label' => '案件種別 : ',
                     'id' => 'category'
                     ]) ?>
+                <?= $this->Form->input('contents', [
+                    'label'=>'議事内容 : ',
+                    'type'=>'textarea',
+                    ]) ?>
                 <?= $this->Form->input('overed_at', [
                     'empty' => true,
                     'label'=>'期限 : ',
