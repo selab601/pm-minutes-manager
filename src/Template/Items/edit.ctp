@@ -9,9 +9,29 @@
         <?= $this->html->script(['jquery.js', 'jquery-ui.min.js', 'bootstrap.min.js']) ?>
     </head>
     <script>
-        $( function() {
+        $(document).ready(function () {
             $( "#datepicker" ).datepicker({dateFormat: 'yy/mm/dd'});
-        } );
+            var meta_categories = <?= json_encode($itemMetaCategoryArray) ?>;
+            var categories = <?= json_encode($itemCategoriesArray) ?>;
+            $("select#meta-category").change(function() {
+                $("select#category").empty();
+                $.each(categories[$(this).val()], function(key, value) {
+                    $("select#category").append(
+                        $("<option></option>")
+                            .attr("value", key)
+                            .text(value));
+                });
+            });
+
+
+            // 初期化
+            $.each(categories[$("select#meta-category").val()], function(key, value) {
+                $("select#category").append(
+                    $("<option></option>")
+                        .attr("value", key)
+                        .text(value));
+            });
+        });
     </script>
     <body>
         <?= $this->element('header') ?>
@@ -47,13 +67,14 @@
                     'default' => "中",
                     'label' => '優先度 : ',
                     ]) ?>
-                <?= $this->Form->input('item_category_id', [
-                    'options' => $itemCategories,
-                    'label' => '案件種別 : '
+                <?= $this->Form->input('item_meta_category_id', [
+                    'options' => $itemMetaCategoryArray,
+                    'label' => '案件項目 : ',
+                    'id' => 'meta-category'
                     ]) ?>
-                <?= $this->Form->input('contents', [
-                    'label'=>'議事内容 : ',
-                    'type'=>'textarea',
+                <?= $this->Form->input('item_category_id', [
+                    'label' => '案件種別 : ',
+                    'id' => 'category'
                     ]) ?>
                 <?= $this->Form->input('overed_at', [
                     'empty' => true,

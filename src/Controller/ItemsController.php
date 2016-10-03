@@ -120,15 +120,24 @@ class ItemsController extends AppController
             }
         }
 
-        $itemMetaCategories = $this->Items->ItemMetaCategories->find('all', [
-            'contain' => ['itemCategories']
-        ]);
-        $itemCategories = $this->Items->ItemCategories->find('all', [
-            'where' =< ['ItemCategories.item_']
-        ])
+        $itemMetaCategoryArray = [];
+        $itemCategoriesArray = [];
+        $itemMetaCategories = $this->Items->ItemMetaCategories->find('all')->all()->toArray();
+        foreach ($itemMetaCategories as &$itemMetaCategory) {
+            $array = [];
+            $itemCategories = $this->Items->ItemCategories->find('all')
+                ->where(['ItemCategories.item_meta_category_id = '.$itemMetaCategory->id])
+                ->all()->toArray();
+            foreach ($itemCategories as $itemCategory) {
+                $array[$itemCategory->id] = $itemCategory->name;
+            }
+
+            $itemMetaCategoryArray[$itemMetaCategory->id] = $itemMetaCategory->name;
+            $itemCategoriesArray[$itemMetaCategory->id] = $array;
+        }
         $users = $this->getUsersWithResponsibility(NULL, $minute->project_id);
 
-        $this->set(compact('item', 'minute', 'itemMetaCategories', 'users'));
+        $this->set(compact('item', 'minute', 'itemMetaCategoryArray', 'itemCategoriesArray', 'users'));
         $this->set('_serialize', ['item']);
     }
 
@@ -163,10 +172,24 @@ class ItemsController extends AppController
             }
         }
 
-        $itemCategories = $this->Items->ItemCategories->find('list', ['limit' => 200]);
+        $itemMetaCategoryArray = [];
+        $itemCategoriesArray = [];
+        $itemMetaCategories = $this->Items->ItemMetaCategories->find('all')->all()->toArray();
+        foreach ($itemMetaCategories as &$itemMetaCategory) {
+            $array = [];
+            $itemCategories = $this->Items->ItemCategories->find('all')
+                ->where(['ItemCategories.item_meta_category_id = '.$itemMetaCategory->id])
+                ->all()->toArray();
+            foreach ($itemCategories as $itemCategory) {
+                $array[$itemCategory->id] = $itemCategory->name;
+            }
+
+            $itemMetaCategoryArray[$itemMetaCategory->id] = $itemMetaCategory->name;
+            $itemCategoriesArray[$itemMetaCategory->id] = $array;
+        }
         $users = $this->getUsersWithResponsibility($item->id, $minute->project_id);
 
-        $this->set(compact('item', 'itemCategories', 'users'));
+        $this->set(compact('item', 'itemMetaCategoryArray', 'itemCategoriesArray', 'minute', 'users'));
         $this->set('_serialize', ['item']);
     }
 
