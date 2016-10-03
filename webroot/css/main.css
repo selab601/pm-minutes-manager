@@ -160,7 +160,8 @@ tr:nth-child(even) {
 }
 
 .flex-navbar-header {
-    width: 100px;
+    padding-left: 10px;
+    padding-right: 5px;
     background-color: #f3f3f3;
 
     display: flex;           display: -webkit-flex;
@@ -171,6 +172,16 @@ tr:nth-child(even) {
 .flex-navbar-header>a {
     color: #666;
     text-decoration: none;
+}
+
+.flex-navbar>#version {
+    background-color: #f3f3f3;
+    color: #666;
+    font-size: 15px;
+    padding-top: 5px;
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
 }
 
 ul.flex-navbar-contents {

@@ -3,7 +3,7 @@
         <div class="flex-navbar-header">
             <?=
                 $this->Html->link(
-                    '議事録',
+                    '議事録管理システム',
                     [
                         'controller' => 'pages',
                         'action' => 'display',
@@ -12,6 +12,7 @@
                 );
             ?>
         </div>
+        <span id="version">0.1.0</span>
         <ul class="flex-navbar-contents">
             <?php if (($this->request->session()->read('Auth.User')) == false): ?>
                 <!-- 未ログインユーザ用メニュー -->
