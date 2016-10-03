@@ -4,12 +4,22 @@
         <?= $this->html->css('bootstrap.min.css') ?>
         <?= $this->html->css('main.css') ?>
         <?= $this->html->css('jquery.datetimepicker.css') ?>
-        <?= $this->html->script(['jquery.js', 'jquery.datetimepicker.full.js', 'bootstrap.min.js']) ?>
+        <?= $this->html->css('jquery-ui.min.css') ?>
+        <?= $this->html->css('jquery-ui.theme.min.css') ?>
+        <?= $this->html->css('jquery-ui.structure.min.css') ?>
+        <?= $this->html->script(['jquery.js', 'jquery-ui.min.js', 'jquery.datetimepicker.full.js', 'bootstrap.min.js']) ?>
     </head>
     <script>
         $(function () {
-            $('#datetimepicker1').datetimepicker();
-            $('#datetimepicker2').datetimepicker();
+            $("#datepicker").datepicker({dateFormat: 'yy/mm/dd'});
+            jQuery('#datetimepicker1').datetimepicker({
+                datepicker:false,
+                format:'H:i'
+            });
+            jQuery('#datetimepicker2').datetimepicker({
+                datepicker:false,
+                format:'H:i'
+            });
         });
     </script>
     <body>
@@ -17,8 +27,9 @@
 
         <?php
             $now = new \DateTime();
-            $ended_at = $minute->ended_at == NULL ? "" : $minute->ended_at->format('Y/m/d H:i');
-            $holded_at = $minute->holded_at == NULL ? "" : $minute->holded_at->format('Y/m/d H:i');
+            $date = $minute->holded_at == NULL ? "" : $minute->holded_at->format('Y/m/d');
+            $ended_at = $minute->ended_at == NULL ? "" : $minute->ended_at->format('H:i');
+            $holded_at = $minute->holded_at == NULL ? "" : $minute->holded_at->format('H:i');
         ?>
 
         <?= $this->element('formContainerTemplate') ?>
@@ -27,19 +38,11 @@
             <legend>議事録の編集</legend>
             <?= $this->Form->input('name', ['label'=>'議事録名 : ']) ?>
             <?= $this->Form->input('holded_place', ['label'=>'開催場所 : ']) ?>
-            <?= $this->Form->input('holded_at', [
-                'type' => 'datetime',
-                'value'=>$holded_at,
-                'label' => '開催時刻 : ',
-                'type'=>'text',
-                'id'=>'datetimepicker1',
-                ]) ?>
-            <?= $this->Form->input('ended_at', [
-                'type' => 'datetime',
-                'value'=>$ended_at,
-                'label' => '終了時刻 : ',
-                'type'=>'text',
-                'id'=>'datetimepicker2',
+            <?= $this->element('spanDateTimeForm', [
+                'form' => $this->form,
+                'date' => $date,
+                'holded_at' => $holded_at,
+                'ended_at' => $ended_at,
                 ]) ?>
             <?= $this->element('checkboxForm', [
                 'name' => 'projects_users._ids',

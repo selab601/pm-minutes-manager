@@ -483,6 +483,34 @@ span.new {
     margin-right: 5px;
 }
 
+/* 期間(時刻含む) */
+
+.span-datetime-form {
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
+    justify-content: flex-start; -webkit-justify-content: flex-start;
+    flex-direction: row;
+}
+
+.span-datetime-form-date {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.span-datetime-form-holded_at {
+    width: 100px;
+}
+
+.span-datetime-form-ended_at {
+    width: 100px;
+}
+
+.span-datetime-form > span {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
 /* 期間 */
 
 .span-form {

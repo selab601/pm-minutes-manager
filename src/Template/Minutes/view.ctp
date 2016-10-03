@@ -163,7 +163,7 @@
                     </tr>
                     <tr>
                         <th>日時</th>
-                        <td><?= h($minute->holded_at->format('Y/m/d H:m')) ?></td>
+                        <td><?= h($minute->holded_at->format('Y/m/d H:i')) ?></td>
                     </tr>
                     <tr>
                         <th>場所</th>

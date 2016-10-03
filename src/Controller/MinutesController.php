@@ -105,6 +105,13 @@ class MinutesController extends AppController
         if ($this->request->is('post')) {
             $minute = $this->Minutes->patchEntity($minute, $this->request->data);
             $minute->project_id = $id;
+            $date = $this->request->data["date"];
+            $holded_at = $this->request->data["holded_at"];
+            $minute->holded_at = $date . " " . $holded_at;
+            if (isset($this->request->data["ended_at"])) {
+                $ended_at = $this->request->data["ended_at"];
+                $minute->ended_at = $date . " " . $ended_at;
+            }
             $now = new \DateTime();
             $minute->created_at = $now->format('Y-m-d H:i:s');
             $minute->updated_at = $now->format('Y-m-d H:i:s');
@@ -161,6 +168,13 @@ class MinutesController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $minute = $this->Minutes->patchEntity($minute, $this->request->data);
+            $date = $this->request->data["date"];
+            $holded_at = $this->request->data["holded_at"];
+            $minute->holded_at = $date . " " . $holded_at;
+            if (isset($this->request->data["ended_at"])) {
+                $ended_at = $this->request->data["ended_at"];
+                $minute->ended_at = $date . " " . $ended_at;
+            }
             if ($this->Minutes->save($minute)) {
 
                 if (!empty($this->request->data["projects_users"]["_ids"])) {
