@@ -143,7 +143,16 @@ class ProjectsController extends AppController
 
             $project = $this->Projects->patchEntity($project, $this->request->data);
             foreach ($project->users as &$user) {
-                $user->_joinData = TableRegistry::get('ProjectsUsers')->newEntity();
+                $projects_user = TableRegistry::get('ProjectsUsers')->find('all')
+                    ->where([
+                        'ProjectsUsers.project_id = '.$id,
+                        'ProjectsUsers.user_id = '.$user->id
+                    ]);
+                if ($projects_user->count() > 0) {
+                    $user->_joinData = $projects_user->first();
+                } else {
+                    $user->_joinData = TableRegistry::get('ProjectsUsers')->newEntity();
+                }
                 $user->_joinData->role_id = $data["roles"][$user->id][0];
             }
 
