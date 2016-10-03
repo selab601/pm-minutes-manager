@@ -222,6 +222,63 @@ ul.flex-navbar-contents>li a.active {
 
 /*************************/
 
+/****** トップページ ******/
+
+body.home {
+    height: 85%;
+}
+
+.contents.top {
+    height: 85%;
+    margin-bottom: 50px;
+}
+
+.side-contents.top {
+    height: 100%;
+}
+
+#revision {
+    height: 85%;
+}
+
+span.new {
+    font-size: 12px;
+    color: red;
+}
+
+#revision > ul {
+    list-style-type: none;
+    padding: 10px;
+    margin: 0;
+
+    height: 100%;
+    overflow-y: scroll;
+
+    background-color: #ccc;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+#revision > ul > li {
+    padding: 10px;
+    background-color: #fff;
+
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.revision-date {
+    font-weight: bold;
+}
+
+.revision-contents {
+
+}
+
+/**************************/
+
 /******* コンテナ ********/
 
 /* ログインコンテナ */
