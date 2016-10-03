@@ -38,7 +38,7 @@
             <legend>議事録の編集</legend>
             <p>
                 現在，システムの使用上参加者のステータスとして「遅刻」が記録できません．<br>
-                近々修正予定です．修正次第TOPページでご連絡します．<br>
+                近々修正予定です．修正次第TOPページで通知します．<br>
             </p>
             <?= $this->Form->input('name', ['label'=>'議事録名 : ']) ?>
             <?= $this->Form->input('holded_place', ['label'=>'開催場所 : ']) ?>
