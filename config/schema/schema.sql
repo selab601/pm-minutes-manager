@@ -8,7 +8,7 @@ CREATE
         mail VARCHAR(300),
         is_authorized TINYINT(1) DEFAULT 0,
         is_deleted TINYINT(1) DEFAULT 0,
-        created_at DATETIME DEFAULT current_timestamp,
+        created_at DATETIME,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         UNIQUE (id_string),
         PRIMARY KEY (id)
@@ -22,7 +22,7 @@ CREATE
         customer_name VARCHAR(100),
         started_at DATE NOT NULL,
         finished_at DATE NOT NULL,
-        created_at DATETIME DEFAULT current_timestamp,
+        created_at DATETIME,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
         );
@@ -56,7 +56,7 @@ CREATE
         holded_place VARCHAR(255) NOT NULL,
         holded_at DATETIME,
         ended_at DATETIME,
-        created_at DATETIME DEFAULT current_timestamp,
+        created_at DATETIME,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         revision TINYINT,
         is_examined TINYINT(1) DEFAULT 0,
@@ -111,7 +111,7 @@ CREATE
         contents VARCHAR(300),
         revision TINYINT,
         overed_at DATE,
-        created_at DATETIME DEFAULT current_timestamp,
+        created_at DATETIME,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         is_followed TINYINT(1),
         followed_by INT,
