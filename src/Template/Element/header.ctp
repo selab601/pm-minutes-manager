@@ -85,5 +85,5 @@
     </div>
 </header>
 
-<?= $this->element('flashModal') ?>
 <?= $this->element('navigation') ?>
+<?= $this->element('flashModal') ?>
