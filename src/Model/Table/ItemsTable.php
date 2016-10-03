@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Items Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Minutes
+ * @property \Cake\ORM\Association\BelongsTo $ItemMetaCategories
  * @property \Cake\ORM\Association\BelongsTo $ItemCategories
  * @property \Cake\ORM\Association\HasMany $Responsibilities
  *
@@ -40,6 +41,10 @@ class ItemsTable extends Table
 
         $this->belongsTo('Minutes', [
             'foreignKey' => 'minute_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('ItemMetaCategories', [
+            'foreignKey' => 'item_meta_category_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('ItemCategories', [
@@ -124,6 +129,7 @@ class ItemsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['minute_id'], 'Minutes'));
+        $rules->add($rules->existsIn(['item_meta_category_id'], 'ItemMetaCategories'));
         $rules->add($rules->existsIn(['item_category_id'], 'ItemCategories'));
 
         return $rules;

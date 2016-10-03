@@ -31,8 +31,6 @@ CREATE
     TABLE roles (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
-        created_at DATETIME DEFAULT current_timestamp,
-        updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
         );
 
@@ -87,11 +85,18 @@ CREATE
         );
 
 CREATE
+    TABLE item_meta_categories (
+        id INT NOT NULL AUTO_INCREMENT,
+        name VARCHAR(50) NOT NULL,
+        PRIMARY KEY (id)
+        );
+
+CREATE
     TABLE item_categories (
         id INT NOT NULL AUTO_INCREMENT,
         name VARCHAR(50) NOT NULL,
-        created_at DATETIME DEFAULT current_timestamp,
-        updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+        item_meta_category_id INT NOT NULL,
+        FOREIGN KEY item_meta_category_key(item_meta_category_id) REFERENCES item_meta_categories(id),
         PRIMARY KEY (id)
         );
 
@@ -100,6 +105,7 @@ CREATE
         id INT NOT NULL AUTO_INCREMENT,
         minute_id INT NOT NULL,
         primary_char VARCHAR(10) NOT NULL,
+        item_meta_category_id INT NOT NULL,
         item_category_id INT NOT NULL,
         order_in_minute TINYINT NOT NULL,
         contents VARCHAR(300),
@@ -113,6 +119,7 @@ CREATE
         followed_at DATETIME,
         FOREIGN KEY minute_key(minute_id) REFERENCES minutes(id),
         FOREIGN KEY item_category_key(item_category_id) REFERENCES item_categories(id),
+        FOREIGN KEY item_meta_category_key(item_meta_category_id) REFERENCES item_meta_categories(id),
         PRIMARY KEY (id)
         );
 

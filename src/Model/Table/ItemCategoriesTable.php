@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * ItemCategories Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $ItemMetaCategories
  * @property \Cake\ORM\Association\HasMany $Items
  *
  * @method \App\Model\Entity\ItemCategory get($primaryKey, $options = [])
@@ -36,6 +37,10 @@ class ItemCategoriesTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
 
+        $this->belongsTo('ItemMetaCategories', [
+            'foreignKey' => 'item_meta_category_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Items', [
             'foreignKey' => 'item_category_id'
         ]);
@@ -57,15 +62,20 @@ class ItemCategoriesTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
-        $validator
-            ->dateTime('created_at')
-            ->allowEmpty('created_at');
-
-        $validator
-            ->dateTime('updated_at')
-            ->requirePresence('updated_at', 'create')
-            ->notEmpty('updated_at');
-
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['item_meta_category_id'], 'ItemMetaCategories'));
+
+        return $rules;
     }
 }

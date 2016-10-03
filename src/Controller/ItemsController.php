@@ -120,10 +120,15 @@ class ItemsController extends AppController
             }
         }
 
-        $itemCategories = $this->Items->ItemCategories->find('list');
+        $itemMetaCategories = $this->Items->ItemMetaCategories->find('all', [
+            'contain' => ['itemCategories']
+        ]);
+        $itemCategories = $this->Items->ItemCategories->find('all', [
+            'where' =< ['ItemCategories.item_']
+        ])
         $users = $this->getUsersWithResponsibility(NULL, $minute->project_id);
 
-        $this->set(compact('item', 'minute', 'itemCategories', 'users'));
+        $this->set(compact('item', 'minute', 'itemMetaCategories', 'users'));
         $this->set('_serialize', ['item']);
     }
 

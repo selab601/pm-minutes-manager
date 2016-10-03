@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $minute_id
  * @property string $primary_char
+ * @property int $item_meta_category_id
  * @property int $item_category_id
  * @property int $order_in_minute
  * @property string $contents

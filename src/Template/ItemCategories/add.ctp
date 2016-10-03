@@ -2,6 +2,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Item Categories'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Item Meta Categories'), ['controller' => 'ItemMetaCategories', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Item Meta Category'), ['controller' => 'ItemMetaCategories', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Items'), ['controller' => 'Items', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Item'), ['controller' => 'Items', 'action' => 'add']) ?></li>
     </ul>
@@ -12,8 +14,7 @@
         <legend><?= __('Add Item Category') ?></legend>
         <?php
             echo $this->Form->input('name');
-            echo $this->Form->input('created_at', ['empty' => true]);
-            echo $this->Form->input('updated_at');
+            echo $this->Form->input('item_meta_category_id', ['options' => $itemMetaCategories]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

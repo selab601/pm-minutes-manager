@@ -4,16 +4,12 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ItemCategory Entity
+ * ItemMetaCategory Entity
  *
  * @property int $id
  * @property string $name
- * @property int $item_meta_category_id
- *
- * @property \App\Model\Entity\ItemMetaCategory $item_meta_category
- * @property \App\Model\Entity\Item[] $items
  */
-class ItemCategory extends Entity
+class ItemMetaCategory extends Entity
 {
 
     /**

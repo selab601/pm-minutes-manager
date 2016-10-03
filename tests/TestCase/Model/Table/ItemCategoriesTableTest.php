@@ -25,11 +25,13 @@ class ItemCategoriesTableTest extends TestCase
      */
     public $fixtures = [
         'app.item_categories',
+        'app.item_meta_categories',
         'app.items',
         'app.minutes',
         'app.projects',
         'app.users',
         'app.projects_users',
+        'app.roles',
         'app.participations',
         'app.responsibilities'
     ];
@@ -74,6 +76,16 @@ class ItemCategoriesTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
