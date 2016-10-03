@@ -13,7 +13,10 @@
     <fieldset>
         <legend>ユーザの追加</legend>
         <div class="form-container-fields add-user">
-            <?= $this->Form->input('id_string', ['label' => 'ID : ',]) ?>
+            <?= $this->Form->input('id_string', [
+                'label' => 'ID : ',
+                'placeholder' => '学籍番号で登録してください',
+                ]) ?>
             <?= $this->element('nameForm', ['form' => $this->Form]) ?>
             <?= $this->Form->input('password', ['label' => 'パスワード : ',]) ?>
             <?= $this->Form->input('mail', ['label' => 'メールアドレス : ',]) ?>

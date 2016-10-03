@@ -36,6 +36,10 @@
         <?= $this->Form->create($project, ['class'=>'form-container add-project']); ?>
         <fieldset>
             <legend>プロジェクトを編集する</legend>
+            <p>
+                <b>注意</b> : 現在バグにより，登録済みの参加者を取り除こうとすると，エラーが生じる可能性があります<br>
+                取り除きたい場合は，兎澤 (15nm722x@vc.ibaraki.ac.jp) までご一報ください．
+            </p>
             <div class="form-container-fields add-project">
                 <?= $this->Form->input('name', ['label' => 'プロジェクト名 : ']) ?>
                 <?= $this->Form->input('budget', ['label' => '予算 : ']) ?>

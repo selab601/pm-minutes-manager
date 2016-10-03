@@ -34,7 +34,28 @@ $cakeDescription = '議事録管理システム';
 
             </div>
             <div class="main-contents">
-                <h3>議事録管理のススメ</h3>
+                <h3>不具合報告について</h3>
+                <p>
+                    不具合を発見した場合は，Slack か メール で報告をいただければ対応します．<br>
+
+                </p>
+                <center style="margin-bottom: 15px;">
+                    <h4><b>Slack</b></h4>
+                    <p>
+                        Slackは便利なチャットツールです．下記画像リンクをクリックすると招待メールが届きます．<br>
+                        不具合報告だけでなく，何かわからないことがあれば遠慮なく質問してください．<br>
+                        デスクトップアプリやスマホアプリもあるので，インストールをおすすめします．
+                    </p>
+                    <?= $this->Html->image('Slack.png', ['url' => "https://sheltered-crag-52727.herokuapp.com/"]) ?>
+                </center>
+                <center>
+                    <h4><b>E-mail</b></h4>
+                    <p>
+                        本アプリ作者の M2 兎澤 のメールアドレスです．<br>
+                        正直 Slack の方が対応が楽です(チャットでやりとりできるので)
+                    </p>
+                    <p><a href="mailto:15nm722x&#64;vc.ibaraki.ac.jp">15nm722x&#64;vc.ibaraki.ac.jp</a></p>
+                </center>
             </div>
         </div>
 

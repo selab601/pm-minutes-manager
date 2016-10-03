@@ -11,7 +11,11 @@
         <div class="contents users-projects-view">
 
             <div class="main-contents  users-projects-view">
-                <center><h4>参加中のプロジェクト一覧</h4></center>
+                <center>
+                    <h4>プロジェクト一覧</h4>
+                    あなたが参加中のプロジェクト一覧が表示されます．<br>
+                    PMは「新規作成」から，メンバーとして開発員，課長を加えたプロジェクトを新たに作成しましょう．
+                </center>
                 <?php if (!empty($user->projects)): ?>
                     <table class="table project-table project">
                         <tr>

@@ -39,6 +39,10 @@
         <?= $this->Form->create($minute, ['class'=>'form-container add-minute']); ?>
         <fieldset>
             <legend>議事録の追加</legend>
+            <p>
+                現在，システムの使用上参加者のステータスとして「遅刻」が記録できません．<br>
+                近々修正予定です．修正次第TOPページでご連絡します．<br>
+            </p>
             <div class="form-container-fields add-minute">
                 <?= $this->Form->input('name', ['label'=>'議事録名 : ']) ?>
                 <?= $this->Form->input('holded_place', ['label'=>'開催場所 : ']) ?>

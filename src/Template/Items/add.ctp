@@ -38,6 +38,11 @@
     <?= $this->Form->create($item, ['class'=>'form-container add-item']) ?>
     <fieldset>
         <legend>案件を追加する</legend>
+        <p>
+            案件項目を「タスク」に設定した場合には，「期限」を必ず設定するようにしてください．<br>
+            「期限」を設定しない場合，現在のシステムの使用上「フォロー」を行うことができません．<br>
+            また，「フォロー」済みの案件の期限，担当者は変更できません．
+        </p>
         <div class="form-container-fields add-item">
             <?= $this->Form->input('primary_char', [
                 'options' => [
