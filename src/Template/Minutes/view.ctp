@@ -23,7 +23,7 @@
                     console.log(json);
 
                     sendPost(
-                        "/minutes/ajaxUpdateItemOrder",
+                        "/minutes/ajaxUpdateItemOrder/<?= $minute->id ?>",
                         {
                             order: json,
                             minute_id: <?= $minute->id ?>
