@@ -45,6 +45,7 @@
                         + '    <div class="table-content primary">優先度</div>'
                         + '    <div class="table-content responsibility">担当</div>'
                         + '    <div class="table-content deadline">期限</div>'
+                        + '    <div class="table-content follow">フォロー</div>'
                         + '  </div>'
                         + '</div>';
           $(tableHtml).appendTo($('.contents').last());
