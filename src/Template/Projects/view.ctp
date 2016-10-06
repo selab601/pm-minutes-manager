@@ -28,12 +28,14 @@
                             <th class="minute-table-content examined-at" scope="col">審査</th>
                             <th class="minute-table-content approved-at" scope="col">承認</th>
                             <th class="minute-table-content is-deletable" scope="col">削除</th>
-                            <th class="minute-table-content action" scope="col"></th>
                         </tr>
                         <?php foreach ($project->minutes as $minutes): ?>
                             <tr>
                                 <td class="minute-table-content minute-name">
-                                    <?= h($minutes->name) ?>
+                                    <?= $this->Html->link($minutes->name, ['controller' => 'Minutes', 'action' => 'view', $minutes->id]) ?>
+                                    <span class="for_examine_or_approve">
+                                        (<?= $this->Html->link('審査/承認用ビュー', ['controller' => 'Minutes', 'action' => 'create-html', $minutes->id]) ?>)
+                                    </span>
                                 </td>
                                 <td class="minute-table-content holded-at">
                                     <?= h($minutes->holded_at->format('Y/m/d')) ?>
@@ -92,9 +94,6 @@
                                             echo "-";
                                         }
                                     ?>
-                                </td>
-                                <td class="minute-table-content action">
-                                    <?= $this->Html->link(__('編集'), ['controller' => 'Minutes', 'action' => 'view', $minutes->id]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
