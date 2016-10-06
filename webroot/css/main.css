@@ -225,12 +225,12 @@ ul.flex-navbar-contents>li a.active {
 /****** トップページ ******/
 
 body.home {
-    height: 85%;
+    height: 650px;
 }
 
 .contents.top {
-    height: 85%;
-    margin-bottom: 50px;
+    height: 650px;
+    margin-bottom: 50px
 }
 
 .side-contents.top {
@@ -238,7 +238,7 @@ body.home {
 }
 
 #revision {
-    height: 85%;
+    height: 500px;
 }
 
 span.new {
