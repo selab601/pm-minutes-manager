@@ -767,9 +767,19 @@ span.for_examine_or_approve {
 
 /* プロジェクト参加者テーブル */
 
-.project-member-table .project-member {
-    width: 50%;
+.project-member-table td {
+    font-size: 13px;
+}
+
+.project-member-table-member {
+    width: 33%;
+    text-align: left;
+}
+
+.project-member-table-role {
+    width: 17%;
     text-align: center;
+    font-weight: bold;
 }
 
 /* 議事録詳細テーブル */

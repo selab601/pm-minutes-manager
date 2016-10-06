@@ -75,7 +75,7 @@ class ProjectsController extends AppController
         ]);
 
         $projects_users = TableRegistry::get('ProjectsUsers')
-            ->find('all', ['contain'=>['Users']])
+            ->find('all', ['contain'=>['Users', 'Roles']])
             ->where([
                 'ProjectsUsers.project_id = '.$id,
                 'ProjectsUsers.is_deleted = 0'

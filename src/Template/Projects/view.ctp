@@ -137,20 +137,22 @@
                 <div>
                     <?php if (!empty($projects_users)): ?>
                         <table class="table project project-member-table">
-                            <tr><th colspan="3">参加メンバー</th></tr>
+                            <tr><th colspan="4">参加メンバー</th></tr>
                             <?php
                                 $users = [];
                                 foreach ($projects_users as $projects_user) {
                                     $user;
                                     $user['name'] = $projects_user->user->last_name . " " . $projects_user->user->first_name;
+                                    $user['role'] = $projects_user->role->name;
                                     array_push($users, $user);
                                 }
                             ?>
                             <?= $this->element('userTable', [
                                 "users"=>$users,
-                                "add_participation"=>false,
+                                "add_role"=>true,
+                                "role_classes"=>"project-member-table-role",
                                 "col_num"=>2,
-                                "classes"=>"project-member",
+                                "classes"=>"project-member-table-member",
                                 ]) ?>
                         </table>
                     <?php endif; ?>
