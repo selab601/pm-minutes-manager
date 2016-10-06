@@ -680,26 +680,21 @@ span.new {
 /* プロジェクトテーブル */
 
 table.project-table {
-    width: 700px;
+    width: 600px;
 }
 
 .project-table-content.project-name {
-    width: 50%;
+    width: 60%;
 }
 
 .project-table-content.started-at {
-    width: 35%;
+    width: 40%;
     text-align: center;
 }
 
 td.project-table-content.project-name {
     font-size: 20px;
     font-weight: 900;
-}
-
-.project-table-content.view-minutes {
-    width: 15%;
-    text-align: center;
 }
 
 /* 議事録テーブル */
