@@ -105,7 +105,7 @@ class ProjectsController extends AppController
 
             foreach ($project->users as &$user) {
                 $user->_joinData = TableRegistry::get('ProjectsUsers')->newEntity();
-                $user->_joinData->role_id = $data["roles"][$user->id][0];
+                $user->_joinData->role_id = $data["roles"][$user->id];
             }
 
             if ($this->Projects->save($project, ['associated' => ['Users']])) {
