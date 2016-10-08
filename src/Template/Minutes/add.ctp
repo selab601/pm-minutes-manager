@@ -25,16 +25,6 @@
     <body>
         <?= $this->element('header') ?>
 
-        <?php
-            $users_array = [];
-            foreach ($projects_users as $projects_user) {
-                $user = $projects_user->toArray()["user"];
-                $users_array[$projects_user->id] =
-                    $user["last_name"] . " " . $user["first_name"];
-            }
-            $now = new \DateTime();
-        ?>
-
         <?= $this->element('formContainerTemplate') ?>
         <?= $this->Form->create($minute, ['class'=>'form-container add-minute']); ?>
         <fieldset>

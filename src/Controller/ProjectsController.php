@@ -118,12 +118,16 @@ class ProjectsController extends AppController
         }
 
         $users = $this->Projects->Users->find()->select(['id', 'last_name', 'first_name']);
+        $users_array = [];
+        foreach ($users as $user) {
+            $users_array[$user['id']] = $user['last_name'] . " " . $user['first_name'];
+        }
         $roles = json_encode(TableRegistry::get('Roles')->find()->select(['id', 'name'])
             ->all()->toArray());
         $auth_user = [];
         $auth_user["user_id"] = $this->request->session()->read('Auth.User.id');
         $auth_user = "[".json_encode($auth_user)."]";
-        $this->set(compact('project', 'users', 'roles', 'auth_user'));
+        $this->set(compact('project', 'users_array', 'roles', 'auth_user'));
         $this->set('_serialize', ['project']);
     }
 
@@ -170,7 +174,18 @@ class ProjectsController extends AppController
             ->where(['ProjectsUsers.project_id='.$id, 'ProjectsUsers.is_deleted=0']);
         $roles = json_encode(TableRegistry::get('Roles')->find()->select(['id', 'name'])
             ->all()->toArray());
-        $this->set(compact('project', 'members', 'users', 'roles'));
+        $users_array = [];
+        foreach ($users as $user) {
+            $users_array[$user->id] = $user->last_name." ".$user->first_name;
+        }
+        $checked_users_array = [];
+        foreach ($members as $member) {
+            array_push($checked_users_array, $member->user->id);
+        }
+        $started_at = is_object($project->started_at) ? $project->started_at->format('Y/m/d') : $project->started_at;
+        $finished_at = is_object($project->finished_at) ? $project->finished_at->format('Y/m/d') : $project->finished_at;
+        $this->set(compact('project', 'members', 'users_array', 'checked_users_array',
+                'roles', 'started_at', 'finished_at'));
         $this->set('_serialize', ['project']);
     }
 

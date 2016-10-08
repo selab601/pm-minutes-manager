@@ -19,19 +19,6 @@
     <body>
         <?= $this->element('header') ?>
 
-        <?php
-            $users_array = [];
-            foreach ($users as $user) {
-                $users_array[$user->id] = $user->last_name." ".$user->first_name;
-            }
-            $checked_users_array = [];
-            foreach ($members as $member) {
-                array_push($checked_users_array, $member->user->id);
-            }
-            $started_at = is_object($project->started_at) ? $project->started_at->format('Y/m/d') : $project->started_at;
-            $finished_at = is_object($project->finished_at) ? $project->finished_at->format('Y/m/d') : $project->finished_at;
-        ?>
-
         <?= $this->element('formContainerTemplate') ?>
         <?= $this->Form->create($project, ['class'=>'form-container add-project']); ?>
         <fieldset>

@@ -149,7 +149,15 @@ class MinutesController extends AppController
                 'ProjectsUsers.project_id = '.$id
             ])
             ->first();
-        $this->set(compact('minute', 'projects_users', 'auth_projects_user'));
+        $users_array = [];
+        foreach ($projects_users as $projects_user) {
+            $user = $projects_user->toArray()["user"];
+            $users_array[$projects_user->id] =
+                $user["last_name"] . " " . $user["first_name"];
+        }
+        $now = new \DateTime();
+
+        $this->set(compact('minute', 'users_array', 'now', 'auth_projects_user'));
         $this->set('_serialize', ['minute']);
     }
 
@@ -206,8 +214,13 @@ class MinutesController extends AppController
                 array_push($checked_users_array, $user->projects_user_id);
             }
         }
+        $now = new \DateTime();
+        $date = $minute->holded_at == NULL ? "" : $minute->holded_at->format('Y/m/d');
+        $ended_at = $minute->ended_at == NULL ? "" : $minute->ended_at->format('H:i');
+        $holded_at = $minute->holded_at == NULL ? "" : $minute->holded_at->format('H:i');
 
-        $this->set(compact('minute', 'users_array', 'checked_users_array'));
+        $this->set(compact('minute', 'users_array', 'checked_users_array',
+                'date', 'ended_at', 'holded_at'));
         $this->set('_serialize', ['minute']);
     }
 

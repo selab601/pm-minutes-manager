@@ -19,13 +19,6 @@
     <body>
         <?= $this->element('header') ?>
 
-        <?php
-            $users_array = [];
-            foreach ($users as $user) {
-                $users_array[$user['id']] = $user['last_name'] . " " . $user['first_name'];
-            }
-        ?>
-
         <?= $this->element('formContainerTemplate') ?>
         <?= $this->Form->create($project, ['class'=>'form-container add-project']); ?>
         <fieldset>

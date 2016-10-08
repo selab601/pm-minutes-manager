@@ -25,13 +25,6 @@
     <body>
         <?= $this->element('header') ?>
 
-        <?php
-            $now = new \DateTime();
-            $date = $minute->holded_at == NULL ? "" : $minute->holded_at->format('Y/m/d');
-            $ended_at = $minute->ended_at == NULL ? "" : $minute->ended_at->format('H:i');
-            $holded_at = $minute->holded_at == NULL ? "" : $minute->holded_at->format('H:i');
-        ?>
-
         <?= $this->element('formContainerTemplate') ?>
         <?= $this->Form->create($minute, ['class'=>'form-container add-minute']); ?>
         <fieldset>
