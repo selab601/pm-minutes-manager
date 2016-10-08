@@ -11,8 +11,9 @@
 <script>
     $(document).ready(function () {
         $( "#datepicker" ).datepicker({dateFormat: 'yy/mm/dd'});
-        var meta_categories = <?= json_encode($itemMetaCategoryArray) ?>;
-        var categories = <?= json_encode($itemCategoriesArray) ?>;
+
+        var meta_categories = <?= json_encode($item_meta_category_array) ?>;
+        var categories = <?= json_encode($item_categories_array) ?>;
         $("select#meta-category").change(function() {
             $("select#category").empty();
             $.each(categories[$(this).val()], function(key, value) {
@@ -26,13 +27,6 @@
 </script>
 <body>
     <?= $this->element('header') ?>
-
-    <?php
-        $users_array = [];
-        foreach ($users as $user) {
-            $users_array[$user->projects_user_id] = $user['last_name']." ".$user['first_name'];
-        }
-    ?>
 
     <?= $this->element('formContainerTemplate') ?>
     <?= $this->Form->create($item, ['class'=>'form-container add-item']) ?>
@@ -56,12 +50,12 @@
                 'value' => "-",
                 ]) ?>
             <?= $this->Form->input('item_meta_category_id', [
-                'options' => $itemMetaCategoryArray,
+                'options' => $item_meta_category_array,
                 'label' => '案件項目 : ',
                 'id' => 'meta-category'
                 ]) ?>
             <?= $this->Form->input('item_category_id', [
-                'options' => $itemCategoriesArray[1],
+                'options' => $item_categories_array[1],
                 'label' => '案件種別 : ',
                 'id' => 'category'
                 ]) ?>

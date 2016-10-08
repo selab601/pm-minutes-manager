@@ -120,24 +120,28 @@ class ItemsController extends AppController
             }
         }
 
-        $itemMetaCategoryArray = [];
-        $itemCategoriesArray = [];
-        $itemMetaCategories = $this->Items->ItemMetaCategories->find('all')->all()->toArray();
-        foreach ($itemMetaCategories as &$itemMetaCategory) {
+        $item_meta_category_array = [];
+        $item_categories_array = [];
+        $item_meta_categories = $this->Items->ItemMetaCategories->find('all')->all()->toArray();
+        foreach ($item_meta_categories as &$item_meta_category) {
             $array = [];
-            $itemCategories = $this->Items->ItemCategories->find('all')
-                ->where(['ItemCategories.item_meta_category_id = '.$itemMetaCategory->id])
+            $item_categories = $this->Items->ItemCategories->find('all')
+                ->where(['ItemCategories.item_meta_category_id = '.$item_meta_category->id])
                 ->all()->toArray();
-            foreach ($itemCategories as $itemCategory) {
-                $array[$itemCategory->id] = $itemCategory->name;
+            foreach ($item_categories as $item_category) {
+                $array[$item_category->id] = $item_category->name;
             }
 
-            $itemMetaCategoryArray[$itemMetaCategory->id] = $itemMetaCategory->name;
-            $itemCategoriesArray[$itemMetaCategory->id] = $array;
+            $item_meta_category_array[$item_meta_category->id] = $item_meta_category->name;
+            $item_categories_array[$item_meta_category->id] = $array;
         }
         $users = $this->getUsersWithResponsibility(NULL, $minute->project_id);
+        $users_array = [];
+        foreach ($users as $user) {
+            $users_array[$user->projects_user_id] = $user['last_name']." ".$user['first_name'];
+        }
 
-        $this->set(compact('item', 'minute', 'itemMetaCategoryArray', 'itemCategoriesArray', 'users'));
+        $this->set(compact('item', 'minute', 'item_meta_category_array', 'item_categories_array', 'users_array'));
         $this->set('_serialize', ['item']);
     }
 
@@ -172,24 +176,40 @@ class ItemsController extends AppController
             }
         }
 
-        $itemMetaCategoryArray = [];
-        $itemCategoriesArray = [];
-        $itemMetaCategories = $this->Items->ItemMetaCategories->find('all')->all()->toArray();
-        foreach ($itemMetaCategories as &$itemMetaCategory) {
+        $item_meta_category_array = [];
+        $item_categories_array = [];
+        $item_meta_categories = $this->Items->ItemMetaCategories->find('all')->all()->toArray();
+        foreach ($item_meta_categories as &$item_meta_category) {
             $array = [];
-            $itemCategories = $this->Items->ItemCategories->find('all')
-                ->where(['ItemCategories.item_meta_category_id = '.$itemMetaCategory->id])
+            $item_categories = $this->Items->ItemCategories->find('all')
+                ->where(['ItemCategories.item_meta_category_id = '.$item_meta_category->id])
                 ->all()->toArray();
-            foreach ($itemCategories as $itemCategory) {
-                $array[$itemCategory->id] = $itemCategory->name;
+            foreach ($item_categories as $item_category) {
+                $array[$item_category->id] = $item_category->name;
             }
 
-            $itemMetaCategoryArray[$itemMetaCategory->id] = $itemMetaCategory->name;
-            $itemCategoriesArray[$itemMetaCategory->id] = $array;
+            $item_meta_category_array[$item_meta_category->id] = $item_meta_category->name;
+            $item_categories_array[$item_meta_category->id] = $array;
         }
-        $users = $this->getUsersWithResponsibility($item->id, $minute->project_id);
 
-        $this->set(compact('item', 'itemMetaCategoryArray', 'itemCategoriesArray', 'minute', 'users'));
+        $users = $this->getUsersWithResponsibility($item->id, $minute->project_id);
+        $users_array = [];
+        $checked_users_array = [];
+        foreach ($users as $user) {
+            $users_array[$user->projects_user_id] = $user['last_name']." ".$user['first_name'];
+            if ($user->has_responsibility) {
+                array_push($checked_users_array, $user->projects_user_id);
+            }
+        }
+
+        if ($item->overed_at == NULL) {
+            $default_overed_at = "";
+        } else {
+            $default_overed_at = $item->overed_at->format('Y/m/d');
+        }
+
+        $this->set(compact('item', 'item_meta_category_array', 'item_categories_array',
+                'minute', 'users_array', 'checked_users_array', 'default_overed_at'));
         $this->set('_serialize', ['item']);
     }
 

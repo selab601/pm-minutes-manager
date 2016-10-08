@@ -11,8 +11,8 @@
     <script>
         $(document).ready(function () {
             $( "#datepicker" ).datepicker({dateFormat: 'yy/mm/dd'});
-            var meta_categories = <?= json_encode($itemMetaCategoryArray) ?>;
-            var categories = <?= json_encode($itemCategoriesArray) ?>;
+            var meta_categories = <?= json_encode($item_meta_category_array) ?>;
+            var categories = <?= json_encode($item_categories_array) ?>;
             $("select#meta-category").change(function() {
                 $("select#category").empty();
                 $.each(categories[$(this).val()], function(key, value) {
@@ -23,7 +23,6 @@
                 });
             });
 
-
             // 初期化
             $.each(categories[$("select#meta-category").val()], function(key, value) {
                 $("select#category").append(
@@ -31,26 +30,12 @@
                         .attr("value", key)
                         .text(value));
             });
+            $('select#category option[value="'+<?= $item->item_category_id ?>+'"]')
+                .attr("selected",true);
         });
     </script>
     <body>
         <?= $this->element('header') ?>
-
-        <?php
-            $users_array = [];
-            $checked_users_array = [];
-            foreach ($users as $user) {
-                $users_array[$user->projects_user_id] = $user['last_name']." ".$user['first_name'];
-                if ($user->has_responsibility) {
-                    array_push($checked_users_array, $user->projects_user_id);
-                }
-            }
-            if ($item->overed_at == NULL) {
-                $default_overed_at = "";
-            } else {
-                $default_overed_at = $item->overed_at->format('Y/m/d');
-            }
-        ?>
 
         <?= $this->element('formContainerTemplate') ?>
         <?= $this->Form->create($item, ['class'=>'form-container add-item']) ?>
@@ -73,9 +58,10 @@
                     'label' => '優先度 : ',
                     ]) ?>
                 <?= $this->Form->input('item_meta_category_id', [
-                    'options' => $itemMetaCategoryArray,
+                    'options' => $item_meta_category_array,
                     'label' => '案件項目 : ',
-                    'id' => 'meta-category'
+                    'id' => 'meta-category',
+                    'default' => $item->item_meta_category_id,
                     ]) ?>
                 <?= $this->Form->input('item_category_id', [
                     'label' => '案件種別 : ',
