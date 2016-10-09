@@ -14,7 +14,9 @@
                     break;
 
                 case "Projects":
-                    if ($this->request->action == "add") {
+                    if ($this->request->action == "index") {
+                        // 管理者画面
+                    } else if ($this->request->action == "add") {
                         echo $project_view_url;
                     } else {
                         echo $project_view_url;
