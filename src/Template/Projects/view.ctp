@@ -136,8 +136,8 @@
 
                 <div>
                     <?php if (!empty($projects_users)): ?>
-                        <table class="table project project-member-table">
-                            <tr><th colspan="4">参加メンバー</th></tr>
+                        <div class="user-table project project-member-table">
+                            <div class="user-table-row"><div class="user-table-row-elem th">参加メンバー</div></div>
                             <?php
                                 $users = [];
                                 foreach ($projects_users as $projects_user) {
@@ -154,7 +154,7 @@
                                 "col_num"=>2,
                                 "classes"=>"project-member-table-member",
                                 ]) ?>
-                        </table>
+                        </div>
                     <?php endif; ?>
                 </div>
 

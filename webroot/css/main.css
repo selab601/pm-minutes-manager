@@ -596,6 +596,87 @@ span.new {
     padding-left: 10px;
 }
 
+/*** ユーザテーブル ***/
+
+.user-table {
+    display: flex;           display: -webkit-flex;
+    flex-direction: column;  -webkit-flex-direction: column;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    margin-bottom: 10px;
+}
+
+.user-table-row {
+    flex: 0 0 1;             -webkit-flex: 0 0 1;
+    display: flex;           display: -webkit-flex;
+    flex-direction: row;     -webkit-flex-direction: row;
+}
+
+.user-table-row-elem {
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    padding: 5px;
+}
+
+.user-table-row-elem.th {
+    width: 100%;
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.user-table-row-elem.td {
+    word-break: break-all;
+    flex: 0 0 1;
+    font-size: 15px;
+}
+
+.user-table.user .th {
+    background-color: #4CAFFF;
+    color: white;
+}
+
+.user-table.project .th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.user-table.minute .th {
+    background-color: #FFAF50;
+    color: white;
+}
+
+/* 参加者テーブル */
+
+.participation-table .project-member {
+    width: 40%;
+}
+
+.participation-table .participation {
+    width: 10%;
+    text-align: center;
+}
+
+/* プロジェクト参加者テーブル */
+
+.project-member-table td {
+    font-size: 13px;
+}
+
+.project-member-table-member {
+    width: 33%;
+    text-align: left;
+}
+
+.project-member-table-role {
+    width: 17%;
+    text-align: center;
+    font-weight: bold;
+}
+
+
 /********* 各ページ個別の設定 **********/
 
 /*** ユーザ追加/編集画面 ***/
@@ -765,36 +846,8 @@ span.for_examine_or_approve {
     width: 130px;
 }
 
-/* プロジェクト参加者テーブル */
-
-.project-member-table td {
-    font-size: 13px;
-}
-
-.project-member-table-member {
-    width: 33%;
-    text-align: left;
-}
-
-.project-member-table-role {
-    width: 17%;
-    text-align: center;
-    font-weight: bold;
-}
-
 /* 議事録詳細テーブル */
 
 .minute-detail-table th {
     width: 90px;
-}
-
-/* 参加者テーブル */
-
-.participation-table .project-member {
-    width: 40%;
-}
-
-.participation-table .participation {
-    width: 10%;
-    text-align: center;
 }

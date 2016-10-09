@@ -3,28 +3,28 @@
     if (!isset($classes)) { $classes = ""; }
     if (!isset($participation_classes)) { $participation_classes = ""; }
     foreach ($users as $user) {
-        if ($i%$col_num == 0) { echo "<tr>"; }
+        if ($i%$col_num == 0) { echo "<div class='user-table-row'>"; }
 
         if (isset($add_participation) && $add_participation == true ) {
-            echo "<td class=\"".$participation_classes."\">".$user['participation']."</td>";
+            echo "<div class=\"user-table-row-elem td ".$participation_classes."\">".$user['participation']."</div>";
         }
         if (isset($add_role) && $add_role == true ) {
-            echo "<td class=\"".$role_classes."\">".$user['role']."</td>";
+            echo "<div class=\"user-table-row-elem td ".$role_classes."\">".$user['role']."</div>";
         }
-        echo "<td class=\"".$classes."\">".$user['name']."</td>";
+        echo "<div class=\"user-table-row-elem td ".$classes."\">".$user['name']."</div>";
 
-        if ($i%$col_num == $col_num - 1) { echo "</tr>"; }
+        if ($i%$col_num == $col_num - 1) { echo "</div>"; }
         $i++;
     }
 
     for ($j = $i; $j%$col_num != 0; $j++) {
         if (isset($add_participation) && $add_participation == true) {
-            echo "<td class=\"".$participation_classes."\"> - </td>";
+            echo "<div class=\"user-table-row-elem td ".$participation_classes."\"> - </div>";
         }
         if (isset($add_role) && $add_role == true) {
-            echo "<td class=\"".$role_classes."\"> - </td>";
+            echo "<div class=\"user-table-row-elem td ".$role_classes."\"> - </div>";
         }
-        echo "<td class=\"".$classes."\"> - </td>";
-        if ($j%$col_num == $col_num-1) { echo "</tr>"; }
+        echo "<div class=\"user-table-row-elem td ".$classes."\"> - </div>";
+        if ($j%$col_num == $col_num-1) { echo "</div>"; }
     }
 ?>

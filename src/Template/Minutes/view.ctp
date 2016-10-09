@@ -188,8 +188,10 @@
                 </table>
 
                 <!-- 出席情報 -->
-                <table class="table minute participation-table">
-                    <tr><th colspan="6">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</th></tr>
+                <div class="user-table minute participation-table">
+                    <div class="user-table-row">
+                        <div class="user-table-row-elem th">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</div>
+                    </div>
                     <?= $this->element('userTable', [
                         "users"=>$user_array,
                         "add_participation"=>true,
@@ -197,7 +199,7 @@
                         "classes"=>"project-member",
                         "participation_classes"=>"participation",
                         ]) ?>
-                </table>
+                </div>
 
                 <center>
                     <?=
