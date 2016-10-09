@@ -228,6 +228,10 @@ body.home {
     height: 650px;
 }
 
+.main-contents.home {
+    min-width: 900px;
+}
+
 .contents.top {
     height: 650px;
     margin-bottom: 50px

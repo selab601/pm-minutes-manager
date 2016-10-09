@@ -45,7 +45,7 @@ $cakeDescription = '議事録管理システム';
                 </div>
 
             </div>
-            <div class="main-contents">
+            <div class="main-contents home">
                 <h3>不具合報告について</h3>
                 <p>
                     不具合を発見した場合は，Slack か メール で報告をいただければ対応します．<br>
