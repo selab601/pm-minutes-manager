@@ -401,7 +401,7 @@ class MinutesController extends AppController
             $user_names = [];
             $responsibilities = TableRegistry::get('Responsibilities')
                 ->find('all')
-                ->where(['responsibilities.item_id = '.$item->id]);
+                ->where(['Responsibilities.item_id = '.$item->id]);
             foreach ($responsibilities as $responsibility) {
                 $projects_users = TableRegistry::get('ProjectsUsers')->get($responsibility->projects_user_id);
                 $user = TableRegistry::get('Users')->get($projects_users->user_id);
