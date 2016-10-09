@@ -64,13 +64,13 @@ body {
 .contents-header {
     padding: 0;
     margin: 0;
-    height: 200px;
     padding-bottom: 20px;
     flex-shrink: 0;
 }
 
 .contents-minute {
     flex: 1;
+    flex-shrink: 0;
 }
 
 /* ヘッダー内 */
