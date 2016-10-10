@@ -12,7 +12,7 @@
                 );
             ?>
         </div>
-        <span id="version">0.1.1</span>
+        <span id="version">0.1.2</span>
         <ul class="flex-navbar-contents">
             <?php if (($this->request->session()->read('Auth.User')) == false): ?>
                 <!-- 未ログインユーザ用メニュー -->
