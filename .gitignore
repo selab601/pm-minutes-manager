@@ -3,3 +3,4 @@
 /tmp/*
 /logs/*
 .ac-php-conf.json
+.DS_Store
