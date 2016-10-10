@@ -255,7 +255,7 @@
                   <div class="table-row">
                     <div class="table-content-wrapper column">
                       <div class="table-content column-th header" id="column-first">
-                        承認
+                        審査
                       </div>
                       <div class="table-content column-td" id="column-first">
                           <?php
@@ -273,7 +273,7 @@
                   <div class="table-row">
                     <div class="table-content-wrapper column">
                       <div class="table-content column-th header">
-                        審査
+                        承認
                       </div>
                       <div class="table-content column-td">
                           <?php
