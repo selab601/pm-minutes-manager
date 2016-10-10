@@ -285,8 +285,8 @@ class ItemsController extends AppController
     public static function deleteResponsibility($user_id, $item_id) {
         $responsibility = TableRegistry::get("Responsibilities")
             ->find('all')
-            ->where(['responsibilities.item_id = '.$item_id,
-                    'responsibilities.projects_user_id = '.$user_id])
+            ->where(['Responsibilities.item_id = '.$item_id,
+                    'Responsibilities.projects_user_id = '.$user_id])
             ->first();
         if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
             throw new \Exception('Failed to delete responsibility entity');
@@ -325,7 +325,7 @@ class ItemsController extends AppController
             if ($item_id != NULL) {
                 $responsibility = TableRegistry::get('Responsibilities')
                     ->find('all')
-                    ->where(['responsibilities.item_id = '.$item_id])
+                    ->where(['Responsibilities.item_id = '.$item_id])
                     ->innerJoin('projects_users', 'projects_users.id = Responsibilities.projects_user_id')
                     ->where(['projects_users.user_id = '.$user->id])
                     ->all()
