@@ -105,12 +105,9 @@ class MinutesController extends AppController
         if ($this->request->is('post')) {
             $minute = $this->Minutes->patchEntity($minute, $this->request->data);
             $minute->project_id = $id;
-            $date = $this->request->data["date"];
-            $holded_at = $this->request->data["holded_at"];
-            $minute->holded_at = $date . " " . $holded_at;
+            $minute->holded_at = $this->request->data["date"] . " " . $this->request->data["holded_at"];
             if (isset($this->request->data["ended_at"])) {
-                $ended_at = $this->request->data["ended_at"];
-                $minute->ended_at = $date . " " . $ended_at;
+                $minute->ended_at = $this->request->data["date"] . " " . $this->request->data["ended_at"];
             }
             $now = new \DateTime();
             $minute->created_at = $now->format('Y-m-d H:i:s');
@@ -122,13 +119,13 @@ class MinutesController extends AppController
                 // 議事録へのユーザ参加の登録
                 $projects_user_ids = $data["projects_users"]["_ids"];
                 if (!empty($projects_user_ids)) {
-                    foreach ($projects_user_ids as $projects_user_id) {
+                    foreach ($projects_user_ids as $projects_user_id => $attendance) {
+                        if ($attendance == "×") { continue; }
                         $participations_registry = TableRegistry::get('Participations');
                         $participations = $participations_registry->newEntity();
                         $participations->projects_user_id = $projects_user_id;
                         $participations->minute_id = $minute->id;
-                        // TODO: 参加と遅刻参加を登録できるようにする
-                        $participations->state = "◯";
+                        $participations->state = $attendance;
                         if (!$participations_registry->save($participations)) {
                             $this->Flash->error('議事録の追加に失敗しました');
                         }
@@ -186,15 +183,27 @@ class MinutesController extends AppController
             if ($this->Minutes->save($minute)) {
 
                 if (!empty($this->request->data["projects_users"]["_ids"])) {
-                    $this->SaveDiff->save(
-                        $minute->id,
-                        "Participations",
-                        ['fields'=>'Participations.projects_user_id'],
-                        ['Participations.minute_id = '.$minute->id],
-                        $this->request->data["projects_users"]["_ids"],
-                        [new MinutesController(), "saveParticipation"],
-                        [new MinutesController(), "deleteParticipation"]
-                    );
+                    $all_participations = TableRegistry::get('Participations')
+                        ->find('all')
+                        ->where(['Participations.minute_id = '.$id]);
+                    if (!empty($all_participations->all())) {
+                        foreach ($all_participations as $participation) {
+                            if (!TableRegistry::get('Participations')->delete($participation)) {
+                                throw new \Exception("Failed to delete participations");
+                            }
+                        }
+                    }
+
+                    foreach($this->request->data["projects_users"]["_ids"] as $projects_user_id => $state) {
+                        if ($participation == "×") {continue;}
+                        $participation = TableRegistry::get('Participations')->newEntity();
+                        $participation->projects_user_id = $projects_user_id;
+                        $participation->minute_id = $id;
+                        $participation->state = $state;
+                        if (!TableRegistry::get('Participations')->save($participation)) {
+                            throw new \Exception("Failed to save participation");
+                        }
+                    }
                 }
 
                 $this->Flash->success('議事録を更新しました');
@@ -211,7 +220,7 @@ class MinutesController extends AppController
         foreach ($users as $user) {
             $users_array[$user->projects_user_id] = $user['last_name']." ".$user['first_name'];
             if ($user->participation != "×") {
-                array_push($checked_users_array, $user->projects_user_id);
+                $checked_users_array[$user->projects_user_id] = $user->participation;
             }
         }
         $now = new \DateTime();

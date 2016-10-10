@@ -41,14 +41,14 @@
                 'holded_at' => $holded_at,
                 'ended_at' => $ended_at,
                 ]) ?>
-            <?= $this->element('checkboxForm', [
-                'name' => 'projects_users._ids',
-                'label' => '参加者 : ',
-                'classes' => 'add-minute',
+            <?= $this->element('attendanceForm', [
+                'classes' => '',
+                'label' => '出席 : ',
                 'form' => $this->Form,
-                'options' => $users_array,
-                'default' => $checked_users_array,
-                ]) ?>
+                'users_array' => $users_array,
+                'defaults' => $checked_users_array,
+                'default' => '×',
+                ])?>
         </fieldset>
         <div class="form-container-footer">
             <?= $this->Form->button("追加") ?>

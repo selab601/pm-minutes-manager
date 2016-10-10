@@ -29,24 +29,19 @@
         <?= $this->Form->create($minute, ['class'=>'form-container add-minute']); ?>
         <fieldset>
             <legend>議事録の追加</legend>
-            <p>
-                現在，システムの使用上参加者のステータスとして「遅刻」が記録できません．<br>
-                近々修正予定です．修正次第TOPページで通知します．<br>
-            </p>
             <div class="form-container-fields add-minute">
                 <?= $this->Form->input('name', ['label'=>'議事録名 : ']) ?>
                 <?= $this->Form->input('holded_place', ['label'=>'開催場所 : ']) ?>
                 <?= $this->element('spanDateTimeForm', [
                     'form' => $this->form,
                     ]) ?>
-                <?= $this->element('checkboxForm', [
-                    'name' => 'projects_users._ids',
-                    'label' => '参加者 : ',
-                    'classes' => 'add-minute',
+                <?= $this->element('attendanceForm', [
+                    'classes' => '',
+                    'label' => '出席 : ',
                     'form' => $this->Form,
-                    'options' => $users_array,
-                    'default' => [$auth_projects_user->id],
-                    ]) ?>
+                    'users_array' => $users_array,
+                    'default' => '○',
+                    ])?>
             </div>
         </fieldset>
         <div class="form-container-footer">
