@@ -294,7 +294,9 @@
                         作成
                       </div>
                       <div class="table-content column-td">
-                        <?= $minute->created_at->format('Y/m/d') ?>
+                          <?= $minute->created_at->format('Y/m/d') ?>
+                          <?= "<br>" ?>
+                          <?= $minute->created_user_name ?>
                       </div>
                     </div>
                   </div>

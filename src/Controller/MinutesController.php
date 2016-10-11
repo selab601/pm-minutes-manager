@@ -113,6 +113,12 @@ class MinutesController extends AppController
             $minute->created_at = $now->format('Y-m-d H:i:s');
             $minute->updated_at = $now->format('Y-m-d H:i:s');
 
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $user_name = $this->request->session()->read('Auth.User.last_name')
+                . " " . $this->request->session()->read('Auth.User.first_name');
+            $minute->created_by = $user_id;
+            $minute->created_user_name = $user_name;
+
             if ($this->Minutes->save($minute)) {
                 $data= $this->request->data;
 

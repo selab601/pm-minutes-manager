@@ -58,6 +58,8 @@ CREATE
         ended_at DATETIME,
         created_at DATETIME,
         updated_at TIMESTAMP DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
+        created_by INT,
+        created_user_name VARCHAR(201),
         revision TINYINT,
         is_examined TINYINT(1) DEFAULT 0,
         is_approved TINYINT(1) DEFAULT 0,

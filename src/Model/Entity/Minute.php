@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $holded_place
  * @property \Cake\I18n\Time $holded_at
+ * @property \Cake\I18n\Time $ended_at
  * @property \Cake\I18n\Time $created_at
  * @property \Cake\I18n\Time $updated_at
  * @property int $revision
@@ -23,7 +24,8 @@ use Cake\ORM\Entity;
  * @property string $examined_user_name
  * @property string $approved_user_name
  * @property bool $is_deletable
- * @property \Cake\I18n\Time $ended_at
+ * @property int $created_by
+ * @property string $created_user_name
  *
  * @property \App\Model\Entity\Project $project
  * @property \App\Model\Entity\Item[] $items

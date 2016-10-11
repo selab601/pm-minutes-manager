@@ -75,6 +75,10 @@ class MinutesTable extends Table
             ->allowEmpty('holded_at');
 
         $validator
+            ->dateTime('ended_at')
+            ->allowEmpty('ended_at');
+
+        $validator
             ->dateTime('created_at')
             ->allowEmpty('created_at');
 
@@ -122,8 +126,11 @@ class MinutesTable extends Table
             ->allowEmpty('is_deletable');
 
         $validator
-            ->dateTime('ended_at')
-            ->allowEmpty('ended_at');
+            ->integer('created_by')
+            ->allowEmpty('created_by');
+
+        $validator
+            ->allowEmpty('created_user_name');
 
         return $validator;
     }
