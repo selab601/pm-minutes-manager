@@ -12,7 +12,7 @@ class DeleteComponent extends Component
 
         $responsibilities = TableRegistry::get('Responsibilities')
             ->find('all')
-            ->where(['responsibilities.item_id = '.$id]);
+            ->where(['Responsibilities.item_id = '.$id]);
         if (!empty($responsibilities)){
             foreach($responsibilities as $responsibility) {
                 if (!TableRegistry::get("Responsibilities")->delete($responsibility)) {
