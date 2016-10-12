@@ -258,7 +258,7 @@ class MinutesController extends AppController
                 throw new \Exception('Failed to examine minute');
             }
 
-            $this->Flash->success('「'.$minute->minute_name.'」を審査済に更新しました');
+            $this->Flash->success('「'.$minute->name.'」を審査済に更新しました');
         }
 
         return $this->redirect(['controller'=>'projects', 'action'=>'view', $minute->project_id]);
@@ -280,7 +280,7 @@ class MinutesController extends AppController
                 throw new \Exception('Failed to approve minute');
             }
 
-            $this->Flash->success('「'.$minute->minute_name.'」を承認済に更新しました');
+            $this->Flash->success('「'.$minute->name.'」を承認済に更新しました');
         }
 
         return $this->redirect(['controller'=>'projects', 'action'=>'view', $minute->project_id]);
