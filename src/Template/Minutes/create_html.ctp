@@ -10,6 +10,7 @@
   </head>
   <script>
       $(document).ready(function() {
+          // 全案件の行末尾に改行文字を加える
           $(".table-content.text").each(function() {
               ApplyLineBreaks(this);
           })
@@ -151,31 +152,50 @@
 
       // 案件の内容を，改ページしている場所で分割する
       function splitTextInItem($item, page_no) {
+          // 何ページ目か
           var page_index = page_no - 1;
+          // ページ内で何番目のテーブル要素か
+          // 案件群のテーブル以外に，議事録詳細テーブル，案件/承認/作成者テーブルが存在する
           var table_index = page_no + 2 - 1;
           $subpage = $('.subpage:eq('+page_index+')');
           $table = $('.table:eq('+table_index+')');
           if ($subpage.get(0) === undefined) {
               return;
           }
+
+          // ページの枠からテーブルがどのくらいはみ出しているか
           var subpage_bottom = $subpage.position().top + $subpage.outerHeight(true);
           var table_bottom = $table.position().top + $table.outerHeight(true);
-          var breaked_height = table_bottom - subpage_bottom;
+          var extra_height = table_bottom - subpage_bottom;
 
+          // 案件全体の行数，はみ出した分の行数を各々取得
           var line_height = parseInt($item.css('line-height'));
           var item_height = $item.outerHeight(true);
-          var all_line_numbers = item_height/line_height;
-          var breaked_line_numbers = breaked_height/line_height;
+          var item_line_numbers = item_height/line_height;
+          var extra_line_numbers = extra_height/line_height;
+          var extra_line_index = item_line_numbers - extra_line_numbers + 1;
 
-          var lines = $item.children(".text").html().split('<br>');
-
-          var index = all_line_numbers - breaked_line_numbers - 1;
-          var text = lines.slice(0, index-1);
-          var hided_text = lines.slice(index-1, lines.length);
-
+          var text_lines = $item.children(".text").html().split('<br>');
+          var username_lines = $item.children(".responsibility").html().split('<br>');
           var $breaked_item = $item.clone();
-          $item.children(".text").html(text.join('<br>'));
-          $breaked_item.children(".text").html(hided_text.join('<br>'));
+
+          if (Object.keys(text_lines).length >= extra_line_index) {
+              var text = text_lines.slice(0, extra_line_index-1);
+              $item.children(".text").html(text.join('<br>'));
+              var hided_text = text_lines.slice(extra_line_index-1, text_lines.length);
+              $breaked_item.children(".text").html(hided_text.join('<br>'));
+          } else {
+              $breaked_item.children(".text").html("");
+          }
+
+          if (Object.keys(username_lines).length >= extra_line_index) {
+              var names = username_lines.slice(0, extra_line_index-1);
+              $item.children(".responsibility").html(names.join('<br>'));
+              var hided_names = username_lines.slice(extra_line_index-1, username_lines.length);
+              $breaked_item.children(".responsibility").html(hided_names.join('<br>'));
+          } else {
+              $breaked_item.children(".responsibility").html("");
+          }
 
           return $breaked_item;
       }
@@ -337,11 +357,10 @@
                             if (empty($item->user_names)) {
                                 echo "-";
                             } else {
-                                echo "<ul>";
                                 foreach($item->user_names as $user_name) {
-                                    echo "<li>".$user_name."</li>";
+                                    echo $user_name;
+                                    echo "<br>";
                                 }
-                                echo "</ul>";
                             }
                         ?>
                       </div>
