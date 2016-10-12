@@ -31,6 +31,11 @@
                         null)
                         .done(function(result) {
                             console.log(result);
+                            if (result == "success") {
+                                alert("案件の順序を更新しました");
+                            } else {
+                                alert("案件の順序の更新に失敗しました．ページをリロードして再度お試しください");
+                            }
                         });
                 }
             });
