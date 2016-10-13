@@ -25,6 +25,15 @@ $cakeDescription = '議事録管理システム';
                     <ul>
                         <?php
                             echo $this->element('revision', [
+                                'date' => '2016/10/13',
+                                'contents' => [
+                                    'v0.1.3 リリース',
+                                    '印刷用議事録における改ページがおかしくなる問題修正',
+                                    '案件の順番変更時に確認用アラートを表示',
+                                    '審査/承認時のメッセージを修正',
+                                ],
+                            ]);
+                            echo $this->element('revision', [
                                 'date' => '2016/10/10',
                                 'contents' => [
                                     'v0.1.2 リリース',
