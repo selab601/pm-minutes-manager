@@ -91,6 +91,11 @@
                                             <?= h($item->order_in_minute) ?>
                                         </div>
                                         <div class="table-content category">
+                                            <?php
+                                                if ($item->item_meta_category_name == "タスク") {
+                                                    echo "【タスク】<br>";
+                                                }
+                                            ?>
                                             <?= h($item->item_category_name) ?>
                                         </div>
                                         <div class="table-content text">

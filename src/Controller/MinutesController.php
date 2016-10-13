@@ -310,7 +310,7 @@ class MinutesController extends AppController
 
     public function createHtml($id) {
         $minute = $this->Minutes->get($id, [
-            'contain' => ['Projects']
+            'contain' => ['Projects', ]
         ]);
 
         $users = $this->getUserParticipations($id, $minute->project_id);
@@ -411,7 +411,10 @@ class MinutesController extends AppController
             ])
             ->where(['Items.minute_id = '.$minute_id]);
         foreach ($ordered_items as $item) {
-            $category = TableRegistry::get('ItemCategories')->get($item->item_category_id);
+            $category = TableRegistry::get('ItemCategories')
+                ->get($item->item_category_id, [
+                    'contain' => ['ItemMetaCategories'],
+                ]);
 
             $user_names = [];
             $responsibilities = TableRegistry::get('Responsibilities')
@@ -424,6 +427,7 @@ class MinutesController extends AppController
             }
 
             $item->item_category_name = $category->name;
+            $item->item_meta_category_name = $category->item_meta_category->name;
             $item->user_names = $user_names;
 
             array_push($items, $item);
