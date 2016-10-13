@@ -171,13 +171,19 @@
           // 案件全体の行数，はみ出した分の行数を各々取得
           var line_height = parseInt($item.css('line-height'));
           var item_height = $item.outerHeight(true);
-          var item_line_numbers = item_height/line_height;
-          var extra_line_numbers = extra_height/line_height;
+          var item_line_numbers = parseInt(item_height/line_height);
+          var extra_line_numbers = parseInt(extra_height/line_height);
           var extra_line_index = item_line_numbers - extra_line_numbers + 1;
 
           var text_lines = $item.children(".text").html().split('<br>');
           var username_lines = $item.children(".responsibility").html().split('<br>');
           var $breaked_item = $item.clone();
+
+          // 改ページされる案件の位置が2行以下なら，案件ごと次ページに回す
+          if (extra_line_index <= 3) {
+              $item.remove();
+              return $breaked_item;
+          }
 
           if (Object.keys(text_lines).length >= extra_line_index) {
               var text = text_lines.slice(0, extra_line_index-1);
