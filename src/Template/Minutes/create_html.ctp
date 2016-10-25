@@ -280,24 +280,6 @@
                 <div class="table right">
                   <div class="table-row">
                     <div class="table-content-wrapper column">
-                      <div class="table-content column-th header" id="column-first">
-                        審査
-                      </div>
-                      <div class="table-content column-td" id="column-first">
-                          <?php
-                              if ($minute->is_examined) {
-                                  echo $minute->examined_at->format('Y/m/d');
-                                  echo "<br>";
-                                  echo $minute->examined_user_name;
-                              } else {
-                                  echo "-";
-                              }
-                          ?>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="table-row">
-                    <div class="table-content-wrapper column">
                       <div class="table-content column-th header">
                         承認
                       </div>
@@ -307,6 +289,24 @@
                                   echo $minute->approved_at->format('Y/m/d');
                                   echo "<br>";
                                   echo $minute->approved_user_name;
+                              } else {
+                                  echo "-";
+                              }
+                          ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-row">
+                    <div class="table-content-wrapper column">
+                      <div class="table-content column-th header" id="column-first">
+                        審査
+                      </div>
+                      <div class="table-content column-td" id="column-first">
+                          <?php
+                              if ($minute->is_examined) {
+                                  echo $minute->examined_at->format('Y/m/d');
+                                  echo "<br>";
+                                  echo $minute->examined_user_name;
                               } else {
                                   echo "-";
                               }
