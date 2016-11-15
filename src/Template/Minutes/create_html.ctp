@@ -280,10 +280,10 @@
                 <div class="table right">
                   <div class="table-row">
                     <div class="table-content-wrapper column">
-                      <div class="table-content column-th header">
+                      <div class="table-content column-th header" id="column-first">
                         承認
                       </div>
-                      <div class="table-content column-td">
+                      <div class="table-content column-td" id="column-first">
                           <?php
                               if ($minute->is_approved) {
                                   echo $minute->approved_at->format('Y/m/d');
@@ -298,10 +298,10 @@
                   </div>
                   <div class="table-row">
                     <div class="table-content-wrapper column">
-                      <div class="table-content column-th header" id="column-first">
+                      <div class="table-content column-th header">
                         審査
                       </div>
-                      <div class="table-content column-td" id="column-first">
+                      <div class="table-content column-td">
                           <?php
                               if ($minute->is_examined) {
                                   echo $minute->examined_at->format('Y/m/d');
