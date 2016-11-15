@@ -16,10 +16,6 @@ body {
 
 /**** 全体のレイアウト ****/
 
-.container {
-    margin-top: 50px;
-}
-
 .contents {
     display: flex; display: -webkit-flex;
     flex-direction: row;
