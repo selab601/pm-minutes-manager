@@ -1,5 +1,3 @@
-<?= $this->element('header') ?>
-
 <?= $this->element('formContainerTemplate') ?>
 <?= $this->Form->create($user, ['class'=>'form-container add-user']) ?>
 <fieldset>
