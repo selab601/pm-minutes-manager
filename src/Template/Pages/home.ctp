@@ -19,50 +19,6 @@ $cakeDescription = '議事録管理システム';
         <?= $this->element('header') ?>
 
         <div class="contents top">
-            <div class="side-contents left top">
-                <h3>更新履歴</h3>
-                <div id="revision">
-                    <ul>
-                        <?php
-                            echo $this->element('revision', [
-                                'date' => '2016/10/13',
-                                'contents' => [
-                                    'v0.1.3 リリース',
-                                    '印刷用議事録における改ページがおかしくなる問題修正',
-                                    '案件の順番変更時に確認用アラートを表示',
-                                    '審査/承認時のメッセージを修正',
-                                ],
-                            ]);
-                            echo $this->element('revision', [
-                                'date' => '2016/10/10',
-                                'contents' => [
-                                    'v0.1.2 リリース',
-                                    '案件編集時のバグ修正',
-                                    '出席情報に遅刻を記録できるように変更',
-                                    '印刷用議事録のレイアウト修正',
-                                ],
-                            ]);
-                            echo $this->element('revision', [
-                                'date' => '2016/10/09',
-                                'contents' => [
-                                    'v0.1.1 リリース',
-                                    '議事録閲覧画面から直接印刷プレビューに飛べるようにした',
-                                    '議事録における文字の行間が狭かったので修正',
-                                    'Safari でユーザの役割を選択する際にボックスが閉じるバグを修正',
-                                    'プロジェクト一覧画面のレイアウト修正',
-                                    'プロジェクト閲覧画面のユーザテーブルに役割を表示',
-                                    'TOPページのレイアウト修正'
-                                ],
-                            ]);
-                            echo $this->element('revision', [
-                                'date' => '2016/10/04',
-                                'contents' => ['v0.1.0 としてリリースしました'],
-                            ]);
-                        ?>
-                    </ul>
-                </div>
-
-            </div>
             <div class="main-contents home">
                 <h3>不具合報告について</h3>
                 <p>
