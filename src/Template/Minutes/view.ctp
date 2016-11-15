@@ -1,3 +1,7 @@
+<?php
+$this->Html->css('minute.css', ['block' => true]);
+$this->Html->script(['elementFromAbsolutePoint.js'],  ['block' => true]);
+?>
 <script>
     $(function () {
         $("#sortable").sortable({

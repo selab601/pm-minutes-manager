@@ -1,3 +1,7 @@
+<?php
+$this->html->css('jquery.datetimepicker.css', ['block' => true]);
+$this->html->script(['jquery.datetimepicker.full.js'], ['block' => true]);
+?>
 <script>
     $(function () {
         $("#datepicker").datepicker({dateFormat: 'yy/mm/dd'});

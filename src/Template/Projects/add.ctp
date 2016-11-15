@@ -1,3 +1,6 @@
+<?php
+$this->html->script(['toggleRoleList.js'], ['block' => true]);
+?>
 <script>
     $(document).ready(function () {
         toggleRoleList(jQuery, '<?= $roles ?>', <?= json_encode($auth_user) ?>);
