@@ -412,6 +412,17 @@ span.new {
     justify-content: flex-end; -webkit-justify-content: flex-end;
 }
 
+
+.form-container-field-column-select {
+    flex: 1;
+    width: 100%;
+}
+
+.form-container-field-column-textarea {
+    flex: 1;
+    width: 100%;
+}
+
 .form-container-field-column-input {
     flex: 1;
     width: 100%;

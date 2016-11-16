@@ -10,5 +10,7 @@
         'error' => '{{content}}',
         'label' => '<label class="form-container-field-column-label" {{attrs}}>{{text}}</label>',
         'input' => '<input class="form-container-field-column-input" type="{{type}}" name="{{name}}" {{attrs}} />',
+        'select' => '<select class="form-container-field-column-select" {{attrs}}>{{content}}</select>',
+        'textarea' => '<textarea class="form-container-field-column-textarea" {{attrs}}>{{value}}</textarea>',
     ])
 ?>
