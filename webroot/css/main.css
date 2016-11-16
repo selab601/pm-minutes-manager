@@ -306,7 +306,7 @@ span.new {
     flex-direction: column;
 }
 
-.login-container>.form-group {
+.login-container>.input {
     flex: 1;
 
     display: flex;       display: -webkit-flex;
@@ -314,7 +314,7 @@ span.new {
     flex-direction: row;
 }
 
-.login-container>.form-group>label {
+.login-container>.input>label {
     maring: 0px;
     padding: 0px;
 
@@ -327,7 +327,7 @@ span.new {
     justify-content: center; -webkit-justify-content: center;
 }
 
-.login-container>.form-group>input {
+.login-container>.input>input {
     flex: 1;
 }
 
