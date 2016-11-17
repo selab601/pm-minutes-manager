@@ -61,8 +61,22 @@ body {
 
 /**** flash message ****/
 
-.mesageBox {
-    position: fixed;
+.message {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+.message.success {
+    background-color: #ddffdd;
+    color: #11aa11;
+    border: 2px solid;
+}
+
+.message.error {
+    background-color: #ffdddd;
+    color: #ff5555;
+    border: 2px solid;
 }
 
 /***********************/
