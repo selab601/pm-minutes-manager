@@ -78,7 +78,14 @@ class ItemsTable extends Table
             ->notEmpty('order_in_minute');
 
         $validator
-            ->allowEmpty('contents');
+            ->allowEmpty('contents')
+            ->add('contents', [
+                'minLength' => [
+                    'rule' => ['maxLength', 200],
+                    'last' => true,
+                    'message' => '200文字以内で入力してください'
+                ]
+            ]);
 
         $validator
             ->integer('revision')
