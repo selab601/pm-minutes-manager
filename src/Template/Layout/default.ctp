@@ -8,10 +8,7 @@
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('bootstrap.min.css') ?>
-    <?= $this->html->css('main.css') ?>
-    <?= $this->html->css('jquery-ui.min.css') ?>
-    <?= $this->html->css('jquery-ui.theme.min.css') ?>
-    <?= $this->html->css('jquery-ui.structure.min.css') ?>
+    <?= $this->Html->css('main.css') ?>
     <?= $this->Html->script(['jquery.js', 'jquery-ui.min.js', 'bootstrap.min.js']) ?>
 
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">

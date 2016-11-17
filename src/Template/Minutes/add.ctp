@@ -1,6 +1,9 @@
 <?php
-$this->html->css('jquery.datetimepicker.css', ['block' => true]);
-$this->html->script(['jquery.datetimepicker.full.js'], ['block' => true]);
+$this->Html->css('jquery-ui.min.css', ['block' => true]);
+$this->Html->css('jquery-ui.theme.min.css', ['block' => true]);
+$this->Html->css('jquery-ui.structure.min.css', ['block' => true]);
+$this->Html->css('jquery.datetimepicker.css', ['block' => true]);
+$this->Html->script(['jquery.datetimepicker.full.js'], ['block' => true]);
 ?>
 <script>
     $(function () {

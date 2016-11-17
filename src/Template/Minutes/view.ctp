@@ -79,7 +79,6 @@ $this->Html->script(['elementFromAbsolutePoint.js'],  ['block' => true]);
                     <div id="sortable">
                         <?php foreach ($items as $item): ?>
                             <div class="table-row ui-state-default">
-                                <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
                                 <div class="table-content no">
                                     <?= h($item->order_in_minute) ?>
                                 </div>

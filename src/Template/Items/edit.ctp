@@ -1,3 +1,8 @@
+<?php
+$this->Html->css('jquery-ui.min.css', ['block' => true]);
+$this->Html->css('jquery-ui.theme.min.css', ['block' => true]);
+$this->Html->css('jquery-ui.structure.min.css', ['block' => true]);
+?>
 <script>
     $(document).ready(function () {
         $( "#datepicker" ).datepicker({dateFormat: 'yy/mm/dd'});

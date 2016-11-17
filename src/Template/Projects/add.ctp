@@ -1,4 +1,7 @@
 <?php
+$this->html->css('jquery-ui.min.css', ['block' => true]);
+$this->html->css('jquery-ui.theme.min.css', ['block' => true]);
+$this->html->css('jquery-ui.structure.min.css', ['block' => true]);
 $this->html->script(['toggleRoleList.js'], ['block' => true]);
 ?>
 <script>
