@@ -396,7 +396,7 @@ span.new {
 
 .form-container-field {
     width: 100%;
-    margin-bottom: 10px;
+    margin-top: 10px;
     display: flex;          display: -webkit-flex;
     align-items: center;    -webkit-align-items: center;
     flex-direction: column; -webkit-flex-wrap: wrap;
@@ -796,6 +796,12 @@ span.new {
     margin-top: 10px;
     margin-bottom: 10px;
     flex: 0 0 200px;
+}
+
+#contents-chars {
+    padding: 0;
+    margin: 0;
+    text-align: right;
 }
 
 /*** ユーザ画面 ***/

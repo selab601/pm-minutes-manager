@@ -18,6 +18,20 @@ $this->Html->css('jquery-ui.structure.min.css', ['block' => true]);
                         .text(value));
             });
         });
+
+        // 動的に入力文字数をカウント
+        document.getElementById('contents').onkeyup = function() {
+            var length = document.getElementById('contents').value.length;
+            var length_str = "";
+            if (length > 200) {
+                length_str = "<span style='color:red'>" + length + "</span>";
+            } else {
+                length_str = "<span>" + length + "</span>";
+            }
+            document.getElementById('contents-chars').innerHTML = length_str + "/200";
+        }
+        // ページ読み込み時に入力文字数を更新
+        $('#contents').keyup();
     });
 </script>
 
@@ -56,6 +70,7 @@ $this->Html->css('jquery-ui.structure.min.css', ['block' => true]);
             'label'=>'議事内容 : ',
             'type'=>'textarea',
             ]) ?>
+        <div id="contents-chars"></div>
         <?= $this->Form->input('overed_at', [
             'empty' => true,
             'label'=>'期限 : ',
