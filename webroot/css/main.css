@@ -14,7 +14,7 @@ body {
     min-width: 100%;
     position: relative;
     margin: 0;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
 }
 
 /**** 全体のレイアウト ****/
@@ -254,6 +254,8 @@ ul.flex-navbar-contents>li a.active {
     padding-bottom: 5px;
     background-color: #efefef;
 
+    height: 50px;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -263,62 +265,100 @@ ul.flex-navbar-contents>li a.active {
 
 /****** トップページ ******/
 
-body.home {
-    height: 650px;
+/* 既存のヘッダーの色を変更 */
+
+header.home>.flex-navbar>.flex-navbar-header {
+    background-color: #ddd;
 }
 
-.main-contents.home {
-    min-width: 900px;
+header.home>.flex-navbar>#version {
+    background-color: #ddd;
 }
 
-.contents.top {
-    height: 650px;
-    margin-bottom: 50px
+header.home>.flex-navbar>.flex-navbar-contents {
+    background-color: #ddd;
 }
 
-.side-contents.top {
+.footer.home {
+    background-color: #ddd;
+}
+
+/* コンテンツ */
+
+#description {
+    width: 100%;
     height: 100%;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #ddd;
+    text-align: center;
 }
 
-#revision {
-    height: 500px;
+#description > h1 {
+    margin-bottom: 30px;
 }
 
-span.new {
-    font-size: 12px;
-    color: red;
-}
-
-#revision > ul {
-    list-style-type: none;
-    padding: 10px;
-    margin: 0;
-
+.app-container-wrapper {
+    width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    padding: 50px;
 
-    background-color: #ccc;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
+    display: flex;
+    display: -webkit-flex;
 }
 
-#revision > ul > li {
+.app-container {
+    flex: 1;
+
+    margin-left: 20px;
+    margin-right: 20px;
+    border: solid black;
+    padding: 30px;
+
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
+    flex-direction: column;
+}
+
+.app-container > p {
+    text-align: left;
+}
+
+.app-icon-wrapper {
+    width:150px;
+    height:150px;
+    text-align: center;
+    vertical-align: middle;
     margin-bottom: 10px;
-    padding: 10px;
-    background-color: #fff;
-
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
 }
 
-.revision-date {
+.app-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.app-name {
+    margin-bottom:10px;
+    margin-top:5px;
+    font-family: "Londrina Solid",cursive;
+}
+
+.slack-versions {
+    width: 100%;
+    padding-top: 20px;
+
+    display: flex;       display: -webkit-flex;
+    align-items: center; -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
+}
+
+.slack-version {
+    flex: 1;
+    text-align: center;
+    font-size: large;
     font-weight: bold;
-}
-
-.revision-contents {
-
 }
 
 /**************************/
