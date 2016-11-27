@@ -22,11 +22,11 @@ body {
 .contents {
     display: flex; display: -webkit-flex;
     flex-direction: row;
-    padding: 40px 40px 0 40px;
+    padding: 20px 20px 20px 20px;
 }
 
 .side-contents {
-    flex: 0 0 400px;
+    flex: 0 0 350px;
     width: 400px;
     padding: 25px;
     background-color: #e7e7e7;
@@ -754,6 +754,7 @@ header.home>.flex-navbar>.flex-navbar-contents {
 
 .user-table-row-elem.th {
     width: 100%;
+    text-align: center;
     display: flex;           display: -webkit-flex;
     align-items: center;     -webkit-align-items: center;
     justify-content: center; -webkit-justify-content: center;
@@ -944,7 +945,7 @@ td.project-table-content.project-name {
 /* 議事録テーブル */
 
 table.minute.projects-view {
-    width: 850px;
+    min-width: 700px;
 }
 
 .minute-table-content.minute-name {

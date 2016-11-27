@@ -192,7 +192,7 @@ $this->Html->script(['elementFromAbsolutePoint.js'],  ['block' => true]);
         <!-- 出席情報 -->
         <div class="user-table minute participation-table">
             <div class="user-table-row">
-                <div class="user-table-row-elem th">出席状況( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</div>
+                <div class="user-table-row-elem th">出席状況<br>( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</div>
             </div>
             <?= $this->element('userTable', [
                 "users"=>$user_array,
