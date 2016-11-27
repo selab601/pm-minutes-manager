@@ -59,6 +59,14 @@ body {
 
 /*************************/
 
+/**** paginator ****/
+
+.paginator {
+    text-align:center;
+}
+
+/*******************/
+
 /**** flash message ****/
 
 .message {
