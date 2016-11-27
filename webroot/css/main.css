@@ -304,6 +304,8 @@ header.home>.flex-navbar>.flex-navbar-contents {
     height: 100%;
     padding: 50px;
 
+    background-color: #fff;
+
     display: flex;
     display: -webkit-flex;
 }
@@ -313,7 +315,7 @@ header.home>.flex-navbar>.flex-navbar-contents {
 
     margin-left: 20px;
     margin-right: 20px;
-    border: solid black;
+    background-color: #ddd;
     padding: 30px;
 
     display: flex;       display: -webkit-flex;
