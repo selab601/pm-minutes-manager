@@ -28,23 +28,6 @@ class ItemCategoriesController extends AppController
     }
 
     /**
-     * View method
-     *
-     * @param string|null $id Item Category id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $itemCategory = $this->ItemCategories->get($id, [
-            'contain' => ['ItemMetaCategories', 'Items']
-        ]);
-
-        $this->set('itemCategory', $itemCategory);
-        $this->set('_serialize', ['itemCategory']);
-    }
-
-    /**
      * Add method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.

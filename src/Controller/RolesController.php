@@ -25,23 +25,6 @@ class RolesController extends AppController
     }
 
     /**
-     * View method
-     *
-     * @param string|null $id Role id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $role = $this->Roles->get($id, [
-            'contain' => ['ProjectsUsers']
-        ]);
-
-        $this->set('role', $role);
-        $this->set('_serialize', ['role']);
-    }
-
-    /**
      * Add method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
