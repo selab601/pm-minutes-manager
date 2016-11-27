@@ -1,5 +1,5 @@
 <?= $this->element('formContainerTemplate') ?>
-<?= $this->Form->create($itemMetaCategory, ['class'=>'form-container item-category']) ?>
+<?= $this->Form->create($itemCategory, ['class'=>'form-container item-category']) ?>
 <div class="itemCategories form large-9 medium-8 columns content">
     <?= $this->Form->create($itemCategory) ?>
     <fieldset>
