@@ -34,6 +34,7 @@ class PagesController extends AppController
         parent::beforeFilter($event);
         // ログインしていないユーザ含め，全ユーザがアクセス可能なページ
         $this->Auth->allow(['display']);
+        $this->viewBuilder()->layout('home');
     }
 
     /**

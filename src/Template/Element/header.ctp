@@ -1,4 +1,9 @@
-<header>
+<?php
+if (!isset($show_navigation_bar)) { $show_navigation_bar = true; }
+if (!isset($class)) { $class = ""; }
+?>
+
+<header class=<?= '"' . $class . '"' ?>>
     <div class="flex-navbar">
         <div class="flex-navbar-header">
             <?=
@@ -86,5 +91,9 @@
     </div>
 </header>
 
-<?= $this->element('navigation') ?>
+<?php
+    if ($show_navigation_bar) {
+        echo $this->element('navigation');
+    }
+?>
 <?= $this->element('flashModal') ?>
