@@ -48,6 +48,21 @@ body {
         background: initial;
         page-break-after: always;
     }
+    .pdf-image-button {
+        display: none;
+    }
+    .modal {
+        display: none;
+    }
+    #squarespaceModal {
+        display: none;
+    }
+    .modal-dialog {
+        display: none;
+    }
+    .modal-content {
+        display: none;
+    }
 }
 
 .contents {
@@ -86,4 +101,29 @@ body {
 
 .contents-header-column {
     width: 30%;
+}
+
+/* PDF 出力ボタン */
+
+.pdf-image-button {
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+}
+
+.print-method-wrapper {
+    display: flex;       display: -webkit-flex;
+    flex-direction: column; -webkit-flex-direction: column;
+}
+
+.print-method-row {
+    flex: 1;
+
+    display: flex;       display: -webkit-flex;
+    flex-direction: row; -webkit-flex-direction: row;
+}
+
+.print-method {
+    flex: 1;
+    padding: 10px;
 }

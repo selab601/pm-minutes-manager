@@ -1,3 +1,4 @@
+<?= $this->assign('title', h($minute->name)) ?>
 <script>
     $(document).ready(function() {
         // 全案件の行末尾に改行文字を加える
@@ -391,6 +392,66 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="pdf-image-button">
+        <?= $this->Html->image('pdf.png', ["data-toggle"=>"modal", "data-target"=>"#squarespaceModal", "style"=>"cursor:pointer;"]) ?>
+    </div>
+
+    <!-- line modal -->
+    <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title" id="lineModalLabel">
+                        PDF出力について
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    印刷時の設定により，PDF として保存することができます．
+                    ご利用のブラウザに応じて設定し，出力してください．
+
+                    <div class="print-method-wrapper">
+                        <div class="print-method-row">
+                            <div class="print-method">
+                                <h3>Firefox</h3>
+                                <p>左下から「PDFとして保存」を選択</p>
+                                <img src="/img/print-firefox.png" style="width:200px" />
+                            </div>
+                            <div class="print-method">
+                                <h3>Google Chrome</h3>
+                                <p>送信先 -> ローカルの送信先 から「PDFに保存」を選択</p>
+                                <img src="/img/print-chrome.png" style="width:250px;" />
+                            </div>
+                        </div>
+                        <div class="print-method-row">
+                            <div class="print-method">
+                                <h3>Safari</h3>
+                                <p>左下から「PDFとして保存」を選択</p>
+                                <img src="/img/print-safari.png" style="width:250px;" />
+                            </div>
+                            <div class="print-method">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">
+                                閉じる
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button" onClick="window.print()">
+                                印刷
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
