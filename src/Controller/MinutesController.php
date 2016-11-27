@@ -47,22 +47,6 @@ class MinutesController extends AppController
     }
 
     /**
-     * Index method
-     *
-     * @return \Cake\Network\Response|null
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Projects']
-        ];
-        $minutes = $this->paginate($this->Minutes);
-
-        $this->set(compact('minutes'));
-        $this->set('_serialize', ['minutes']);
-    }
-
-    /**
      * View method
      *
      * @param string|null $id Minute id.
