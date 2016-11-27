@@ -31,8 +31,13 @@ if (Configure::read('debug')):
     $this->end();
 endif;
 ?>
-<h2><?= h($message) ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= __d('cake', 'The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>
-</p>
+
+<div class="form-container error">
+    <h2><?= h($message) ?></h2>
+    <p class="error">
+        <?= __d('cake', '要求されたアドレス {0} がサーバ上に見つかりません', "<strong>'{$url}'</strong>") ?>
+    </p>
+    <center>
+        <?= $this->Html->link(__('戻る'), 'javascript:history.back()') ?>
+    </center>
+</div>

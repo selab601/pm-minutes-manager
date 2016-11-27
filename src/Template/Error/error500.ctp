@@ -36,8 +36,15 @@ if (Configure::read('debug')):
     $this->end();
 endif;
 ?>
-<h2><?= __d('cake', 'An Internal Error Has Occurred') ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= h($message) ?>
-</p>
+
+<div class="form-container error">
+    <h2><?= h("技術的な問題が発生しています") ?></h2>
+    <p class="error">
+        申し訳ございません．技術的な問題が発生しているようです．
+        お手数ですが，<a href="https://github.com/selab601/web_minutes/issues">GitHub の issue</a>，もしくは Slack を使用して問題を報告してください．
+    </p>
+    <p style="color:gray;"><?=h($message) ?></p>
+    <center>
+        <?= $this->Html->link(__('戻る'), 'javascript:history.back()') ?>
+    </center>
+</div>

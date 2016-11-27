@@ -558,6 +558,12 @@ header.home>.flex-navbar>.flex-navbar-contents {
     padding-right: 10px;
 }
 
+/* エラー */
+
+.form-container.error {
+    width: 700px;
+}
+
 /* 名前 */
 
 .name-form {
