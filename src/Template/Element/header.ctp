@@ -68,6 +68,7 @@
                             <li><?=  $this->Html->link('ユーザ', ['controller'=>'Users', 'action'=>'index']) ?></li>
                             <li><?=  $this->Html->link('プロジェクト', ['controller'=>'Projects', 'action'=>'index']) ?></li>
                             <li><?=  $this->Html->link('担当種別', ['controller'=>'Roles', 'action'=>'index']) ?></li>
+                            <li><?=  $this->Html->link('案件大項目', ['controller'=>'ItemMetaCategories', 'action'=>'index']) ?></li>
                             <li><?=  $this->Html->link('案件種別', ['controller'=>'ItemCategories', 'action'=>'index']) ?></li>
                         </ul>
                     </li>
