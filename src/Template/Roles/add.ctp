@@ -1,21 +1,10 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Projects Users'), ['controller' => 'ProjectsUsers', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Projects User'), ['controller' => 'ProjectsUsers', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="roles form large-9 medium-8 columns content">
-    <?= $this->Form->create($role) ?>
-    <fieldset>
-        <legend><?= __('Add Role') ?></legend>
-        <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('created_at', ['empty' => true]);
-            echo $this->Form->input('updated_at');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->element('formContainerTemplate') ?>
+<?= $this->Form->create($role, ['class'=>'form-container role']) ?>
+<fieldset>
+    <legend><?= __('担当種別の追加') ?></legend>
+    <?= $this->Form->input('name', ['label'=>'担当種別名 : ']) ?>
+</fieldset>
+<div class="form-container-footer">
+    <?= $this->Form->button(__('追加')) ?>
 </div>
+<?= $this->Form->end() ?>

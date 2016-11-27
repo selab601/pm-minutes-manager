@@ -752,6 +752,24 @@ span.new {
 
 /********* 各ページ個別の設定 **********/
 
+/*** 担当種別追加/編集画面 ***/
+
+.form-container.role {
+    width: 500px;
+}
+
+/*** 案件項目追加/編集画面 ***/
+
+.form-container.item-category {
+    width: 600px;
+}
+
+/*** 案件大項目追加/編集画面 ***/
+
+.form-container.item-meta-category {
+    width: 600px;
+}
+
 /*** ユーザ追加/編集画面 ***/
 
 .form-container.add-user {
