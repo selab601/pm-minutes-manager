@@ -22,7 +22,8 @@
 
     <?= $this->fetch('content') ?>
 
-    <div id="footer">
+    <div class="footer">
+        <p class="text-muted">© Copyright 2016 Software Engineering Ueda's Laboratory</p>
     </div>
 </body>
 </html>

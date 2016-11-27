@@ -12,6 +12,9 @@ html {
 body {
     min-height: 100%;
     min-width: 100%;
+    position: relative;
+    margin: 0;
+    padding-bottom: 100px;
 }
 
 /**** 全体のレイアウト ****/
@@ -239,6 +242,24 @@ ul.flex-navbar-contents>li a.active {
 }
 
 /*************************/
+
+/***** footer *****/
+
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    background-color: #efefef;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/******************/
 
 /****** トップページ ******/
 
