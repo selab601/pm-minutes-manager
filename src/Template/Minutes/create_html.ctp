@@ -1,8 +1,3 @@
-<?php
-$this->Html->css('minute.css', ['block' => true]);
-$this->Html->css('minute-html.css', ['block' => true]);
-$this->Html->script(['elementFromAbsolutePoint.js'],  ['block' => true]);
-?>
 <script>
     $(document).ready(function() {
         // 全案件の行末尾に改行文字を加える

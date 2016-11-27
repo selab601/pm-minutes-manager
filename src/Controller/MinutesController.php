@@ -309,6 +309,8 @@ class MinutesController extends AppController
     }
 
     public function createHtml($id) {
+        $this->viewBuilder()->layout('create-html');
+
         $minute = $this->Minutes->get($id, [
             'contain' => ['Projects', ]
         ]);
