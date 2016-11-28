@@ -419,19 +419,19 @@
                             <div class="print-method">
                                 <h3>Firefox</h3>
                                 <p>左下から「PDFとして保存」を選択</p>
-                                <img src="/img/print-firefox.png" style="width:200px" />
+                                <?= $this->Html->image('print-firefox.png', ["style"=>"width:200px;"]) ?>
                             </div>
                             <div class="print-method">
                                 <h3>Google Chrome</h3>
                                 <p>送信先 -> ローカルの送信先 から「PDFに保存」を選択</p>
-                                <img src="/img/print-chrome.png" style="width:250px;" />
+                                <?= $this->Html->image('print-chrome.png', ["style"=>"width:250px;"]) ?>
                             </div>
                         </div>
                         <div class="print-method-row">
                             <div class="print-method">
                                 <h3>Safari</h3>
                                 <p>左下から「PDFとして保存」を選択</p>
-                                <img src="/img/print-safari.png" style="width:250px;" />
+                                <?= $this->Html->image('print-safari.png', ["style"=>"width:250px;"]) ?>
                             </div>
                             <div class="print-method">
                             </div>
