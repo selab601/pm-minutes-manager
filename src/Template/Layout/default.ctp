@@ -7,9 +7,15 @@
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('bootstrap.min.css') ?>
-    <?= $this->Html->css('main.css') ?>
-    <?= $this->Html->script(['jquery.js', 'jquery-ui.min.js', 'bootstrap.min.js']) ?>
+    <?= $this->Html->css([
+        'main.css',
+        'lib/bootstrap.min.css'
+        ]) ?>
+    <?= $this->Html->script([
+        'lib/jquery.js',
+        'lib/jquery-ui.min.js',
+        'lib/bootstrap.min.js',
+        ]) ?>
 
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Londrina+Solid' rel='stylesheet' type='text/css'>

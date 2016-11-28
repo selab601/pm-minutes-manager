@@ -7,12 +7,18 @@
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('main.css') ?>
-    <?= $this->Html->css('minute.css') ?>
-    <?= $this->Html->css('minute-html.css') ?>
-    <?= $this->Html->css('bootstrap.min.css') ?>
-    <?= $this->Html->script(['jquery.js', 'jquery-ui.min.js', 'bootstrap.min.js']) ?>
-    <?= $this->Html->script(['elementFromAbsolutePoint.js'],  ['block' => true]) ?>
+    <?= $this->Html->css([
+        'main.css',
+        'minute.css',
+        'minute-html.css',
+        'lib/bootstrap.min.css'
+        ]) ?>
+    <?= $this->Html->script([
+        'lib/jquery.js',
+        'lib/jquery-ui.min.js',
+        'lib/bootstrap.min.js',
+        'elementFromAbsolutePoint.js'
+        ]) ?>
 
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 

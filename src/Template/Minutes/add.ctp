@@ -1,9 +1,14 @@
 <?php
-$this->Html->css('jquery-ui.min.css', ['block' => true]);
-$this->Html->css('jquery-ui.theme.min.css', ['block' => true]);
-$this->Html->css('jquery-ui.structure.min.css', ['block' => true]);
-$this->Html->css('jquery.datetimepicker.css', ['block' => true]);
-$this->Html->script(['jquery.datetimepicker.full.js'], ['block' => true]);
+    // ページ固有の CSS, JS の読み込み
+    $this->Html->css([
+        'lib/jquery-ui.min.css',
+        'lib/jquery-ui.theme.min.css',
+        'lib/jquery-ui.structure.min.css',
+        'lib/jquery.datetimepicker.css',
+    ], ['block' => true]);
+    $this->Html->script([
+        'lib/jquery.datetimepicker.full.js'
+    ], ['block' => true]);
 ?>
 <script>
     $(function () {

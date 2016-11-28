@@ -1,7 +1,10 @@
 <?php
-$this->Html->css('jquery-ui.min.css', ['block' => true]);
-$this->Html->css('jquery-ui.theme.min.css', ['block' => true]);
-$this->Html->css('jquery-ui.structure.min.css', ['block' => true]);
+    // ページ固有の CSS, JS の読み込み
+    $this->Html->css([
+        'lib/jquery-ui.min.css',
+        'lib/jquery-ui.theme.min.css',
+        'lib/jquery-ui.structure.min.css',
+    ], ['block' => true]);
 ?>
 <script>
     $(document).ready(function () {

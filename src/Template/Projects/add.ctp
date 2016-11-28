@@ -1,8 +1,13 @@
 <?php
-$this->html->css('jquery-ui.min.css', ['block' => true]);
-$this->html->css('jquery-ui.theme.min.css', ['block' => true]);
-$this->html->css('jquery-ui.structure.min.css', ['block' => true]);
-$this->html->script(['toggleRoleList.js'], ['block' => true]);
+    // ページ固有の CSS, JS の読み込み
+    $this->Html->css([
+        'lib/jquery-ui.min.css',
+        'lib/jquery-ui.theme.min.css',
+        'lib/jquery-ui.structure.min.css',
+    ], ['block' => true]);
+    $this->html->script([
+        'toggleRoleList.js'
+    ], ['block' => true]);
 ?>
 <script>
     $(document).ready(function () {
