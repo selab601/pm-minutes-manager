@@ -173,6 +173,7 @@ tr:nth-child(even) {
 
 .flex-navbar {
     width: 100%;
+    min-width: 800px;
     height: 50px;
     background-color: white;
     display: flex;
