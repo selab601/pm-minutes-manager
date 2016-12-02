@@ -6,11 +6,13 @@
 
 既に以前にダウンロードした議事録管理システムがサーバ上で動作している場合のアップデート手順について記述します．
 
-1. 既存の `webminutes` ディレクトリ内の `config/app.php` を適当な場所に避難させます
-2. 既存の `webminutes` は，念のためにバックアップとしてリネームしておきます (`mv webminutes webminutes_`)
-3. `git clone https://github.com/selab601/web_minutes` により最新のリポジトリをクローンします
-4. ディレクトリ名をサーバ設定に合わせて変更します (`mv web_minutes webminutes`)
-5. `app.php` を設置します (`mv path/to/app.php webminutes/config`)
+1. `~/serverData/www` に移動します (`cd ~/serverData/www`)
+2. 既存の `webminutes` ディレクトリ内の `config/app.php` を適当な場所に避難させます (`cp webminutes/config/app.php .`)
+3. 既存の `webminutes` は，念のためにバックアップとしてリネームしておきます (`mv webminutes webminutes_`)
+4. `git clone https://github.com/selab601/web_minutes` により最新のリポジトリをクローンします
+5. ディレクトリ名をサーバ設定に合わせて変更します (`mv web_minutes webminutes`)
+6. `app.php` を設置します (`mv app.php webminutes/config`)
+7. `composer install` を実行します
 
 動作確認を行います．
 問題なければ，手順 2 でバックアップとして残した `webminutes_` は削除してしまって構いません．
