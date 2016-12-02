@@ -96,6 +96,8 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->created_at = $now->format('Y/m/d H:i:s');
             $user->updated_at = $now->format('Y/m/d H:i:s');
+            // 新規登録時に管理者権限は付与できないようにする
+            $user->is_authorized = 0;
             if ($this->Users->save($user)) {
                 $this->Flash->success('ユーザ登録に成功しました');
                 return $this->redirect(['action' => 'login']);
@@ -122,6 +124,11 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             if (empty($this->request->data["password"])) {
                 unset($this->request->data["password"]);
+            }
+            // 管理者権限を持つ人のみ管理者権限を追加できる
+            $is_authorized = $this->request->session()->read('Auth.User.is_authorized');
+            if ($is_authorized == 0) {
+                $this->request->data["is_authorized"] = 0;
             }
 
             $user = $this->Users->patchEntity($user, $this->request->data);
