@@ -5,19 +5,22 @@ if (!isset($class)) { $class = ""; }
 
 <header class=<?= '"' . $class . '"' ?>>
     <div class="flex-navbar">
-        <div class="flex-navbar-header">
+        <div class="flex-navbar-icon">
             <?=
                 $this->Html->link(
-                    '議事録管理システム',
+                    $this->Html->image('icon.png'),
                     [
                         'controller' => 'pages',
                         'action' => 'display',
-                        'home'
+                        'home',
+                        'escape' => false
+                    ],
+                    [
+                        'escape' => false
                     ]
                 );
             ?>
         </div>
-        <span id="version">0.1.3</span>
         <ul class="flex-navbar-contents">
             <?php if (($this->request->session()->read('Auth.User')) == false): ?>
                 <!-- 未ログインユーザ用メニュー -->

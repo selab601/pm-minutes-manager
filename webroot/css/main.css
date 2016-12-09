@@ -181,29 +181,16 @@ tr:nth-child(even) {
     font-size: 20px;
 }
 
-.flex-navbar-header {
-    padding-left: 10px;
+.flex-navbar-icon {
+    padding-left: 20px;
+    padding-top: 5px;
     padding-right: 5px;
     background-color: #f3f3f3;
-
-    display: flex;           display: -webkit-flex;
-    align-items: center;     -webkit-align-items: center;
-    justify-content: center; -webkit-justify-content: center;
 }
 
-.flex-navbar-header>a {
-    color: #666;
-    text-decoration: none;
-}
-
-.flex-navbar>#version {
-    background-color: #f3f3f3;
-    color: #666;
-    font-size: 15px;
-    padding-top: 5px;
-    display: flex;           display: -webkit-flex;
-    align-items: center;     -webkit-align-items: center;
-    justify-content: center; -webkit-justify-content: center;
+.flex-navbar-icon > a > img {
+    height: 40px;
+    width: 40px;
 }
 
 ul.flex-navbar-contents {
@@ -268,11 +255,7 @@ ul.flex-navbar-contents>li a.active {
 
 /* 既存のヘッダーの色を変更 */
 
-header.home>.flex-navbar>.flex-navbar-header {
-    background-color: #ddd;
-}
-
-header.home>.flex-navbar>#version {
+header.home>.flex-navbar>.flex-navbar-icon {
     background-color: #ddd;
 }
 
