@@ -1,3 +1,4 @@
+<?= $this->assign('title', 'ユーザ') ?>
 <div class="contents users-view">
 
     <div class="main-contents users-view">

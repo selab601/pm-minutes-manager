@@ -1,3 +1,4 @@
+<?= $this->assign('title', '管理者画面') ?>
 <?= $this->element('formContainerTemplate') ?>
 <?= $this->Form->create($role, ['class'=>'form-container role']) ?>
 <fieldset>

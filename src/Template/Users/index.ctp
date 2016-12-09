@@ -1,3 +1,4 @@
+<?= $this->assign('title', '管理者画面') ?>
 <div class="container">
     <h3>登録済みユーザ一覧</h3>
     <table class="table table-striped" cellpadding="0" cellspacing="0">

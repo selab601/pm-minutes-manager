@@ -1,3 +1,4 @@
+<?= $this->assign('title', '案件追加') ?>
 <?php
     // ページ固有の CSS, JS の読み込み
     $this->Html->css([

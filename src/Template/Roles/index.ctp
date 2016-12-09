@@ -1,3 +1,4 @@
+<?= $this->assign('title', '管理者画面') ?>
 <div class="container">
     <div class="roles index large-9 medium-8 columns content">
         <h3><?= __('担当種別') ?></h3>

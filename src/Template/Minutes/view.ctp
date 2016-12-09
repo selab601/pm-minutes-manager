@@ -1,3 +1,4 @@
+<?= $this->assign('title', '議事録閲覧') ?>
 <?php
 $this->Html->css('minute.css', ['block' => true]);
 $this->Html->script(['common.js'],  ['block' => true]);

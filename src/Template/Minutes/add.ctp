@@ -1,3 +1,4 @@
+<?= $this->assign('title', '議事録追加') ?>
 <?php
     // ページ固有の CSS, JS の読み込み
     $this->Html->css([

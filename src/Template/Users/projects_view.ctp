@@ -1,3 +1,4 @@
+<?= $this->assign('title', 'プロジェクト一覧') ?>
 <div class="contents users-projects-view">
 
     <div class="main-contents  users-projects-view">

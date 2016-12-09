@@ -1,3 +1,4 @@
+<?= $this->assign('title', '議事録一覧') ?>
 <div class="contents">
     <div class="main-contents">
 

@@ -1,3 +1,4 @@
+<?= $this->assign('title', '管理者画面') ?>
 <div class="container">
     <div class="itemMetaCategories index large-9 medium-8 columns content">
         <h3><?= __('案件大項目') ?></h3>

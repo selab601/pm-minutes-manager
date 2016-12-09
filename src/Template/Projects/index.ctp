@@ -1,3 +1,4 @@
+<?= $this->assign('title', 'プロジェクト') ?>
 <div class="container">
     <h3>登録済みのプロジェクト</h3>
     <table class="table table-striped" cellpadding="0" cellspacing="0">
