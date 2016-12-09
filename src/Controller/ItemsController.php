@@ -48,39 +48,6 @@ class ItemsController extends AppController
     }
 
     /**
-     * Index method
-     *
-     * @return \Cake\Network\Response|null
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Minutes', 'ItemCategories']
-        ];
-        $items = $this->paginate($this->Items);
-
-        $this->set(compact('items'));
-        $this->set('_serialize', ['items']);
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Item id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $item = $this->Items->get($id, [
-            'contain' => ['Minutes', 'ItemCategories', 'Responsibilities']
-        ]);
-
-        $this->set('item', $item);
-        $this->set('_serialize', ['item']);
-    }
-
-    /**
      * Add method
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
