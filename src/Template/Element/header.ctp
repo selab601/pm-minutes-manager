@@ -78,7 +78,7 @@ if (!isset($class)) { $class = ""; }
                             $this->request->session()->read('Auth.User.first_name') .
                             " さん";
                         echo $this->Html->link(
-                            $this->Html->image('icon_account.png') .
+                            $this->Html->image($class=="home"?'icon_account_white.png':'icon_account_black.png') .
                             $full_name .
                             "  <span class=\"caret\"></span>",
                             "#",
