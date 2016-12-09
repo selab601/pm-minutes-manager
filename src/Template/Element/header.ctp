@@ -21,6 +21,13 @@ if (!isset($class)) { $class = ""; }
                 );
             ?>
         </div>
+        <div class="flex-navbar-navigation">
+            <?php
+                if ($show_navigation_bar) {
+                    echo $this->element('navigation');
+                }
+            ?>
+        </div>
         <ul class="flex-navbar-contents">
             <?php if (($this->request->session()->read('Auth.User')) == false): ?>
                 <!-- 未ログインユーザ用メニュー -->
@@ -94,9 +101,4 @@ if (!isset($class)) { $class = ""; }
     </div>
 </header>
 
-<?php
-    if ($show_navigation_bar) {
-        echo $this->element('navigation');
-    }
-?>
 <?= $this->element('flashModal') ?>
