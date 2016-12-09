@@ -1,11 +1,16 @@
+<?php
+    $this->assign('title', '議事録管理システム');
+?>
 <div id="description">
-    <h1>ようこそ</h1>
-    <p>
-        議事録管理システムは，上田研究室の学生が開発，運営している，PM論受講者のためのWebアプリケーションです．
-    </p>
-    <p>
-        初めて利用する方は，まず以下の <b>Slack</b> と <b>GitHub</b> に関する説明を <b style="color:red;">必ず</b> 一読してください．
-    </p>
+    <div id="box">
+        <h1>ようこそ</h1>
+        <p>
+            議事録管理システムは，上田研究室の学生が開発，運営している，PM論受講者のためのWebアプリケーションです．
+        </p>
+        <p>
+            初めて利用する方は，まず以下の <b>Slack</b> と <b>GitHub</b> に関する説明を <b style="color:red;">必ず</b> 一読してください．
+        </p>
+    </div>
 </div>
 
 <div class="app-container-wrapper">

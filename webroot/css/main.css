@@ -142,7 +142,6 @@ tr:nth-child(even) {
     width: 100%;
     min-width: 800px;
     height: 50px;
-    background-color: white;
     display: flex;
 
     font-size: 20px;
@@ -268,16 +267,34 @@ ul.flex-navbar-contents>li a.active {
 
 /* 既存のヘッダーの色を変更 */
 
+header.home {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+
+header.home>.flex-navbar>ul.flex-navbar-contents>li a {
+    color: white;
+}
+
+header.home>.flex-navbar>ul.flex-navbar-contents>li>ul.dropdown-menu>li a {
+    color: black;
+}
+
+header.home>.flex-navbar>ul.flex-navbar-contents>li a: hover {
+    background-color: transparent;
+}
+
 header.home>.flex-navbar>.flex-navbar-icon {
-    background-color: #ddd;
+    background-color: transparent;
 }
 
 header.home>.flex-navbar>.flex-navbar-navigation {
-    background-color: #ddd;
+    background-color: transparent;
 }
 
 header.home>.flex-navbar>.flex-navbar-contents {
-    background-color: #ddd;
+    background-color: transparent;
 }
 
 .footer.home {
@@ -288,16 +305,37 @@ header.home>.flex-navbar>.flex-navbar-contents {
 
 #description {
     width: 100%;
-    height: 100%;
+    height: 300px;
 
-    padding-top: 20px;
+    padding-top: 70px;
     padding-bottom: 20px;
-    background-color: #ddd;
-    text-align: center;
+
+    position: relative;
+    background: url("../img/header.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
 }
 
-#description > h1 {
-    margin-bottom: 30px;
+#description:before {
+    background-color:rgba(0,0,0,0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+}
+
+#box {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+#box > h1 {
+    margin-bottom: 50px;
 }
 
 .app-container-wrapper {
