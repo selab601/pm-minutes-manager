@@ -313,7 +313,7 @@ header.home>.flex-navbar>.flex-navbar-contents {
     position: relative;
     background: url("../img/header.png");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-attachment: fixed;
 }
 
