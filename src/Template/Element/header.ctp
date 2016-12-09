@@ -55,26 +55,6 @@ if (!isset($class)) { $class = ""; }
             <?php else: ?>
                 <!-- ログインユーザ用メニュー -->
 
-                <!-- 一般ユーザ用メニュー -->
-                <li>
-                    <?php
-                        echo $this->Html->link('プロフィール', [
-                            'controller'=>'Users',
-                            'action'=>'view',
-                            $this->request->session()->read('Auth.User.id')
-                        ]);
-                    ?>
-                </li>
-                <li>
-                    <?php
-                        echo $this->Html->link('プロジェクト', [
-                            'controller'=>'Users',
-                            'action'=>'projectsView',
-                            $this->request->session()->read('Auth.User.id')
-                        ]);
-                    ?>
-                </li>
-
                 <!-- 管理者ユーザ用メニュー -->
                 <?php if ($this->request->session()->read('Auth.User.is_authorized') == 1): ?>
                     <li class="dropdown">
@@ -88,14 +68,36 @@ if (!isset($class)) { $class = ""; }
                         </ul>
                     </li>
                 <?php endif; ?>
-                <li>
-                    <?= $this->Html->link(
-                        'ログアウト', [
-                            'controller' => 'Users',
-                            'action' => 'logout',
-                        ]
-                        ) ?>
+
+                <!-- 一般ユーザ用メニュー -->
+                <li class="dropdown" id="flex-navbar-contents-account">
+                    <?php
+                        $full_name =
+                            $this->request->session()->read('Auth.User.last_name') .
+                            " " .
+                            $this->request->session()->read('Auth.User.first_name') .
+                            " さん";
+                        echo $this->Html->link(
+                            $this->Html->image('icon_account.png') .
+                            $full_name .
+                            "  <span class=\"caret\"></span>",
+                            "#",
+                            [
+                                "class" => "dropdown-toggle",
+                                "data-toggle" => "dropdown",
+                                "role" => "button",
+                                "aria-expanded" => "false",
+                                "escape" => false
+                            ]
+                        );
+                    ?>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><?=  $this->Html->link('プロフィール', ['controller'=>'Users', 'action'=>'view', $this->request->session()->read('Auth.User.id')]) ?></li>
+                        <li><?=  $this->Html->link('参加プロジェクト', ['controller'=>'Users', 'action'=>'projectsView', $this->request->session()->read('Auth.User.id')]) ?></li>
+                        <li><?=  $this->Html->link('ログアウト', ['controller'=>'Users', 'action'=>'logout' ]) ?></li>
+                    </ul>
                 </li>
+
             <?php endif; ?>
         </ul>
     </div>

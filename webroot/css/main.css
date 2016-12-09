@@ -199,6 +199,7 @@ ul.flex-navbar-contents {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    padding-right: 20px;
 
     background-color: #f3f3f3;
 
@@ -227,6 +228,18 @@ ul.flex-navbar-contents>li a:hover:not(.active) {
 ul.flex-navbar-contents>li a.active {
     color: white;
     background-color: #4CAF50;
+}
+
+#flex-navbar-contents-account > a {
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
+}
+
+#flex-navbar-contents-account > a > img {
+    padding-right: 10px;
+    flex: 0 0 30px;
+    height: 30px;
 }
 
 /*************************/
