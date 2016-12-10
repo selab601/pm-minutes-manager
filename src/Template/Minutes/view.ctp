@@ -3,40 +3,11 @@
 $this->Html->css('minute.css', ['block' => true]);
 $this->Html->script(['common.js'],  ['block' => true]);
 $this->Html->script(['elementFromAbsolutePoint.js'],  ['block' => true]);
+$this->Html->script(['Minutes/sortable.js'],  ['block' => true]);
 ?>
 <script>
-    $(function () {
-        $("#sortable").sortable({
-            update: function(event, ui) {
-                var order = [];
-                var i=0;
-                $(".table-content.no").each(function (item, index) {
-                    if (i==0) { i++; return; }
-                    order.push($(this).text().replace(/\s+/g, ""));
-                    $(this).text(i);
-                    i++;
-                });
-                var json = JSON.stringify(order);
-                console.log(json);
-
-                sendPost(
-                    "/webminutes/minutes/ajaxUpdateItemOrder/<?= $minute->id ?>",
-                    {
-                        order: json,
-                        minute_id: <?= $minute->id ?>
-                    },
-                    null)
-                    .done(function(result) {
-                        console.log(result);
-                        if (result == "success") {
-                            alert("案件の順序を更新しました");
-                        } else {
-                            alert("案件の順序の更新に失敗しました．ページをリロードして再度お試しください");
-                        }
-                    });
-            }
-        });
-        $("#sortable").disableSelection();
+    $(document).ready(function(){
+        sortable("#sortable", <?= $minute->id ?>);
     });
 </script>
 
