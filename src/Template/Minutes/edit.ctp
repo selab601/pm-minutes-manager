@@ -8,21 +8,14 @@
         'lib/jquery.datetimepicker.css',
     ], ['block' => true]);
     $this->Html->script([
-        'lib/jquery.datetimepicker.full.js'
+        'lib/jquery.datetimepicker.full.js',
+        'addDateTimePicker.js'
     ], ['block' => true]);
 ?>
 <script>
-    $(function () {
-        $("#datepicker").datepicker({dateFormat: 'yy/mm/dd'});
-        jQuery('#datetimepicker1').datetimepicker({
-            datepicker:false,
-            format:'H:i'
-        });
-        jQuery('#datetimepicker2').datetimepicker({
-            datepicker:false,
-            format:'H:i'
-        });
-    });
+    $("#datepicker").datepicker({dateFormat: 'yy/mm/dd'});
+    addDateTimePicker("#datetimepicker1");
+    addDateTimePicker("#datetimepicker2");
 </script>
 
 <?= $this->element('formContainerTemplate') ?>
