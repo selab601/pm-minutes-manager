@@ -84,6 +84,10 @@ body {
 /**** flash message ****/
 
 .message {
+    z-index: 1000;
+    position: absolute;
+    width: 100%;
+    min-width: 1200px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
