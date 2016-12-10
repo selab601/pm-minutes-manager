@@ -149,7 +149,7 @@ tr:nth-child(even) {
 
 .flex-navbar {
     width: 100%;
-    min-width: 800px;
+    min-width: 1200px;
     height: 50px;
     display: flex;
 
@@ -255,6 +255,9 @@ ul.flex-navbar-contents>li a.active {
 /***** footer *****/
 
 .footer {
+    width: 100%;
+    min-width: 1200px;
+
     position: absolute;
     right: 0;
     bottom: 0;
