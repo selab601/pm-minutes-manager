@@ -46,12 +46,14 @@ body {
 }
 
 .side-contents {
-    height: calc(100% - (50px + 50px));
+    // 50px: header size
+    // 30px: footer size
+    height: calc(100% - (50px + 30px));
     width: 250px;
 
     left: 0;
     top: 50px;
-    bottom: 50px;
+    bottom: 30px;
     margin: 0px;
     padding: 25px;
 
@@ -264,9 +266,11 @@ ul.flex-navbar-contents>li a.active {
     left: 0;
     padding-top: 15px;
     padding-bottom: 5px;
-    background-color: #efefef;
+    background-color: #f3f3f3;
 
-    height: 50px;
+    height: 30px;
+    font-size: x-small;
+    color: #bbbbbb;
 
     display: flex;
     justify-content: center;

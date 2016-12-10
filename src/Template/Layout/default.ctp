@@ -30,7 +30,7 @@
     <?= $this->fetch('content') ?>
 
     <div class="footer">
-        <p class="text-muted">© Copyright 2016 Software Engineering Ueda's Laboratory</p>
+        <p>© Copyright 2016 Software Engineering Ueda's Laboratory</p>
     </div>
 </body>
 </html>
