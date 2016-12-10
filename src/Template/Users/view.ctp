@@ -1,5 +1,5 @@
 <?= $this->assign('title', 'ユーザ') ?>
-<div class="contents users-view">
+<div class="contents">
 
     <div class="main-contents users-view">
         <h4>プロフィール</h4>

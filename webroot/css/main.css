@@ -20,34 +20,17 @@ body {
 /**** 全体のレイアウト ****/
 
 .contents {
-    display: flex; display: -webkit-flex;
+    width: 100%;
+    height: 100%;
+
+    display: flex;           display: -webkit-flex;
+    align-items: center;     -webkit-align-items: center;
+    justify-content: center; -webkit-justify-content: center;
     flex-direction: row;
-    padding: 20px 20px 20px 20px;
-}
-
-.side-contents {
-    flex: 0 0 350px;
-    width: 400px;
-    padding: 25px;
-    background-color: #e7e7e7;
-
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-}
-
-.side-contents.right {
-    margin-left: 30px;
-}
-
-.side-contents.left {
-    margin-right: 30px;
 }
 
 .main-contents {
-    flex: 0 0 1;
-    -webkit-flex: 1;
-
+    margin: 30px;
     padding: 25px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #e7e7e7;
@@ -60,6 +43,30 @@ body {
     display: flex;           display: -webkit-flex;
     align-items: center;     -webkit-align-items: center;
     flex-direction: column;
+}
+
+.side-contents {
+    height: calc(100% - (50px + 50px));
+    width: 250px;
+
+    left: 0;
+    top: 50px;
+    bottom: 50px;
+    margin: 0px;
+    padding: 25px;
+
+    position: absolute;
+    background-color: #e7e7e7;
+}
+
+.main-contents.right {
+    margin-left: 280px;
+}
+
+@media all and (max-width: 1180px) {
+  .main-contents.right {
+    margin-left: 500px;
+  }
 }
 
 /*************************/
@@ -947,18 +954,8 @@ header.home>.flex-navbar>.flex-navbar-contents {
     flex: 0 0 500px;
 }
 
-.contents.users-view {
-    -webkit-justify-content: center;
-    justify-content: center;
-}
-
 .main-contents.users-projects-view {
     flex: 0 0 800px;
-}
-
-.contents.users-projects-view {
-    -webkit-justify-content: center;
-    justify-content: center;
 }
 
 /* ユーザ詳細テーブル */
@@ -972,6 +969,10 @@ header.home>.flex-navbar>.flex-navbar-contents {
 }
 
 /* プロジェクトテーブル */
+
+.main-contents.project-view {
+    flex: 0 0 900px;
+}
 
 table.project-table {
     width: 600px;
@@ -992,6 +993,10 @@ td.project-table-content.project-name {
 }
 
 /* 議事録テーブル */
+
+.main-contents.minutes-view {
+    flex: 0 0 900px;
+}
 
 table.minute.projects-view {
     min-width: 700px;
