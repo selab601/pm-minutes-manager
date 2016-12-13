@@ -13,52 +13,7 @@ $this->Html->script(['Minutes/sortable.js'],  ['block' => true]);
 
 <div class="contents">
 
-    <div class="side-contents">
-        <h4><?= h($minute->name) ?></h4>
-        <?=
-            $this->Html->link('編集', [
-                'action'=>'edit',
-                $minute->id
-            ])
-        ?>
-
-        <!-- <table class="table minute minute-detail-table">
-             <tr>
-             <th>議事録名</th>
-             <td><b><?= h($minute->name) ?></b></td>
-             </tr>
-             <tr>
-             <th>日時</th>
-             <td><?= h($minute->holded_at->format('Y/m/d H:i')) ?></td>
-             </tr>
-             <tr>
-             <th>場所</th>
-             <td><?= h($minute->holded_place) ?></td>
-             </tr>
-             <tr>
-             <th>作成日</th>
-             <td><?= h($minute->created_at->format('Y/m/d')) ?></td>
-             </tr>
-             <tr>
-             <th>更新日</th>
-             <td><?= h($minute->updated_at->format('Y/m/d')) ?></td>
-             </tr>
-             </table> -->
-
-        <!-- 出席情報 -->
-        <!-- <div class="user-table minute participation-table">
-             <div class="user-table-row">
-             <div class="user-table-row-elem th">出席状況<br>( ◯ : 参加, △ : 遅刻, ✕ : 不参加 )</div>
-             </div>
-             <?= $this->element('userTable', [
-                 "users"=>$user_array,
-                 "add_participation"=>true,
-                 "col_num"=>2,
-                 "classes"=>"project-member",
-                 "participation_classes"=>"participation",
-                 ]) ?>
-             </div> -->
-    </div>
+    <?= $this->element('sidebar') ?>
 
     <div class="main-contents minutes-view right">
 

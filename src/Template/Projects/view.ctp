@@ -1,60 +1,7 @@
 <?= $this->assign('title', '議事録一覧') ?>
 <div class="contents">
 
-    <nav class="side-contents">
-        <h3><?= h($project->name) ?></h3>
-        <?=
-            $this->Html->link('編集', [
-                'action'=>'edit',
-                $project->id
-            ])
-        ?>
-
-        <!-- <div>
-             <table class="table project project-detail-table">
-             <tr>
-             <th scope="row">プロジェクト名</th>
-             <td><?= h($project->name) ?></td>
-             </tr>
-             <tr>
-             <th scope="row">顧客名</th>
-             <td><?= h($project->customer_name) ?></td>
-             </tr>
-             <tr>
-             <th scope="row">予算</th>
-             <td><?= $this->Number->format($project->budget) ?></td>
-             </tr>
-             <tr>
-             <th scope="row">期間</th>
-             <td><?= h($project->started_at->format('Y/m/d')." 〜 ".$project->finished_at->format('Y/m/d')) ?></td>
-             </tr>
-             </table>
-             </div> -->
-
-        <!-- <div>
-             <?php if (!empty($projects_users)): ?>
-             <div class="user-table project project-member-table">
-             <div class="user-table-row"><div class="user-table-row-elem th">参加メンバー</div></div>
-             <?php
-                 $users = [];
-                 foreach ($projects_users as $projects_user) {
-                 $user;
-                 $user['name'] = $projects_user->user->last_name . " " . $projects_user->user->first_name;
-                 $user['role'] = $projects_user->role->name;
-                 array_push($users, $user);
-                 }
-                 ?>
-             <?= $this->element('userTable', [
-                 "users"=>$users,
-                 "add_role"=>true,
-                 "role_classes"=>"project-member-table-role",
-                 "col_num"=>2,
-                 "classes"=>"project-member-table-member",
-                 ]) ?>
-             </div>
-             <?php endif; ?>
-             </div> -->
-    </nav>
+    <?= $this->element('sidebar') ?>
 
     <div class="main-contents project-view right">
 

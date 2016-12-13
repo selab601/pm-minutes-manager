@@ -68,8 +68,15 @@ class MinutesController extends AppController
             array_push($user_array, $u);
         }
 
+        $project = $minute->project;
+        $projects_users = TableRegistry::get('ProjectsUsers')
+            ->find('all', ['contain'=>['Users', 'Roles']])
+            ->where([
+                'ProjectsUsers.project_id = '.$project->id,
+                'ProjectsUsers.is_deleted = 0'
+            ]);
         $items = $this->getItemsWithUserAndCategoryName($id);
-        $this->set(compact('minute', 'items', 'user_array'));
+        $this->set(compact('minute', 'items', 'project', 'projects_users', 'user_array'));
         $this->set('_serialize', ['minute']);
     }
 

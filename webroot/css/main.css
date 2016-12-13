@@ -45,7 +45,7 @@ body {
     flex-direction: column;
 }
 
-.side-contents {
+.sidebar {
     // 50px: header size
     // 30px: footer size
     height: calc(100% - (50px + 30px));
@@ -55,7 +55,7 @@ body {
     top: 50px;
     bottom: 30px;
     margin: 0px;
-    padding: 25px;
+    padding: 15px;
 
     position: absolute;
     background-color: #e7e7e7;
@@ -254,6 +254,33 @@ ul.flex-navbar-contents>li a.active {
     padding-right: 10px;
     flex: 0 0 30px;
     height: 30px;
+}
+
+/*************************/
+
+/******** sidebar ********/
+
+.sidebar-contents {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    background-color: #aaaaff;
+
+    margin: 3px;
+
+    padding: 5px 10px 5px 10px;
+    font-size: 1.5em;
+}
+
+.sidebar-project-details {
+    font-size: 1em;
+    margin-left: 20px;
+}
+
+.sidebar-minute-details {
+    font-size: 1em;
+    margin-left: 20px;
 }
 
 /*************************/
