@@ -44,7 +44,7 @@ php のバージョンが 7.1 になっていない場合は，`/usr/local/bin` 
 
 ``` shell
 $ cd ~/serverData/www
-$ git clone https://github.com/sela601/web_minutes
+$ git clone https://github.com/selab601/web_minutes
 # フォルダ名を変更します．
 $ mv web_minutes webminutes
 ```
