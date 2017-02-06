@@ -1,4 +1,5 @@
 <?= $this->assign('title', 'プロジェクト追加') ?>
+<?= $this->Html->script(['Minutes/on_focus.js'], ['block' => true]) ?>
 <?php
     // ページ固有の CSS, JS の読み込み
     $this->Html->css([
@@ -23,7 +24,10 @@
 <fieldset>
     <legend>プロジェクトを追加する</legend>
     <div class="form-container-fields add-project">
-        <?= $this->Form->input('name', ['label' => 'プロジェクト名 : ']) ?>
+        <?= $this->Form->input('name', [
+            'label' => 'プロジェクト名 : ',
+            'id' => 1,
+            ]) ?>
         <?= $this->Form->input('budget', ['label' => '予算 : ']) ?>
         <?= $this->Form->input('customer_name', ['label' => '顧客名 : ']) ?>
         <?= $this->element('spanForm', [
