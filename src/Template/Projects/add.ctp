@@ -1,5 +1,5 @@
 <?= $this->assign('title', 'プロジェクト追加') ?>
-<?= $this->Html->script(['Minutes/on_focus.js'], ['block' => true]) ?>
+<?= $this->Html->script(['/util/on_focus.js'], ['block' => true]) ?>
 <?php
     // ページ固有の CSS, JS の読み込み
     $this->Html->css([
@@ -26,7 +26,7 @@
     <div class="form-container-fields add-project">
         <?= $this->Form->input('name', [
             'label' => 'プロジェクト名 : ',
-            'id' => 1,
+            'id' => 'first_focus',
             ]) ?>
         <?= $this->Form->input('budget', ['label' => '予算 : ']) ?>
         <?= $this->Form->input('customer_name', ['label' => '顧客名 : ']) ?>
