@@ -76,18 +76,15 @@
             'disabled' => $item->is_followed,
             'value'=>$default_overed_at,
             ]) ?>
-        <?php
-            if (!$item->is_followed) {
-                echo $this->element('checkboxForm', [
-                    'name' => 'projects_users._ids',
-                    'label' => '担当者 : ',
-                    'classes' => 'add-item',
-                    'form' => $this->Form,
-                    'options' => $users_array,
-                    'default' => $checked_users_array,
-                ]);
-            }
-        ?>
+        <?= $this->element('checkboxForm', [
+            'name' => 'projects_users._ids',
+            'label' => '担当者 : ',
+            'classes' => 'add-item',
+            'form' => $this->Form,
+            'options' => $users_array,
+            'default' => $checked_users_array,
+            'disabled' => $item->is_followed,
+            ]) ?>
     </div>
 </fieldset>
 <div class="form-container-footer">

@@ -13,6 +13,7 @@
                         'templates' => [
                             'inputContainer' => '{{content}}',
                         ],
+                        'disabled' => $disabled,
                     ]);
                 ?>
             </div>
