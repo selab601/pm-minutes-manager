@@ -8,7 +8,6 @@
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css([
-        'main.css',
         'minute.css',
         'minute-html.css',
         'lib/bootstrap.min.css'
