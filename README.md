@@ -117,7 +117,7 @@ $ cp config/app.default.php config/app.php
 SQLSTATE[HY000]: General error: 1298 Unknown or incorrect time zone: 'Asia/Tokyo'
 ```
 
-対うさせるためには，以下のようなコマンドを実行すると良いようです．ただし，環境によって必要な操作が異なる可能性があるので，適宜対応してください．
+対応させるためには，以下のようなコマンドを実行すると良いようです．ただし，環境によって必要な操作が異なる可能性があるので，適宜対応してください．
 
 ``` shell
 mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql -p
