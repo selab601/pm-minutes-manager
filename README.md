@@ -43,12 +43,29 @@ $ mysql -uroot
 mysql >
 ```
 
+### データベースの作成
+
 MySQL が起動できることを確認したら，CakePHP アプリケーション用のデータベースを作成しておきます
 ．MySQL サーバログイン後，適当な名前でデータベースを作成しておいてください．ここで作成したデータベース名は，後に使用します．
 
 ``` shell
 mysql > create database <database_name>
 ```
+
+### テーブルの作成
+作成したデータベースにテーブルを作成する．
+作成するためのSQL文が`config/schema/`に存在するのでインポートという形でMySQLに取り込む．
+
+``` shell
+# ログアウト
+mysql > exit
+# 4つのファイルをインポート
+$ mysql -u root <database_name> < config/schema/schema.sql
+$ mysql -u root <database_name> < config/schema/18n.sql
+$ mysql -u root <database_name> < config/schema/sessions.sql
+$ mysql -u root <database_name> < config/schema/init.sql
+```
+
 
 ### リポジトリのクローン
 
