@@ -85,8 +85,18 @@
                     'options' => $users_array,
                     'default' => $checked_users_array,
                 ]);
+            }else{
+                echo $this->element('checkboxForm', [
+                    'name' => 'projects_users._ids',
+                    'label' => '担当者 : ',
+                    'classes' => 'add-item',
+                    'form' => $this->Form,
+                    'options' => $users_array,
+                    'default' => $checked_users_array,
+                    'disabled' => "disabled"
+                ]);
             }
-        ?>
+          ?>
     </div>
 </fieldset>
 <div class="form-container-footer">
