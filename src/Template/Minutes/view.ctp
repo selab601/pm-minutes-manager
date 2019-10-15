@@ -89,7 +89,7 @@ $this->Html->script(['Minutes/sortable.js'],  ['block' => true]);
                                         if ($item->overed_at != NULL) {
                                             echo $item->overed_at->format('Y/m/d');
                                         } else {
-                                            echo "-";
+                                            echo " ";
                                         }
                                     ?>
                                 </div>
@@ -100,7 +100,7 @@ $this->Html->script(['Minutes/sortable.js'],  ['block' => true]);
                                             echo "<br>";
                                             echo $item->followed_user_name;
                                         } else {
-                                            echo "-";
+                                            echo " ";
                                         }
                                     ?>
                                 </div>
