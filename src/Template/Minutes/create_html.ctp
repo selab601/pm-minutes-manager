@@ -114,16 +114,9 @@
                                         作成
                                     </div>
                                     <div class="table-content column-td">
-                                            <?php    
-                                            if ($minute->is_examined) {
-                                                echo $minute->created_at->format('Y/m/d') ;
-                                                echo "<br>";
-                                                echo $minute->created_user_name;
-                                            } else {
-                                                echo "-";
-                                            }
-                                        ?>
-                                      
+                                        <?= $minute->created_at->format('Y/m/d') ?>
+                                        <?= "<br>" ?>
+                                        <?= $minute->created_user_name ?>
                                     </div>
                                 </div>
                             </div>
